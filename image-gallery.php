@@ -6,9 +6,9 @@
  * Author:          The WordPress Contributors
  * License:         GPL-2.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     image-gallery
+ * Text Domain:     image-gallery-block
  *
- * @package         image-gallery
+ * @package         image-gallery-block
  */
 
 /**
@@ -35,14 +35,6 @@ function create_block_image_gallery_block_init() {
 		$script_asset['version']
 	);
 
-	$editor_css = 'build/index.css';
-	wp_register_style(
-		'create-block-image-gallery-block-editor',
-		plugins_url( $editor_css, __FILE__ ),
-		array(),
-		filemtime( "$dir/$editor_css" )
-	);
-
 	$style_css = 'build/style-index.css';
 	wp_register_style(
 		'create-block-image-gallery-block',
@@ -54,12 +46,36 @@ function create_block_image_gallery_block_init() {
   $frontend_js = "src/frontend.js";
   wp_enqueue_script(
       'essential-blocks-image-gallery-frontend',
-      plugins_url($frontend_js, __FILE__)),
+      plugins_url($frontend_js, __FILE__),
       array( "jquery","wp-editor" ),
       true
   );
 
-	register_block_type( 'create-block/image-gallery', array(
+  $masonry_js = 'src/js/masonry.min.js';
+  wp_enqueue_script(
+      'essential-blocks-masonry',
+      plugins_url($masonry_js, __FILE__),
+      array("wp-editor"),
+      true
+  );
+
+  $lightbox_css = 'src/css/fslightbox.min.css';
+    wp_enqueue_style(
+      'fslightbox-style',
+      plugins_url($lightbox_css, __FILE__),
+      array()
+    );
+
+  $lightbox_js = 'src/js/fslightbox.min.js';
+  wp_enqueue_script(
+      'fslightbox-js',
+      plugins_url($lightbox_js, __FILE__),
+      array("wp-editor"),
+      true, 
+      true 
+  );
+
+	register_block_type( 'block/image-gallery', array(
 		'editor_script' => 'create-block-image-gallery-block-editor',
 		'editor_style'  => 'create-block-image-gallery-block-editor',
 		'style'         => 'create-block-image-gallery-block',

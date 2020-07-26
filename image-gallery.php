@@ -6,9 +6,9 @@
  * Author:          The WordPress Contributors
  * License:         GPL-2.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:     create-block
+ * Text Domain:     image-gallery
  *
- * @package         create-block
+ * @package         image-gallery
  */
 
 /**
@@ -50,6 +50,14 @@ function create_block_image_gallery_block_init() {
 		array(),
 		filemtime( "$dir/$style_css" )
 	);
+
+  $frontend_js = "src/frontend.js";
+  wp_enqueue_script(
+      'essential-blocks-image-gallery-frontend',
+      plugins_url($frontend_js, __FILE__)),
+      array( "jquery","wp-editor" ),
+      true
+  );
 
 	register_block_type( 'create-block/image-gallery', array(
 		'editor_script' => 'create-block-image-gallery-block-editor',

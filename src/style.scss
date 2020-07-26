@@ -1,12 +1,249 @@
-/**
- * The following styles get applied both on the front of your site
- * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
- */
+.eb-gallery-img-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-between;
+}
 
-.wp-block-create-block-image-gallery {
-	background-color: var(--wp-admin-theme-color);
-	color: #fff;
-	padding: 2px;
+.eb-gallery-img {
+  cursor: pointer;
+}
+
+.eb-gallery-img-wrapper a {
+  flex-grow: 1;
+  max-width: 100%;
+  margin: 5px;
+}
+
+.eb-gallery-img-wrapper a img {
+  height: 100%;
+  width: 100%;
+}
+
+// Sortable item styles
+.eb-lightbox-sortable-item {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid;
+  line-height: 2.5em;
+}
+
+// Sortable style
+.eb-lightbox-sortable-title {
+  cursor: pointer;
+  flex: 12;
+  padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+  white-space: nowrap;
+}
+
+// Upload button style
+.eb-gallery-upload-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 60px;
+  width: 100%;
+  background: #e3e3e3;
+  color: #666666;
+}
+
+// Image close button style
+.eb-lightbox-delete-icon {
+  position: absolute;
+  margin-left: 88%;
+  margin-top: 1%;
+  color: #f44336;
+}
+
+.eb-lightbox-image-wrapper {
+  position: relative;
+}
+
+.eb-is-sorting {
+  outline: 4px solid;
+}
+
+@media (min-width: 600px) {
+  .columns-8 a {
+    flex-basis: calc(12.5% - 16px);
+  }
+  .columns-7 a {
+    flex-basis: calc(14.28% - 16px);
+  }
+  .columns-6 a {
+    flex-basis: calc(16.667% - 16px);
+  }
+  .columns-5 a {
+    flex-basis: calc(20% - 16px);
+  }
+  .columns-4 a {
+    flex-basis: calc(25% - 16px);
+  }
+  .columns-3 a {
+    flex-basis: calc(33.33% - 16px);
+  }
+  .columns-2 a {
+    flex-basis: calc(50% - 16px);
+  }
+  .columns-1 a {
+    flex-basis: 100%;
+  }
+}
+
+.eb-gallery-img-link {
+  position: relative;
+  cursor: pointer;
+}
+
+.eb-gallery-img-caption {
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  right: 0%;
+  left: 0%;
+}
+
+.eb-lightbox-caption-input-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+// Caption styles
+
+// 1st style
+.caption-style-1 {
+  overflow: hidden;
+}
+.caption-style-1 .eb-gallery-img-caption {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.caption-style-1 .eb-gallery-img {
+  transition: all 0.25s ease-in-out;
+  filter: grayscale(100%) !important;
+}
+
+.caption-style-1:hover .eb-gallery-img {
+  filter: grayscale(0%) !important;
+}
+
+.caption-style-1:hover .eb-gallery-img-caption {
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+}
+
+// 2nd style
+.caption-style-2 {
+  overflow: hidden;
+}
+.caption-style-2 .eb-gallery-img-caption {
+  opacity: 0;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.caption-style-2 .eb-gallery-img {
+  transition: all 0.25s ease-in-out;
+}
+
+.caption-style-2:hover .eb-gallery-img {
+  border: 5px solid white !important;
+  filter: drop-shadow(2px 4px 4px gray) !important;
+}
+
+.caption-style-2:hover .eb-gallery-img-caption {
+  opacity: 1;
+  transform: translateY(-100%);
+  transition: all 0.25s ease-in-out;
+}
+
+// 3rd style
+.caption-style-3 {
+  overflow: hidden;
+}
+.caption-style-3 .eb-gallery-img-caption {
+  opacity: 0;
+}
+
+.caption-style-3 .eb-gallery-img {
+  transition: all 0.25s ease-in-out;
+}
+
+.caption-style-3:hover .eb-gallery-img-caption {
+  opacity: 1;
+  transition: all 0.45s ease-in-out;
+}
+
+.caption-style-3:hover .eb-gallery-img {
+  transform: scale(1.15, 1.15);
+  filter: blur(1px);
+}
+
+// SVG icon style
+.st0g {
+  fill: url(#SVGID_1_GALLERY);
+}
+.st1g {
+  fill: url(#SVGID_2_GALLERY);
+}
+.st2g {
+  fill: url(#SVGID_3_GALLERY);
+}
+.st3g {
+  fill: url(#SVGID_4_GALLERY);
+}
+.st4g {
+  fill: url(#SVGID_5_GALLERY);
+}
+.st5g {
+  fill: url(#SVGID_6_GALLERY);
+}
+
+.eb-lightbox-input-label-wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.eb-lightbox-input-label {
+  align-self: center;
+}
+
+.eb-lightbox-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.eb-lightbox-save-btn {
+  margin-right: 10px;
+}
+
+/* clear fix */
+.eb-gallery-grid:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.eb-gallery-grid-item {
+  width: 33.333%;
+}
+
+.eb-gallery-grid-item {
+  float: left;
+}
+
+.eb-gallery-grid-item img {
+  display: block;
+  width: 100%;
 }

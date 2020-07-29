@@ -8,7 +8,7 @@ import save from "./save";
 import attributes from "./attributes";
 import icon from "./icon";
 
-registerBlockType("block/image-gallery", {
+registerBlockType("block/image-gallery-block", {
 	title: __("Image Gallery", "create-block"),
 	description: __(
 		"Example block written with ESNext standard and JSX support – build step required.",

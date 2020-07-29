@@ -23,7 +23,7 @@ function create_block_image_gallery_block_init() {
 	$script_asset_path = "$dir/build/index.asset.php";
 	if ( ! file_exists( $script_asset_path ) ) {
 		throw new Error(
-			'You need to run `npm start` or `npm run build` for the "create-block/image-gallery" block first.'
+			'You need to run `npm start` or `npm run build` for the "create-block/image-gallery-block" block first.'
 		);
 	}
 	$index_js     = 'build/index.js';
@@ -75,7 +75,7 @@ function create_block_image_gallery_block_init() {
       true 
   );
 
-	register_block_type( 'block/image-gallery', array(
+	register_block_type( 'block/image-gallery-block', array(
 		'editor_script' => 'create-block-image-gallery-block-editor',
 		'editor_style'  => 'create-block-image-gallery-block-editor',
 		'style'         => 'create-block-image-gallery-block',

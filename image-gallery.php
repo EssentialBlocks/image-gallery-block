@@ -75,10 +75,12 @@ function create_block_image_gallery_block_init() {
       true 
   );
 
-	register_block_type( 'block/image-gallery-block', array(
-		'editor_script' => 'create-block-image-gallery-block-editor',
-		'editor_style'  => 'create-block-image-gallery-block-editor',
-		'style'         => 'create-block-image-gallery-block',
-	) );
+	if( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' ) ) {
+    register_block_type( 'block/image-gallery-block', array(
+      'editor_script' => 'create-block-image-gallery-block-editor',
+      'editor_style'  => 'create-block-image-gallery-block-editor',
+      'style'         => 'create-block-image-gallery-block',
+    ) );
+  }
 }
 add_action( 'init', 'create_block_image_gallery_block_init' );

@@ -9,10 +9,10 @@ import attributes from "./attributes";
 import icon from "./icon";
 
 registerBlockType("block/image-gallery-block", {
-	title: __("Image Gallery", "create-block"),
+	title: __("Image Gallery", "image-gallery-block"),
 	description: __(
-		"Example block written with ESNext standard and JSX support – build step required.",
-		"create-block"
+		"Impress your audience with high-resolution images",
+		"image-gallery-block"
 	),
 	keywords: [
 		__("images", "essential-blocks"),

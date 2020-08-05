@@ -2,7 +2,7 @@
 	"name": "block/image-gallery-block",
 	"title": "Image Gallery",
 	"category": "widgets",
-	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"description": " Impress your audience with high-resolution images",
 	"textdomain": "image-gallery-block",
 	"keywords": ["images", "photos", "gallery"],
 	"supports": {

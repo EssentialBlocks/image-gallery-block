@@ -2,11 +2,7 @@
 	"name": "block/image-gallery-block",
 	"title": "Image Gallery",
 	"category": "widgets",
-<<<<<<< HEAD
-	"description": " Impress your audience with high-resolution images",
-=======
 	"description": "Impress your audience with beautiful image gallery with lightbox.",
->>>>>>> a9d771629349930959e8dfcfd8b660911efc60fb
 	"textdomain": "image-gallery-block",
 	"keywords": ["images", "photos", "gallery"],
 	"supports": {

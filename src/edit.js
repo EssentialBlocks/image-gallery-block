@@ -4,12 +4,11 @@
 const { __ } = wp.i18n;
 const { MediaUpload, MediaPlaceholder, BlockControls } = wp.blockEditor;
 const { Toolbar, Button } = wp.components;
-const { Fragment, useState } = wp.element;
+const { Fragment } = wp.element;
 
 /**
  * External dependencies
  */
-// import FsLightbox from "fslightbox-react";
 import Masonry from "react-masonry-component";
 import Inspector from "./inspector";
 
@@ -65,18 +64,6 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 		}${paddingUnit}`,
 	};
 
-	// const [lightboxController, setLightboxController] = useState({
-	// 	toggler: false,
-	// 	sourceIndex: 0
-	// });
-
-	// function openLightboxOnSlide(number) {
-	// 	setLightboxController({
-	// 		toggler: !lightboxController.toggler,
-	// 		sourceIndex: number
-	// 	});
-	// }
-
 	function onImageSelect(images) {
 		let sources = [];
 		images.map((image) => {
@@ -107,24 +94,15 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 						style={{
 							width: isMasonry && `${100 / columns}%`,
 							padding: `${
-								typeof paddingTop !== "undefined"
-									? paddingTop
-									: 3
+								typeof paddingTop !== "undefined" ? paddingTop : 3
 							}${paddingUnit} ${
-								typeof paddingRight !== "undefined"
-									? paddingRight
-									: 3
+								typeof paddingRight !== "undefined" ? paddingRight : 3
 							}${paddingUnit} ${
-								typeof paddingBottom !== "undefined"
-									? paddingBottom
-									: 3
+								typeof paddingBottom !== "undefined" ? paddingBottom : 3
 							}${paddingUnit} ${
-								typeof paddingLeft !== "undefined"
-									? paddingLeft
-									: 3
+								typeof paddingLeft !== "undefined" ? paddingLeft : 3
 							}${paddingUnit}`,
 						}}
-						// onClick={() => openLightboxOnSlide(index)}
 					>
 						<img
 							className="eb-gallery-img"
@@ -133,16 +111,13 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 								border: `${borderWidth || 0}px ${borderStyle} ${
 									borderColor || "gray"
 								}`,
-								filter: `drop-shadow(${hOffset || 0}px ${
-									vOffset || 0
-								}px ${blur || 0}px ${shadowColor || "gray"})`,
+								filter: `drop-shadow(${hOffset || 0}px ${vOffset || 0}px ${
+									blur || 0
+								}px ${shadowColor || "gray"})`,
 							}}
 						/>
 						{displayCaption && (
-							<span
-								className="eb-gallery-img-caption"
-								style={captionStyles}
-							>
+							<span className="eb-gallery-img-caption" style={captionStyles}>
 								{source.caption}
 							</span>
 						)}
@@ -163,11 +138,10 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 						style={{
 							padding: `${paddingTop || 0}${paddingUnit} ${
 								paddingRight || 0
-							}${paddingUnit} ${
-								paddingBottom || 0
-							}${paddingUnit} ${paddingLeft || 0}${paddingUnit}`,
+							}${paddingUnit} ${paddingBottom || 0}${paddingUnit} ${
+								paddingLeft || 0
+							}${paddingUnit}`,
 						}}
-						// onClick={() => openLightboxOnSlide(index)}
 					>
 						<img
 							className="eb-gallery-img"
@@ -176,16 +150,13 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 								border: `${borderWidth || 0}px ${borderStyle} ${
 									borderColor || "gray"
 								}`,
-								filter: `drop-shadow(${hOffset || 0}px ${
-									vOffset || 0
-								}px ${blur || 0}px ${shadowColor || "gray"})`,
+								filter: `drop-shadow(${hOffset || 0}px ${vOffset || 0}px ${
+									blur || 0
+								}px ${shadowColor || "gray"})`,
 							}}
 						/>
 						{displayCaption && (
-							<span
-								className="eb-gallery-img-caption"
-								style={captionStyles}
-							>
+							<span className="eb-gallery-img-caption" style={captionStyles}>
 								{source.caption}
 							</span>
 						)}
@@ -230,6 +201,7 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 				<BlockControls>
 					<Toolbar>
 						<MediaUpload
+							value={images.map((img) => img.id)}
 							onSelect={(images) => onImageSelect(images)}
 							allowedTypes={["image"]}
 							multiple
@@ -274,14 +246,6 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 						)
 					}
 				/>
-				{/*
-				<FsLightbox
-					toggler={lightboxController.toggler}
-					sourceIndex={lightboxController.sourceIndex}
-					sources={urls}
-					key={urls[lightboxController.sourceIndex]} // Fixes image reorder issue
-				/>
-        */}
 			</Fragment>
 		),
 	];

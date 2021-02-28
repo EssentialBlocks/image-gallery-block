@@ -4,3 +4,6 @@
 [submodule "util/dimensions-control"]
 	path = util/dimensions-control
 	url = git@github.com:EssentialBlocks/dimensions-control.git
+[submodule "util/unit-control"]
+	path = util/unit-control
+	url = git@github.com:EssentialBlocks/unit-control.git

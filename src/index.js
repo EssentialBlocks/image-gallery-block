@@ -8,7 +8,7 @@ import save from "./save";
 import attributes from "./attributes";
 import icon from "./icon";
 
-registerBlockType("block/image-gallery-block", {
+registerBlockType("image-gallery-block/image-gallery-block", {
 	title: __("Image Gallery", "image-gallery-block"),
 	description: __(
 		"Impress your audience with high-resolution images",

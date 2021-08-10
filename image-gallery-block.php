@@ -19,6 +19,10 @@
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/applying-styles-with-stylesheets/
  */
+
+
+require_once __DIR__ . '/lib/style-handler/style-handler.php';
+
 function create_block_image_gallery_block_init() {
 	$dir = dirname( __FILE__ );
 

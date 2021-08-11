@@ -10,7 +10,35 @@ const { Fragment } = wp.element;
  * External dependencies
  */
 import Masonry from "react-masonry-component";
+
+/**
+  * Internal depencencies
+*/
 import Inspector from "./inspector";
+import "./editor.scss";
+import {
+	WRAPPER_BG,
+	WRAPPER_MARGIN,
+	WRAPPER_PADDING,
+	WRAPPER_BORDER_SHADOW,
+	GRID_COLUMNS,
+	IMAGE_GAP,
+	IMAGE_BORDER_SHADOW,
+	CAPTION_MARGIN,
+	CAPTION_PADDING,
+	CAPTION_TYPOGRAPHY,
+} from "./constants";
+import {
+	softMinifyCssStrings,
+	isCssExists,
+	generateTypographyStyles,
+	generateDimensionsControlStyles,
+	generateBorderShadowStyles,
+	generateResponsiveRangeStyles,
+	generateBackgroundControlStyles,
+	mimmikCssForPreviewBtnClick,
+	duplicateBlockIdFix,
+} from "../util/helpers";
 
 const Edit = ({ isSelected, attributes, setAttributes }) => {
 	const {
@@ -42,11 +70,11 @@ const Edit = ({ isSelected, attributes, setAttributes }) => {
 		isMasonry,
 	} = attributes;
 
-	const masonryOptions = {
-		transitionDuration: "0.5s",
-	};
+	// const masonryOptions = {
+	// 	transitionDuration: "0.5s",
+	// };
 
-	const imagesLoadedOptions = { background: ".eb-lightbox-image-bg" };
+	// const imagesLoadedOptions = { background: ".eb-lightbox-image-bg" };
 
 	const captionStyles = {
 		fontSize: captionFontSize

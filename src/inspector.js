@@ -14,6 +14,7 @@ const {
 	ButtonGroup,
 	BaseControl,
 	TabPanel,
+	ColorPicker,
 } = wp.components;
 const { useEffect } = wp.element;
 const { select } = wp.data;
@@ -24,28 +25,26 @@ const { select } = wp.data;
 /**
  * Internal depencencies
  */
-//  import {
-// 	WRAPPER_BG,
-// 	WRAPPER_MARGIN,
-// 	WRAPPER_PADDING,
-// 	WRAPPER_BORDER_SHADOW,
-// 	TITLE_MARGIN,
-// 	SUBTITLE_MARGIN,
-// 	SEPARATOR_MARGIN,
-// 	SEPARATOR_LINE_SIZE,
-// 	SEPARATOR_ICON_SIZE,
-// 	SEPARATOR_WIDTH,
-// 	SEPARATOR_POSITION,
-// 	NORMAL_HOVER,
-// 	UNIT_TYPES,
-// 	SEPARATOR_UNIT_TYPES,
-// 	PRESETS,
-// 	TEXT_ALIGN,
-// 	HEADING,
-// 	SEPERATOR_STYLES,
-// 	SEPARATOR_TYPE,
-// } from "./constants/constants";
-// import {TITLE_TYPOGRAPHY, SUBTITLE_TYPOGRAPHY } from "./constants/typographyPrefixConstants";
+ import {
+	WRAPPER_BG,
+	WRAPPER_MARGIN,
+	WRAPPER_PADDING,
+	WRAPPER_BORDER_SHADOW,
+	GRID_COLUMNS,
+	IMAGE_GAP,
+	IMAGE_BORDER_SHADOW,
+	CAPTION_MARGIN,
+	CAPTION_PADDING,
+	CAPTION_TYPOGRAPHY,
+	LAYOUTS,
+	STYLES,
+	BORDER_STYLES,
+	TEXT_ALIGN,
+	HORIZONTAL_ALIGN,
+	VERTICAL_ALIGN,
+	NORMAL_HOVER,
+	UNIT_TYPES,
+} from "./constants";
 import {mimmikCssForResBtns, mimmikCssOnPreviewBtnClickWhileBlockSelected} from "../util/helpers";
 import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
 import TypographyDropdown from "../util/typography-control-v2";
@@ -59,11 +58,17 @@ function Inspector(props) {
 	const { attributes, setAttributes } = props;
 	const {
 		resOption,
+		layouts,
 		columns,
 		displayCaption,
 		captionFontSize,
 		captionSizeUnit,
+		captionColorType,
 		captionColor,
+		captionHoverColor,
+		captionBGColorType,
+		captionBGColor,
+		captionBGHoverColor,
 		horizontalAlign,
 		verticalAlign,
 		textAlign,
@@ -152,227 +157,238 @@ function Inspector(props) {
 										title={__("General")} 
 										initialOpen={true}
 									>
-									<ToggleControl
-										label={__("Masonry Layout")}
-										checked={isMasonry}
-										onChange={() => setAttributes({ isMasonry: !isMasonry })}
-									/>
-					
-									<ToggleControl
-										label={__("Display Caption")}
-										checked={displayCaption}
-										onChange={() => setAttributes({ displayCaption: !displayCaption })}
-									/>
-					
-									{/* <RangeControl
-										label={__("Columns")}
-										value={columns}
-										onChange={(columns) => setAttributes({ columns })}
-										min={1}
-										max={8}
-									/> */}
-									<ResponsiveRangeController
-										baseLabel={__("Separator Height", "advance-heading")}
-										controlName={SEPARATOR_LINE_SIZE}
-										resRequiredProps={resRequiredProps}
-										units={UNIT_TYPES}
-										min={0}
-										max={100}
-										step={1}
-									/>
-					
-									<SelectControl
-										label={__("Styles")}
-										value={styleNumber}
-										options={STYLES}
-										onChange={(styleNumber) => setAttributes({ styleNumber })}
-									/>
-								</PanelBody>
-					
-								{displayCaption && (
-									<PanelBody title={__("Caption Styles")}>
-										<ColorControl
-											label={__("Caption Color")}
-											color={captionColor}
-											onChange={(captionColor) => setAttributes({ captionColor })}
-										/>
-					
-										<UnitControl
-											selectedUnit={captionSizeUnit}
-											unitTypes={[
-												{ label: "px", value: "px" },
-												{ label: "em", value: "em" },
-												{ label: "%", value: "%" },
-											]}
-											onClick={(captionSizeUnit) => setAttributes({ captionSizeUnit })}
-										/>
-					
-										<RangeControl
-											label={__("Font Size")}
-											value={captionFontSize}
-											allowReset
-											onChange={(captionFontSize) => setAttributes({ captionFontSize })}
-											step={captionSizeStep}
-											min={captionSizeMin}
-											max={captionSizeMax}
-										/>
-					
-										<BaseControl label={__("Text Align")}>
-											<ButtonGroup>
-												{TEXT_ALIGN.map((item) => (
-													<Button
-														isLarge
-														isPrimary={textAlign === item.value}
-														isSecondary={textAlign !== item.value}
-														onClick={() => setAttributes({ textAlign: item.value })}
-													>
-														{item.label}
-													</Button>
-												))}
-											</ButtonGroup>
-										</BaseControl>
-					
-										<BaseControl label={__("Vertical Align")}>
-											<ButtonGroup>
-												{VERTICAL_ALIGN.map((item) => (
-													<Button
-														isLarge
-														isPrimary={verticalAlign === item.value}
-														isSecondary={verticalAlign !== item.value}
-														onClick={() =>
-															setAttributes({
-																verticalAlign: item.value,
-															})
-														}
-													>
-														{item.label}
-													</Button>
-												))}
-											</ButtonGroup>
-										</BaseControl>
-					
-										<BaseControl label={__("Horizontal Align")}>
-											<ButtonGroup>
-												{HORIZONTAL_ALIGN.map((item) => (
-													<Button
-														isLarge
-														isPrimary={horizontalAlign === item.value}
-														isSecondary={horizontalAlign !== item.value}
-														onClick={() =>
-															setAttributes({
-																horizontalAlign: item.value,
-															})
-														}
-													>
-														{item.label}
-													</Button>
-												))}
-											</ButtonGroup>
-										</BaseControl>
-									</PanelBody>
-								)}
-					
-								<PanelBody title={__("Image Settings")}>
-									<UnitControl
-										selectedUnit={paddingUnit}
-										unitTypes={[
-											{ label: "px", value: "px" },
-											{ label: "em", value: "em" },
-											{ label: "%", value: "%" },
-										]}
-										onClick={(paddingUnit) => setAttributes({ paddingUnit })}
-									/>
-					
-									<DimensionControl
-										label={__("Padding")}
-										top={paddingTop}
-										right={paddingRight}
-										bottom={paddingBottom}
-										left={paddingLeft}
-										onChange={({ top, right, bottom, left }) =>
-											setAttributes({
-												paddingTop: top,
-												paddingRight: right,
-												paddingBottom: bottom,
-												paddingLeft: left,
-											})
-										}
-									/>
-					
-									<PanelBody title={__("Border")} initialOpen={false}>
 										<SelectControl
-											label={__("Border Style")}
-											value={borderStyle}
-											options={BORDER_STYLES}
-											onChange={(borderStyle) => setAttributes({ borderStyle })}
+											label={__("Layouts")}
+											value={layouts}
+											options={LAYOUTS}
+											onChange={(layouts) => setAttributes({ layouts })}
 										/>
-					
-										{borderStyle !== "none" && (
-											<RangeControl
-												label={__("Border Width")}
-												value={borderWidth}
-												onChange={(borderWidth) => setAttributes({ borderWidth })}
-												allowReset
-												min={0}
-												max={20}
-											/>
-										)}
-					
-										{borderStyle !== "none" && (
-											<ColorControl
-												label={__("BorderColor")}
-												color={borderColor}
-												onChange={(borderColor) => setAttributes({ borderColor })}
-											/>
-										)}
-									</PanelBody>
-					
-									<PanelBody title={__("Shadow")} initialOpen={false}>
-										<ColorControl
-											label={__("Shadow Color")}
-											color={shadowColor}
-											onChange={(shadowColor) => setAttributes({ shadowColor })}
-										/>
-					
-										<RangeControl
-											label={__("Horizontal Offset")}
-											allowReset
-											value={hOffset}
-											onChange={(hOffset) => setAttributes({ hOffset })}
-											min={0}
-											max={20}
-										/>
-					
-										<RangeControl
-											label={__("Vertical Offset")}
-											value={vOffset}
-											allowReset
-											onChange={(vOffset) => setAttributes({ vOffset })}
-											min={0}
-											max={20}
-										/>
-					
-										<RangeControl
-											label={__("Shadow Blur")}
-											value={blur}
-											allowReset
-											onChange={(blur) => setAttributes({ blur })}
-											min={0}
-											max={20}
-										/>
-									</PanelBody>
-								</PanelBody>
 
+										<SelectControl
+											label={__("Styles")}
+											value={styleNumber}
+											options={STYLES}
+											onChange={(styleNumber) => setAttributes({ styleNumber })}
+										/>
+						
+										<ToggleControl
+											label={__("Display Caption")}
+											checked={displayCaption}
+											onChange={() => setAttributes({ displayCaption: !displayCaption })}
+										/>
+
+										<ResponsiveRangeController
+											baseLabel={__("Columns", "image-gallery-block")}
+											controlName={GRID_COLUMNS}
+											resRequiredProps={resRequiredProps}
+											units={[]}
+											min={0}
+											max={8}
+											step={1}
+										/>
+
+										<ResponsiveRangeController
+											baseLabel={__("Image Gap", "image-gallery-block")}
+											controlName={IMAGE_GAP}
+											resRequiredProps={resRequiredProps}
+											units={UNIT_TYPES}
+											min={0}
+											max={100}
+											step={1}
+										/>
+									</PanelBody>
 								</>
 							)}
 
 							{tab.name === "styles" && (
 								<>
+									<PanelBody title={__("Image Settings")}>
+										<PanelBody title={__("Border & Shadow")} initialOpen={true}>
+											<BorderShadowControl
+												controlName={IMAGE_BORDER_SHADOW}
+												resRequiredProps={resRequiredProps}
+												// noShadow
+												// noBorder
+											/>
+										</PanelBody>
+									</PanelBody>
+									{displayCaption && (
+										<PanelBody title={__("Caption Styles")}>
+											<ButtonGroup className="eb-inspector-btn-group">
+												{NORMAL_HOVER.map((item) => (
+													<Button
+														isLarge
+														isPrimary={captionColorType === item.value}
+														isSecondary={captionColorType !== item.value}
+														onClick={() => setAttributes({ captionColorType: item.value })}
+													>
+														{item.label}
+													</Button>
+												))}
+											</ButtonGroup>
+
+											{captionColorType === "normal" && (
+												<>
+													<PanelColorSettings
+														className={"eb-subpanel no-title"}
+														initialOpen={true}
+														colorSettings={[
+															{
+																value: captionColor,
+																onChange: (newColor) =>
+																	setAttributes({ captionColor: newColor }),
+																label: __("Caption Color"),
+															}
+														]}
+													/>
+
+													<PanelColorSettings
+														className={"eb-subpanel no-title"}
+														initialOpen={true}
+														colorSettings={[
+															{
+																value: captionBGColor,
+																onChange: (newColor) =>
+																	setAttributes({ captionBGColor: newColor }),
+																label: __("Caption Background Color"),
+															}
+														]}
+													/>
+												</>
+											)}
+
+											{captionColorType === "hover" && (
+												<>
+													<PanelColorSettings
+														className={"eb-subpanel no-title"}
+														initialOpen={true}
+														colorSettings={[
+															{
+																value: captionHoverColor,
+																onChange: (newColor) =>
+																	setAttributes({ captionHoverColor: newColor }),
+																label: __("Caption Hover Color"),
+															}
+														]}
+													/>
+													<PanelColorSettings
+														className={"eb-subpanel no-title"}
+														initialOpen={true}
+														colorSettings={[
+															{
+																value: captionBGHoverColor,
+																onChange: (newColor) =>
+																	setAttributes({ captionBGHoverColor: newColor }),
+																label: __("Background Hover Color"),
+															}
+														]}
+													/>
+												</>
+											)}
+
+											<TypographyDropdown
+												baseLabel={__("Typography", "image-gallery-block")}
+												typographyPrefixConstant={CAPTION_TYPOGRAPHY}
+												resRequiredProps={resRequiredProps}
+											/>
+					
+											<BaseControl label={__("Text Align")}>
+												<ButtonGroup>
+													{TEXT_ALIGN.map((item) => (
+														<Button
+															isLarge
+															isPrimary={textAlign === item.value}
+															isSecondary={textAlign !== item.value}
+															onClick={() => setAttributes({ textAlign: item.value })}
+														>
+															{item.label}
+														</Button>
+													))}
+												</ButtonGroup>
+											</BaseControl>
+					
+											<BaseControl label={__("Vertical Align")}>
+												<ButtonGroup>
+													{VERTICAL_ALIGN.map((item) => (
+														<Button
+															isLarge
+															isPrimary={verticalAlign === item.value}
+															isSecondary={verticalAlign !== item.value}
+															onClick={() =>
+																setAttributes({
+																	verticalAlign: item.value,
+																})
+															}
+														>
+															{item.label}
+														</Button>
+													))}
+												</ButtonGroup>
+											</BaseControl>
+					
+											<BaseControl label={__("Horizontal Align")}>
+												<ButtonGroup>
+													{HORIZONTAL_ALIGN.map((item) => (
+														<Button
+															isLarge
+															isPrimary={horizontalAlign === item.value}
+															isSecondary={horizontalAlign !== item.value}
+															onClick={() =>
+																setAttributes({
+																	horizontalAlign: item.value,
+																})
+															}
+														>
+															{item.label}
+														</Button>
+													))}
+												</ButtonGroup>
+											</BaseControl>
+
+											<ResponsiveDimensionsControl
+												resRequiredProps={resRequiredProps}
+												controlName={CAPTION_MARGIN}
+												baseLabel="Margin"
+											/>
+
+											<ResponsiveDimensionsControl
+												resRequiredProps={resRequiredProps}
+												controlName={CAPTION_PADDING}
+												baseLabel="Padding"
+											/>
+										</PanelBody>
+									)}
 								</>
 							)}
 
 							{tab.name === "advance" && (
 								<>
+									<PanelBody>
+										<ResponsiveDimensionsControl
+											resRequiredProps={resRequiredProps}
+											controlName={WRAPPER_MARGIN}
+											baseLabel="Margin"
+										/>
+										<ResponsiveDimensionsControl
+											resRequiredProps={resRequiredProps}
+											controlName={WRAPPER_PADDING}
+											baseLabel="Padding"
+										/>
+									</PanelBody>
+									<PanelBody title={__("Background")} initialOpen={false}>
+										<BackgroundControl
+											controlName={WRAPPER_BG}
+											resRequiredProps={resRequiredProps}
+										/>
+									</PanelBody>
+									<PanelBody title={__("Border & Shadow")} initialOpen={false}>
+										<BorderShadowControl
+											controlName={WRAPPER_BORDER_SHADOW}
+											resRequiredProps={resRequiredProps}
+											// noShadow
+											// noBorder
+										/>
+									</PanelBody>
 								</>
 							)}
 						</div>

@@ -1,15 +1,15 @@
-// import {
-// 	WRAPPER_BG,
-// 	WRAPPER_MARGIN,
-// 	WRAPPER_PADDING,
-// 	WRAPPER_BORDER_SHADOW,
-// 	TITLE_MARGIN,
-// 	SUBTITLE_MARGIN,
-// 	SEPARATOR_MARGIN,
-// 	SEPARATOR_LINE_SIZE,
-// 	SEPARATOR_ICON_SIZE,
-// 	SEPARATOR_WIDTH,
-// } from "./constants/constants";
+import {
+	WRAPPER_BG,
+	WRAPPER_MARGIN,
+	WRAPPER_PADDING,
+	WRAPPER_BORDER_SHADOW,
+	GRID_COLUMNS,
+	IMAGE_GAP,
+	IMAGE_BORDER_SHADOW,
+	CAPTION_MARGIN,
+	CAPTION_PADDING,
+	CAPTION_TYPOGRAPHY
+} from "./constants";
 import {
 	generateDimensionsAttributes,
 	generateTypographyAttributes,
@@ -17,7 +17,6 @@ import {
 	generateBorderShadowAttributes,
 	generateResponsiveRangeAttributes
 } from "../util/helpers";
-// import * as typographyObjs from "./constants/typographyPrefixConstants";
 
 const attributes = {
 	resOption: {
@@ -43,6 +42,10 @@ const attributes = {
 	},
 	selectedImgIndex: {
 		type: "number",
+	},
+	layouts: {
+		type: "string",
+		default: "grid"
 	},
 	columns: {
 		type: "number",
@@ -84,7 +87,26 @@ const attributes = {
 		type: "string",
 		default: "px",
 	},
+	captionColorType: {
+		type: "string",
+		default: "normal"
+	},
 	captionColor: {
+		type: "string",
+		default: "#333333"
+	},
+	captionHoverColor: {
+		type: "string",
+	},
+	captionBGColorType: {
+		type: "string",
+		default: "normal"
+	},
+	captionBGColor: {
+		type: "string",
+		default: "#333333"
+	},
+	captionBGHoverColor: {
 		type: "string",
 	},
 	horizontalAlign: {
@@ -145,6 +167,67 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+
+	// typography attributes ⬇
+	...generateTypographyAttributes(Object.values(CAPTION_TYPOGRAPHY)),
+
+	// margin padding attributes ⬇
+	...generateDimensionsAttributes(WRAPPER_MARGIN),
+	...generateDimensionsAttributes(WRAPPER_PADDING),
+	...generateDimensionsAttributes(CAPTION_MARGIN, {
+		top: 0,
+		bottom: 10,
+		right: 0,
+		left: 0,
+		isLinked: false,
+	}),
+	...generateDimensionsAttributes(CAPTION_PADDING, {
+		top: 5,
+		bottom: 5,
+		right: 10,
+		left: 10,
+		isLinked: false,
+	}),
+
+	// border shadow attributes ⬇
+	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW, 
+		{
+			bdrDefaults: {
+				top: 0,
+				bottom: 0,
+				right: 0,
+				left: 0,
+			},
+			// noShadow: true,
+			// noBorder: true,
+		}
+	),
+	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW, 
+		{
+			bdrDefaults: {
+				top: 0,
+				bottom: 0,
+				right: 0,
+				left: 0,
+			},
+			// noShadow: true,
+			// noBorder: true,
+		}
+	),
+
+	// background attributes ⬇
+	...generateBackgroundAttributes(WRAPPER_BG, {
+		defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)",
+	}),
+
+	// range controller Separator Line Grid Column
+	...generateResponsiveRangeAttributes(GRID_COLUMNS, {
+		defaultRange: 3,
+	}),
+	// range controller Separator Image Gap
+	...generateResponsiveRangeAttributes(IMAGE_GAP, {
+		defaultRange: 10,
+	}),
 };
 
 export default attributes;

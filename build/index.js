@@ -13131,6 +13131,7 @@ var UNIT_TYPES = [{
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
 /* harmony import */ var react_masonry_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-masonry-component */ "./node_modules/react-masonry-component/lib/index.js");
 /* harmony import */ var react_masonry_component__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_masonry_component__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _inspector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./inspector */ "./src/inspector.js");
@@ -13157,11 +13158,14 @@ var __ = wp.i18n.__;
 var _wp$blockEditor = wp.blockEditor,
     MediaUpload = _wp$blockEditor.MediaUpload,
     MediaPlaceholder = _wp$blockEditor.MediaPlaceholder,
-    BlockControls = _wp$blockEditor.BlockControls;
+    BlockControls = _wp$blockEditor.BlockControls,
+    useBlockProps = _wp$blockEditor.useBlockProps;
 var _wp$components = wp.components,
     Toolbar = _wp$components.Toolbar,
     Button = _wp$components.Button;
 var Fragment = wp.element.Fragment;
+var useEffect = wp.element.useEffect;
+var select = wp.data.select;
 /**
  * External dependencies
  */
@@ -13175,12 +13179,16 @@ var Fragment = wp.element.Fragment;
 
 
 
-
-var Edit = function Edit(_ref) {
-  var isSelected = _ref.isSelected,
-      attributes = _ref.attributes,
-      setAttributes = _ref.setAttributes;
-  var images = attributes.images,
+function Edit(props) {
+  var attributes = props.attributes,
+      setAttributes = props.setAttributes,
+      clientId = props.clientId,
+      isSelected = props.isSelected;
+  var resOption = attributes.resOption,
+      blockId = attributes.blockId,
+      blockMeta = attributes.blockMeta,
+      images = attributes.images,
+      layouts = attributes.layouts,
       selectedImgIndex = attributes.selectedImgIndex,
       columns = attributes.columns,
       sources = attributes.sources,
@@ -13205,20 +13213,186 @@ var Edit = function Edit(_ref) {
       hOffset = attributes.hOffset,
       vOffset = attributes.vOffset,
       blur = attributes.blur,
-      isMasonry = attributes.isMasonry; // const masonryOptions = {
-  // 	transitionDuration: "0.5s",
-  // };
-  // const imagesLoadedOptions = { background: ".eb-lightbox-image-bg" };
+      isMasonry = attributes.isMasonry; // this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
 
-  var captionStyles = {
-    fontSize: captionFontSize ? "".concat(captionFontSize).concat(captionSizeUnit) : undefined,
-    color: captionColor || undefined,
-    display: "flex",
-    justifyContent: horizontalAlign,
-    alignItems: verticalAlign,
-    textAlign: textAlign,
-    padding: "".concat(paddingTop || 0).concat(paddingUnit, " ").concat(paddingRight || 0).concat(paddingUnit, " ").concat(paddingBottom || 0).concat(paddingUnit, " ").concat(paddingLeft || 0).concat(paddingUnit)
-  };
+  useEffect(function () {
+    var bodyClasses = document.body.className;
+    setAttributes({
+      resOption: select("core/edit-post").__experimentalGetPreviewDeviceType()
+    });
+  }, []); // this useEffect is for creating a unique id for each block's unique className by a random unique number
+
+  useEffect(function () {
+    var BLOCK_PREFIX = "eb-image-gallery";
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["duplicateBlockIdFix"])({
+      BLOCK_PREFIX: BLOCK_PREFIX,
+      blockId: blockId,
+      setAttributes: setAttributes,
+      select: select,
+      clientId: clientId
+    });
+  }, []); // this useEffect is for mimmiking css when responsive options clicked from wordpress's 'preview' button
+
+  useEffect(function () {
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["mimmikCssForPreviewBtnClick"])({
+      domObj: document,
+      select: select
+    });
+  }, []);
+  var blockProps = useBlockProps({
+    className: "eb-guten-block-main-parent-wrapper"
+  });
+  /**
+   * CSS/styling Codes Starts from Here
+  */
+  // Caption Typography 
+
+  var _generateTypographySt = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateTypographyStyles"])({
+    attributes: attributes,
+    prefixConstant: _constants__WEBPACK_IMPORTED_MODULE_3__["CAPTION_TYPOGRAPHY"]
+  }),
+      titleTypographyDesktop = _generateTypographySt.typoStylesDesktop,
+      titleTypographyTab = _generateTypographySt.typoStylesTab,
+      titleTypographyMobile = _generateTypographySt.typoStylesMobile;
+  /* Wrapper Margin */
+
+
+  var _generateDimensionsCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["WRAPPER_MARGIN"],
+    styleFor: "margin",
+    attributes: attributes
+  }),
+      wrapperMarginDesktop = _generateDimensionsCo.dimensionStylesDesktop,
+      wrapperMarginTab = _generateDimensionsCo.dimensionStylesTab,
+      wrapperMarginMobile = _generateDimensionsCo.dimensionStylesMobile;
+  /* Wrapper Padding */
+
+
+  var _generateDimensionsCo2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["WRAPPER_PADDING"],
+    styleFor: "padding",
+    attributes: attributes
+  }),
+      wrapperPaddingDesktop = _generateDimensionsCo2.dimensionStylesDesktop,
+      wrapperPaddingTab = _generateDimensionsCo2.dimensionStylesTab,
+      wrapperPaddingMobile = _generateDimensionsCo2.dimensionStylesMobile;
+  /* Caption Margin */
+
+
+  var _generateDimensionsCo3 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["CAPTION_MARGIN"],
+    styleFor: "margin",
+    attributes: attributes
+  }),
+      captionMarginDesktop = _generateDimensionsCo3.dimensionStylesDesktop,
+      captionMarginTab = _generateDimensionsCo3.dimensionStylesTab,
+      captionMarginMobile = _generateDimensionsCo3.dimensionStylesMobile;
+  /* Caption Padding */
+
+
+  var _generateDimensionsCo4 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["CAPTION_PADDING"],
+    styleFor: "padding",
+    attributes: attributes
+  }),
+      captionPaddingDesktop = _generateDimensionsCo4.dimensionStylesDesktop,
+      captionPaddingTab = _generateDimensionsCo4.dimensionStylesTab,
+      captionPaddingMobile = _generateDimensionsCo4.dimensionStylesMobile; // range controller Separator Line Grid Column
+
+
+  var _generateResponsiveRa = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["GRID_COLUMNS"],
+    property: "",
+    attributes: attributes
+  }),
+      gridColumnsDesktop = _generateResponsiveRa.rangeStylesDesktop,
+      gridColumnsTab = _generateResponsiveRa.rangeStylesTab,
+      gridColumnsMobile = _generateResponsiveRa.rangeStylesMobile; // range controller Separator Image Gap
+
+
+  var _generateResponsiveRa2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["IMAGE_GAP"],
+    property: "grid-gap",
+    attributes: attributes
+  }),
+      imageGapStyleDesktop = _generateResponsiveRa2.rangeStylesDesktop,
+      imageGapStyleTab = _generateResponsiveRa2.rangeStylesTab,
+      imageGapStyleMobile = _generateResponsiveRa2.rangeStylesMobile; //Generate Background
+
+
+  var _generateBackgroundCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBackgroundControlStyles"])({
+    attributes: attributes,
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["WRAPPER_BG"]
+  }),
+      wrapperBackgroundStylesDesktop = _generateBackgroundCo.backgroundStylesDesktop,
+      wrapperHoverBackgroundStylesDesktop = _generateBackgroundCo.hoverBackgroundStylesDesktop,
+      wrapperBackgroundStylesTab = _generateBackgroundCo.backgroundStylesTab,
+      wrapperHoverBackgroundStylesTab = _generateBackgroundCo.hoverBackgroundStylesTab,
+      wrapperBackgroundStylesMobile = _generateBackgroundCo.backgroundStylesMobile,
+      wrapperHoverBackgroundStylesMobile = _generateBackgroundCo.hoverBackgroundStylesMobile,
+      wrapperOverlayStylesDesktop = _generateBackgroundCo.overlayStylesDesktop,
+      wrapperHoverOverlayStylesDesktop = _generateBackgroundCo.hoverOverlayStylesDesktop,
+      wrapperOverlayStylesTab = _generateBackgroundCo.overlayStylesTab,
+      wrapperHoverOverlayStylesTab = _generateBackgroundCo.hoverOverlayStylesTab,
+      wrapperOverlayStylesMobile = _generateBackgroundCo.overlayStylesMobile,
+      wrapperHoverOverlayStylesMobile = _generateBackgroundCo.hoverOverlayStylesMobile,
+      wrapperBgTransitionStyle = _generateBackgroundCo.bgTransitionStyle,
+      wrapperOvlTransitionStyle = _generateBackgroundCo.ovlTransitionStyle; // generateBorderShadowStyles for Wrapper ⬇
+
+
+  var _generateBorderShadow = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBorderShadowStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["WRAPPER_BORDER_SHADOW"],
+    attributes: attributes // noShadow: true,
+    // noBorder: true,
+
+  }),
+      wrapperBDShadowDesktop = _generateBorderShadow.styesDesktop,
+      wrapperBDShadowTab = _generateBorderShadow.styesTab,
+      wrapperBDShadowMobile = _generateBorderShadow.styesMobile,
+      wrapperBDShadowHoverDesktop = _generateBorderShadow.stylesHoverDesktop,
+      wrapperBDShadowHoverTab = _generateBorderShadow.stylesHoverTab,
+      wrapperBDShadowHoverMobile = _generateBorderShadow.stylesHoverMobile,
+      wrapperBDShadowTransitionStyle = _generateBorderShadow.transitionStyle; // generateBorderShadowStyles for Images ⬇
+
+
+  var _generateBorderShadow2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBorderShadowStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["IMAGE_BORDER_SHADOW"],
+    attributes: attributes // noShadow: true,
+    // noBorder: true,
+
+  }),
+      imageBDShadowDesktop = _generateBorderShadow2.styesDesktop,
+      imageBDShadowTab = _generateBorderShadow2.styesTab,
+      imageBDShadowMobile = _generateBorderShadow2.styesMobile,
+      imageBDShadowHoverDesktop = _generateBorderShadow2.stylesHoverDesktop,
+      imageBDShadowHoverTab = _generateBorderShadow2.stylesHoverTab,
+      imageBDShadowHoverMobile = _generateBorderShadow2.stylesHoverMobile,
+      imageBDShadowTransitionStyle = _generateBorderShadow2.transitionStyle; // wrapper styles css in strings ⬇
+
+
+  var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ", auto);\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperOverlayStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t\t").concat(wrapperOvlTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperHoverOverlayStylesDesktop, "\n\t\t}\n\t");
+  var wrapperStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(wrapperMarginTab, "\n\t\t\t").concat(wrapperPaddingTab, "\n\t\t\t").concat(wrapperBDShadowTab, "\n\t\t\t").concat(wrapperBackgroundStylesTab, "\n\t\t\t").concat(wrapperOverlayStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverTab, "\n\t\t\t").concat(wrapperHoverBackgroundStylesTab, "\n\t\t\t").concat(wrapperHoverOverlayStylesTab, "\n\t\t}\n\t");
+  var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t\t").concat(wrapperOverlayStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t\t").concat(wrapperHoverOverlayStylesMobile, "\n\t\t}\n\t"); // all css styles for large screen width (desktop/laptop) in strings ⬇
+
+  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesDesktop) ? wrapperStylesDesktop : " ", "\n\t")); // all css styles for Tab in strings ⬇
+
+  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesTab) ? wrapperStylesTab : " ", "\n\t")); // all css styles for Mobile in strings ⬇
+
+  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesMobile) ? wrapperStylesMobile : " ", "\n\t")); // Set All Style in "blockMeta" Attribute
+
+  useEffect(function () {
+    var styleObject = {
+      desktop: desktopAllStyles,
+      tab: tabAllStyles,
+      mobile: mobileAllStyles
+    };
+
+    if (JSON.stringify(blockMeta) != JSON.stringify(styleObject)) {
+      setAttributes({
+        blockMeta: styleObject
+      });
+    }
+  }, [attributes]);
 
   function onImageSelect(images) {
     var sources = [];
@@ -13232,72 +13406,6 @@ var Edit = function Edit(_ref) {
       images: images,
       sources: sources
     });
-  }
-
-  function renderMesonry(sources) {
-    return /*#__PURE__*/React.createElement(react_masonry_component__WEBPACK_IMPORTED_MODULE_0___default.a, {
-      className: "eb-gallery-grid",
-      elementType: "div",
-      options: masonryOptions,
-      disableImagesLoaded: false,
-      updateOnEachImageLoad: false,
-      imagesLoadedOptions: imagesLoadedOptions
-    }, sources.map(function (source, index) {
-      return /*#__PURE__*/React.createElement("a", {
-        className: "eb-gallery-img-link caption-style-".concat(styleNumber, " ").concat(isMasonry ? "eb-gallery-grid-item" : "", " ").concat(selectedImgIndex === index ? "eb-is-sorting" : ""),
-        style: {
-          width: isMasonry && "".concat(100 / columns, "%"),
-          padding: "".concat(typeof paddingTop !== "undefined" ? paddingTop : 3).concat(paddingUnit, " ").concat(typeof paddingRight !== "undefined" ? paddingRight : 3).concat(paddingUnit, " ").concat(typeof paddingBottom !== "undefined" ? paddingBottom : 3).concat(paddingUnit, " ").concat(typeof paddingLeft !== "undefined" ? paddingLeft : 3).concat(paddingUnit)
-        }
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "eb-gallery-img",
-        src: source.url,
-        style: {
-          border: "".concat(borderWidth || 0, "px ").concat(borderStyle, " ").concat(borderColor || "gray"),
-          filter: "drop-shadow(".concat(hOffset || 0, "px ").concat(vOffset || 0, "px ").concat(blur || 0, "px ").concat(shadowColor || "gray", ")")
-        }
-      }), displayCaption && /*#__PURE__*/React.createElement("span", {
-        className: "eb-gallery-img-caption",
-        style: captionStyles
-      }, source.caption));
-    }));
-  }
-
-  function renderImages(sources) {
-    return /*#__PURE__*/React.createElement("div", {
-      className: "eb-gallery-img-wrapper columns-".concat(columns)
-    }, sources.map(function (source, index) {
-      return /*#__PURE__*/React.createElement("a", {
-        className: "eb-gallery-img-link caption-style-".concat(styleNumber, " ").concat(selectedImgIndex === index ? "eb-is-sorting" : ""),
-        style: {
-          padding: "".concat(paddingTop || 0).concat(paddingUnit, " ").concat(paddingRight || 0).concat(paddingUnit, " ").concat(paddingBottom || 0).concat(paddingUnit, " ").concat(paddingLeft || 0).concat(paddingUnit)
-        }
-      }, /*#__PURE__*/React.createElement("img", {
-        className: "eb-gallery-img",
-        src: source.url,
-        style: {
-          border: "".concat(borderWidth || 0, "px ").concat(borderStyle, " ").concat(borderColor || "gray"),
-          filter: "drop-shadow(".concat(hOffset || 0, "px ").concat(vOffset || 0, "px ").concat(blur || 0, "px ").concat(shadowColor || "gray", ")")
-        }
-      }), displayCaption && /*#__PURE__*/React.createElement("span", {
-        className: "eb-gallery-img-caption",
-        style: captionStyles
-      }, source.caption));
-    }));
-  }
-
-  function renderPlaceholder() {
-    return /*#__PURE__*/React.createElement(MediaPlaceholder, {
-      onSelect: function onSelect(images) {
-        return onImageSelect(images);
-      },
-      allowTypes: ["image"],
-      multiple: true,
-      labels: {
-        title: "Images",
-        instructions: "Drag media files, upload or select files from your library."
-      }
-    });
   } // Get only urls for Lightbox
 
 
@@ -13308,7 +13416,17 @@ var Edit = function Edit(_ref) {
   return [isSelected && images.length > 0 && /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_1__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), /*#__PURE__*/React.createElement(Fragment, null, urls.length === 0 ? renderPlaceholder() : isMasonry ? renderMesonry(sources) : renderImages(sources)), urls.length > 0 && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(Toolbar, null, /*#__PURE__*/React.createElement(MediaUpload, {
+  }), /*#__PURE__*/React.createElement(Fragment, null, urls.length === 0 && /*#__PURE__*/React.createElement(MediaPlaceholder, {
+    onSelect: function onSelect(images) {
+      return onImageSelect(images);
+    },
+    allowTypes: ["image"],
+    multiple: true,
+    labels: {
+      title: "Images",
+      instructions: "Drag media files, upload or select files from your library."
+    }
+  })), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("style", null, "\n\t\t\t\t".concat(desktopAllStyles, "\n\n\t\t\t\t/* mimmikcssStart */\n\n\t\t\t\t").concat(resOption === "Tablet" ? tabAllStyles : " ", "\n\t\t\t\t").concat(resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " ", "\n\n\t\t\t\t/* mimmikcssEnd */\n\n\t\t\t\t@media all and (max-width: 1024px) {\t\n\n\t\t\t\t\t/* tabcssStart */\t\t\t\n\t\t\t\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])(tabAllStyles), "\n\t\t\t\t\t/* tabcssEnd */\t\t\t\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\t@media all and (max-width: 767px) {\n\t\t\t\t\t\n\t\t\t\t\t/* mobcssStart */\t\t\t\n\t\t\t\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])(mobileAllStyles), "\n\t\t\t\t\t/* mobcssEnd */\t\t\t\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t")), urls.length > 0 && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(Toolbar, null, /*#__PURE__*/React.createElement(MediaUpload, {
     value: images.map(function (img) {
       return img.id;
     }),
@@ -13318,8 +13436,8 @@ var Edit = function Edit(_ref) {
     allowedTypes: ["image"],
     multiple: true,
     gallery: true,
-    render: function render(_ref2) {
-      var open = _ref2.open;
+    render: function render(_ref) {
+      var open = _ref.open;
       return /*#__PURE__*/React.createElement(Button, {
         className: "components-toolbar__control",
         label: __("Edit gallery"),
@@ -13327,7 +13445,20 @@ var Edit = function Edit(_ref) {
         onClick: open
       });
     }
-  }))), /*#__PURE__*/React.createElement(MediaUpload, {
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "eb-gallery-img-wrapper ".concat(blockId, " ").concat(layouts, " caption-style-").concat(styleNumber),
+    "data-id": blockId
+  }, sources.map(function (source, index) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "eb-gallery-img-content"
+    }, /*#__PURE__*/React.createElement("img", {
+      className: "eb-gallery-img",
+      src: source.url,
+      "image-index": index
+    }), displayCaption && /*#__PURE__*/React.createElement("span", {
+      className: "eb-gallery-img-caption"
+    }, source.caption));
+  })), /*#__PURE__*/React.createElement(MediaUpload, {
     onSelect: function onSelect(newImage) {
       var updatedImages = [].concat(_toConsumableArray(images), [newImage]);
       var sources = [];
@@ -13344,8 +13475,8 @@ var Edit = function Edit(_ref) {
     },
     type: "image",
     value: newImage,
-    render: function render(_ref3) {
-      var open = _ref3.open;
+    render: function render(_ref2) {
+      var open = _ref2.open;
       return !newImage && /*#__PURE__*/React.createElement(Button, {
         className: "eb-gallery-upload-button",
         label: __("Add Image"),
@@ -13353,10 +13484,9 @@ var Edit = function Edit(_ref) {
         onClick: open
       }, "Add an Image");
     }
-  }))];
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Edit);
+  })))];
+}
+;
 
 /***/ }),
 

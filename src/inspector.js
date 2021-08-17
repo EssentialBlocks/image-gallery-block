@@ -182,7 +182,7 @@ function Inspector(props) {
 											controlName={GRID_COLUMNS}
 											resRequiredProps={resRequiredProps}
 											units={[]}
-											min={0}
+											min={1}
 											max={8}
 											step={1}
 										/>
@@ -191,7 +191,7 @@ function Inspector(props) {
 											baseLabel={__("Image Gap", "image-gallery-block")}
 											controlName={IMAGE_GAP}
 											resRequiredProps={resRequiredProps}
-											units={UNIT_TYPES}
+											units={[]}
 											min={0}
 											max={100}
 											step={1}

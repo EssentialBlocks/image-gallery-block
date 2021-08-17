@@ -65,6 +65,13 @@ function create_block_image_gallery_block_init() {
       true
   );
 
+  // wp_enqueue_script(
+  //     'essential-blocks-imagesloaded',
+  //     "https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.js",
+  //     array("wp-editor"),
+  //     true
+  // );
+
   $lightbox_css = 'src/css/fslightbox.min.css';
     wp_enqueue_style(
       'fslightbox-style',

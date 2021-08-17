@@ -54,7 +54,7 @@ const attributes = {
 	sources: {
 		type: "array",
 		source: "query",
-		selector: ".eb-gallery-img-link",
+		selector: ".eb-gallery-img-content",
 		query: {
 			url: {
 				type: "string",

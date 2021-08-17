@@ -1,8 +1,5 @@
 .eb-gallery-img-wrapper {
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(3, auto);
-  grid-auto-flow: dense;
+  
 
   .eb-gallery-img-content{
     position: relative;
@@ -10,6 +7,11 @@
   }
 
   &.grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(3, auto);
+    grid-auto-flow: dense;
+
     .eb-gallery-img-content{
 
       img {
@@ -17,6 +19,16 @@
         height: 100%;
         object-fit: cover;
       }
+    }
+  }
+
+  &.masonry {
+    display: block;
+    columns: 3;
+    gap: 1em;
+
+    .eb-gallery-img-content{
+      break-inside: avoid;
     }
   }
 }

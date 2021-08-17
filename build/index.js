@@ -12823,7 +12823,7 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
   sources: {
     type: "array",
     source: "query",
-    selector: ".eb-gallery-img-link",
+    selector: ".eb-gallery-img-content",
     query: {
       url: {
         type: "string",
@@ -13307,17 +13307,27 @@ function Edit(props) {
   }),
       gridColumnsDesktop = _generateResponsiveRa.rangeStylesDesktop,
       gridColumnsTab = _generateResponsiveRa.rangeStylesTab,
-      gridColumnsMobile = _generateResponsiveRa.rangeStylesMobile; // range controller Separator Image Gap
+      gridColumnsMobile = _generateResponsiveRa.rangeStylesMobile; // range controller Separator Line Grid Column Margin Bottom 
 
 
   var _generateResponsiveRa2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["IMAGE_GAP"],
+    property: "margin-bottom",
+    attributes: attributes
+  }),
+      gridColumnsMarginBottomDesktop = _generateResponsiveRa2.rangeStylesDesktop,
+      gridColumnsMarginBottomTab = _generateResponsiveRa2.rangeStylesTab,
+      gridColumnsMarginBottomMobile = _generateResponsiveRa2.rangeStylesMobile; // range controller Separator Image Gap
+
+
+  var _generateResponsiveRa3 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["IMAGE_GAP"],
     property: "grid-gap",
     attributes: attributes
   }),
-      imageGapStyleDesktop = _generateResponsiveRa2.rangeStylesDesktop,
-      imageGapStyleTab = _generateResponsiveRa2.rangeStylesTab,
-      imageGapStyleMobile = _generateResponsiveRa2.rangeStylesMobile; //Generate Background
+      imageGapStyleDesktop = _generateResponsiveRa3.rangeStylesDesktop,
+      imageGapStyleTab = _generateResponsiveRa3.rangeStylesTab,
+      imageGapStyleMobile = _generateResponsiveRa3.rangeStylesMobile; //Generate Background
 
 
   var _generateBackgroundCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBackgroundControlStyles"])({
@@ -13370,15 +13380,18 @@ function Edit(props) {
       imageBDShadowTransitionStyle = _generateBorderShadow2.transitionStyle; // wrapper styles css in strings ⬇
 
 
-  var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ", auto);\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperOverlayStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t\t").concat(wrapperOvlTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperHoverOverlayStylesDesktop, "\n\t\t}\n\t");
+  var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperOverlayStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t\t").concat(wrapperOvlTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperHoverOverlayStylesDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleDesktop.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
   var wrapperStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(wrapperMarginTab, "\n\t\t\t").concat(wrapperPaddingTab, "\n\t\t\t").concat(wrapperBDShadowTab, "\n\t\t\t").concat(wrapperBackgroundStylesTab, "\n\t\t\t").concat(wrapperOverlayStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverTab, "\n\t\t\t").concat(wrapperHoverBackgroundStylesTab, "\n\t\t\t").concat(wrapperHoverOverlayStylesTab, "\n\t\t}\n\t");
-  var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t\t").concat(wrapperOverlayStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t\t").concat(wrapperHoverOverlayStylesMobile, "\n\t\t}\n\t"); // all css styles for large screen width (desktop/laptop) in strings ⬇
+  var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t\t").concat(wrapperOverlayStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t\t").concat(wrapperHoverOverlayStylesMobile, "\n\t\t}\n\t");
+  var imageStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverDesktop, "\n\t\t\t").concat(imageBDShadowTransitionStyle, "\n\t\t}\n\t");
+  var imageStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverTab, "\n\t\t}\n\t");
+  var imageStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverMobile, "\n\t\t}\n\t"); // all css styles for large screen width (desktop/laptop) in strings ⬇
 
-  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesDesktop) ? wrapperStylesDesktop : " ", "\n\t")); // all css styles for Tab in strings ⬇
+  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesDesktop) ? wrapperStylesDesktop : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(imageStylesDesktop) ? imageStylesDesktop : " ", "\n\t")); // all css styles for Tab in strings ⬇
 
-  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesTab) ? wrapperStylesTab : " ", "\n\t")); // all css styles for Mobile in strings ⬇
+  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesTab) ? wrapperStylesTab : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(imageStylesTab) ? imageStylesTab : " ", "\n\t")); // all css styles for Mobile in strings ⬇
 
-  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesMobile) ? wrapperStylesMobile : " ", "\n\t")); // Set All Style in "blockMeta" Attribute
+  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesMobile) ? wrapperStylesMobile : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(imageStylesMobile) ? imageStylesMobile : " ", "\n\t")); // Set All Style in "blockMeta" Attribute
 
   useEffect(function () {
     var styleObject = {
@@ -13831,14 +13844,14 @@ function Inspector(props) {
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["GRID_COLUMNS"],
       resRequiredProps: resRequiredProps,
       units: [],
-      min: 0,
+      min: 1,
       max: 8,
       step: 1
     }), /*#__PURE__*/React.createElement(_util_responsive_range_control__WEBPACK_IMPORTED_MODULE_5__["default"], {
       baseLabel: __("Image Gap", "image-gallery-block"),
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["IMAGE_GAP"],
       resRequiredProps: resRequiredProps,
-      units: _constants__WEBPACK_IMPORTED_MODULE_0__["UNIT_TYPES"],
+      units: [],
       min: 0,
       max: 100,
       step: 1
@@ -14007,62 +14020,24 @@ function Inspector(props) {
 __webpack_require__.r(__webpack_exports__);
 var Save = function Save(_ref) {
   var attributes = _ref.attributes;
-  var eb = attributes.eb,
-      columns = attributes.columns,
+  var blockId = attributes.blockId,
+      layouts = attributes.layouts,
       sources = attributes.sources,
       displayCaption = attributes.displayCaption,
-      captionFontSize = attributes.captionFontSize,
-      captionSizeUnit = attributes.captionSizeUnit,
-      captionColor = attributes.captionColor,
-      horizontalAlign = attributes.horizontalAlign,
-      verticalAlign = attributes.verticalAlign,
-      textAlign = attributes.textAlign,
-      styleNumber = attributes.styleNumber,
-      paddingUnit = attributes.paddingUnit,
-      paddingTop = attributes.paddingTop,
-      paddingRight = attributes.paddingRight,
-      paddingBottom = attributes.paddingBottom,
-      paddingLeft = attributes.paddingLeft,
-      borderColor = attributes.borderColor,
-      borderWidth = attributes.borderWidth,
-      borderStyle = attributes.borderStyle,
-      shadowColor = attributes.shadowColor,
-      hOffset = attributes.hOffset,
-      vOffset = attributes.vOffset,
-      blur = attributes.blur,
-      isMasonry = attributes.isMasonry;
+      styleNumber = attributes.styleNumber;
   if (sources.length === 0) return null;
-  var captionStyles = {
-    display: displayCaption ? "flex" : "none",
-    fontSize: captionFontSize ? "".concat(captionFontSize).concat(captionSizeUnit) : undefined,
-    color: captionColor || undefined,
-    justifyContent: horizontalAlign,
-    alignItems: verticalAlign,
-    textAlign: textAlign,
-    padding: "".concat(paddingTop || 0).concat(paddingUnit, " ").concat(paddingRight || 0).concat(paddingUnit, " ").concat(paddingBottom || 0).concat(paddingUnit, " ").concat(paddingLeft || 0).concat(paddingUnit)
-  };
   return /*#__PURE__*/React.createElement("div", {
-    className: isMasonry ? "eb-gallery-grid" : "eb-gallery-img-wrapper columns-".concat(columns)
-  }, sources.map(function (source) {
-    return /*#__PURE__*/React.createElement("a", {
-      className: "eb-gallery-img-link caption-style-".concat(styleNumber, " ").concat(isMasonry ? "eb-gallery-grid-item" : ""),
-      style: {
-        width: isMasonry && "".concat(100 / columns, "%"),
-        padding: "".concat(typeof paddingTop !== "undefined" ? paddingTop : 3).concat(paddingUnit, " ").concat(typeof paddingRight !== "undefined" ? paddingRight : 3).concat(paddingUnit, " ").concat(typeof paddingBottom !== "undefined" ? paddingBottom : 3).concat(paddingUnit, " ").concat(typeof paddingLeft !== "undefined" ? paddingLeft : 3).concat(paddingUnit)
-      },
-      "data-fslightbox": "gallery",
-      "data-caption": source.caption,
-      href: source.url
+    className: "eb-gallery-img-wrapper ".concat(blockId, " ").concat(layouts, " caption-style-").concat(styleNumber),
+    "data-id": blockId
+  }, sources.map(function (source, index) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "eb-gallery-img-content"
     }, /*#__PURE__*/React.createElement("img", {
       className: "eb-gallery-img",
       src: source.url,
-      style: {
-        border: "".concat(borderWidth || 0, "px ").concat(borderStyle, " ").concat(borderColor || "gray"),
-        filter: "drop-shadow(".concat(hOffset || 0, "px ").concat(vOffset || 0, "px ").concat(blur || 0, "px ").concat(shadowColor || "gray", ")")
-      }
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "eb-gallery-img-caption",
-      style: captionStyles
+      "image-index": index
+    }), displayCaption && /*#__PURE__*/React.createElement("span", {
+      className: "eb-gallery-img-caption"
     }, source.caption));
   }));
 };

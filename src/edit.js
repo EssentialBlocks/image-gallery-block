@@ -181,6 +181,17 @@ export default function Edit(props) {
 		attributes,
 	});
 
+	// range controller Separator Line Grid Column Margin Bottom 
+	const {
+		rangeStylesDesktop: gridColumnsMarginBottomDesktop,
+		rangeStylesTab: gridColumnsMarginBottomTab,
+		rangeStylesMobile: gridColumnsMarginBottomMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: IMAGE_GAP,
+		property: "margin-bottom",
+		attributes,
+	});
+
 	// range controller Separator Image Gap
 	const {
 		rangeStylesDesktop: imageGapStyleDesktop,
@@ -249,7 +260,6 @@ export default function Edit(props) {
 	// wrapper styles css in strings ⬇
 	const wrapperStylesDesktop = `
 		.eb-gallery-img-wrapper.${blockId}{
-			grid-template-columns: repeat(${gridColumnsDesktop.replace(/[^0-9]/g, '')}, auto);
 			${imageGapStyleDesktop}
 			${wrapperMarginDesktop}
 			${wrapperPaddingDesktop}
@@ -263,6 +273,15 @@ export default function Edit(props) {
 			${wrapperBDShadowHoverDesktop}
 			${wrapperHoverBackgroundStylesDesktop}
 			${wrapperHoverOverlayStylesDesktop}
+		}
+		.eb-gallery-img-wrapper.${blockId}.grid{
+			grid-template-columns: repeat(${gridColumnsDesktop.replace(/[^0-9]/g, '')}, auto);
+		}
+		.eb-gallery-img-wrapper.${blockId}.masonry{
+			columns: ${gridColumnsDesktop.replace(/[^0-9]/g, '')};
+		}
+		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
+			margin-bottom: calc(${imageGapStyleDesktop.replace(/[^0-9]/g, '')}px - ${gridColumnsDesktop.replace(/[^0-9]/g, '')}px);
 		}
 	`;
 	const wrapperStylesTab = `
@@ -294,19 +313,50 @@ export default function Edit(props) {
 		}
 	`;
 
+	const imageStylesDesktop = `
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img{
+			${imageBDShadowDesktop}
+		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img{
+			${imageBDShadowHoverDesktop}
+			${imageBDShadowTransitionStyle}
+		}
+	`;
+
+	const imageStylesTab = `
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img{
+			${imageBDShadowTab}
+		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img{
+			${imageBDShadowHoverTab}
+		}
+	`;
+
+	const imageStylesMobile = `
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img{
+			${imageBDShadowMobile}
+		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img{
+			${imageBDShadowHoverMobile}
+		}
+	`;
+
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
 		${isCssExists(wrapperStylesDesktop) ? wrapperStylesDesktop : " "}
+		${isCssExists(imageStylesDesktop) ? imageStylesDesktop : " "}
 	`);
 
 	// all css styles for Tab in strings ⬇
 	const tabAllStyles = softMinifyCssStrings(`
 		${isCssExists(wrapperStylesTab) ? wrapperStylesTab : " "}
+		${isCssExists(imageStylesTab) ? imageStylesTab : " "}
 	`);
 
 	// all css styles for Mobile in strings ⬇
 	const mobileAllStyles = softMinifyCssStrings(`
 		${isCssExists(wrapperStylesMobile) ? wrapperStylesMobile : " "}
+		${isCssExists(imageStylesMobile) ? imageStylesMobile : " "}
 	`);
 
 	// Set All Style in "blockMeta" Attribute
@@ -321,9 +371,6 @@ export default function Edit(props) {
 		}
 	}, [attributes]);
 
-
-
-	
 
 	function onImageSelect(images) {
 		let sources = [];
@@ -414,6 +461,7 @@ export default function Edit(props) {
 						className={`eb-gallery-img-wrapper ${blockId} ${layouts} caption-style-${styleNumber}`} 
 						data-id={blockId}
 					>
+						
 						{sources.map((source, index) => (
 							<div className={`eb-gallery-img-content`}>
 								<img className="eb-gallery-img" src={source.url} image-index={index} />

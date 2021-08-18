@@ -74,6 +74,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	captionOnHover: {
+		type: "boolean",
+		default: false,
+	},
 	clickedImage: {
 		type: "number",
 	},
@@ -104,7 +108,7 @@ const attributes = {
 	},
 	captionBGColor: {
 		type: "string",
-		default: "#333333"
+		default: "#e5e8e9"
 	},
 	captionBGHoverColor: {
 		type: "string",
@@ -115,7 +119,7 @@ const attributes = {
 	},
 	verticalAlign: {
 		type: "string",
-		default: "flex-end",
+		default: "bottom",
 	},
 	textAlign: {
 		type: "string",

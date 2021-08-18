@@ -55,10 +55,12 @@ export default function Edit(props) {
 		columns,
 		sources,
 		displayCaption,
+		captionOnHover,
 		newImage,
 		captionFontSize,
 		captionSizeUnit,
 		captionColor,
+		captionBGColor,
 		horizontalAlign,
 		verticalAlign,
 		textAlign,
@@ -118,12 +120,13 @@ export default function Edit(props) {
 
 	// Caption Typography 
 	const {
-		typoStylesDesktop: titleTypographyDesktop,
-		typoStylesTab: titleTypographyTab,
-		typoStylesMobile: titleTypographyMobile,
+		typoStylesDesktop: captionTypographyDesktop,
+		typoStylesTab: captionTypographyTab,
+		typoStylesMobile: captionTypographyMobile,
 	} = generateTypographyStyles({
 		attributes,
 		prefixConstant: CAPTION_TYPOGRAPHY,
+		defaultFontSize: 13,
 	});
 
 	/* Wrapper Margin */
@@ -199,7 +202,7 @@ export default function Edit(props) {
 		rangeStylesMobile: imageGapStyleMobile,
 	} = generateResponsiveRangeStyles({
 		controlName: IMAGE_GAP,
-		property: "grid-gap",
+		property: "gap",
 		attributes,
 	});
 
@@ -256,6 +259,26 @@ export default function Edit(props) {
 		// noBorder: true,
 	});
 
+	//Generate Caption Alignement
+	const verticalAlignStyles = (verticalAlign) => {
+		if (verticalAlign === 'top') {
+			return `
+				top: 0;
+			`;
+		}
+		else if (verticalAlign === 'center') {
+			return `
+				top: 50%;
+				transformY: translate(-50%);
+			`;
+		}
+		else {
+			return `
+				bottom: 0;
+			`;
+		}
+	};
+
 
 	// wrapper styles css in strings ⬇
 	const wrapperStylesDesktop = `
@@ -286,6 +309,7 @@ export default function Edit(props) {
 	`;
 	const wrapperStylesTab = `
 		.eb-gallery-img-wrapper.${blockId}{
+			${imageGapStyleTab}
 			${wrapperMarginTab}
 			${wrapperPaddingTab}
 			${wrapperBDShadowTab}
@@ -297,9 +321,19 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesTab}
 			${wrapperHoverOverlayStylesTab}
 		}
+		.eb-gallery-img-wrapper.${blockId}.grid{
+			grid-template-columns: repeat(${gridColumnsTab.replace(/[^0-9]/g, '')}, auto);
+		}
+		.eb-gallery-img-wrapper.${blockId}.masonry{
+			columns: ${gridColumnsTab.replace(/[^0-9]/g, '')};
+		}
+		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
+			margin-bottom: calc(${imageGapStyleTab.replace(/[^0-9]/g, '')}px - ${gridColumnsTab.replace(/[^0-9]/g, '')}px);
+		}
 	`;
 	const wrapperStylesMobile = `
 		.eb-gallery-img-wrapper.${blockId}{
+			${imageGapStyleMobile}
 			${wrapperMarginMobile}
 			${wrapperPaddingMobile}
 			${wrapperBDShadowMobile}
@@ -311,6 +345,15 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesMobile}
 			${wrapperHoverOverlayStylesMobile}
 		}
+		.eb-gallery-img-wrapper.${blockId}.grid{
+			grid-template-columns: repeat(${gridColumnsMobile.replace(/[^0-9]/g, '')}, auto);
+		}
+		.eb-gallery-img-wrapper.${blockId}.masonry{
+			columns: ${gridColumnsMobile.replace(/[^0-9]/g, '')};
+		}
+		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
+			margin-bottom: calc(${imageGapStyleMobile.replace(/[^0-9]/g, '')}px - ${gridColumnsMobile.replace(/[^0-9]/g, '')}px);
+		}
 	`;
 
 	const imageStylesDesktop = `
@@ -321,6 +364,15 @@ export default function Edit(props) {
 			${imageBDShadowHoverDesktop}
 			${imageBDShadowTransitionStyle}
 		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content .eb-gallery-img-caption {
+			color: ${captionColor};
+			background-color: ${captionBGColor};
+			text-align: ${textAlign};
+			${verticalAlignStyles(verticalAlign)}
+			${captionMarginDesktop}
+			${captionPaddingDesktop}
+			${captionTypographyDesktop}
+		}
 	`;
 
 	const imageStylesTab = `
@@ -330,6 +382,11 @@ export default function Edit(props) {
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img{
 			${imageBDShadowHoverTab}
 		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content .eb-gallery-img-caption {
+			${captionMarginTab}
+			${captionPaddingTab}
+			${captionTypographyTab}
+		}
 	`;
 
 	const imageStylesMobile = `
@@ -338,6 +395,11 @@ export default function Edit(props) {
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img{
 			${imageBDShadowHoverMobile}
+		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content .eb-gallery-img-caption {
+			${captionMarginMobile}
+			${captionPaddingMobile}
+			${captionTypographyMobile}
 		}
 	`;
 
@@ -458,23 +520,25 @@ export default function Edit(props) {
 					</BlockControls>
 
 					<div 
-						className={`eb-gallery-img-wrapper ${blockId} ${layouts} caption-style-${styleNumber}`} 
+						className={`eb-gallery-img-wrapper ${blockId} ${layouts} caption-style-${styleNumber} ${captionOnHover ? 'caption-on-hover' : ''}`} 
 						data-id={blockId}
 					>
 						
 						{sources.map((source, index) => (
-							<div className={`eb-gallery-img-content`}>
+							<a
+								className={`eb-gallery-img-content`}
+							>
 								<img className="eb-gallery-img" src={source.url} image-index={index} />
-								{displayCaption && (
+								{(displayCaption && source.caption && source.caption.length > 0) && (
 									<span className="eb-gallery-img-caption">{source.caption}</span>
 								)}
-							</div>
+							</a>
 						))}
 					</div>
 
 					<MediaUpload
 						onSelect={(newImage) => {
-							let updatedImages = [...images, newImage];
+							let updatedImages = [...images, ...newImage];
 							let sources = [];
 
 							updatedImages.map((image) => {
@@ -486,7 +550,8 @@ export default function Edit(props) {
 
 							setAttributes({ images: updatedImages, sources });
 						}}
-						type="image"
+						allowedTypes={["image"]}
+						multiple
 						value={newImage}
 						render={({ open }) =>
 							!newImage && (
@@ -496,7 +561,7 @@ export default function Edit(props) {
 									icon="plus-alt"
 									onClick={open}
 								>
-									Add an Image
+									Add More Images
 								</Button>
 							)
 						}

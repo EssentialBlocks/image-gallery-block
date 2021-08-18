@@ -61,6 +61,7 @@ function Inspector(props) {
 		layouts,
 		columns,
 		displayCaption,
+		captionOnHover,
 		captionFontSize,
 		captionSizeUnit,
 		captionColorType,
@@ -177,6 +178,14 @@ function Inspector(props) {
 											onChange={() => setAttributes({ displayCaption: !displayCaption })}
 										/>
 
+										{displayCaption && styleNumber === '0' && (
+											<ToggleControl
+											label={__("Display Caption on Hover")}
+											checked={captionOnHover}
+											onChange={() => setAttributes({ captionOnHover: !captionOnHover })}
+										/>
+										)}
+
 										<ResponsiveRangeController
 											baseLabel={__("Columns", "image-gallery-block")}
 											controlName={GRID_COLUMNS}
@@ -214,77 +223,28 @@ function Inspector(props) {
 									</PanelBody>
 									{displayCaption && (
 										<PanelBody title={__("Caption Styles")}>
-											<ButtonGroup className="eb-inspector-btn-group">
-												{NORMAL_HOVER.map((item) => (
-													<Button
-														isLarge
-														isPrimary={captionColorType === item.value}
-														isSecondary={captionColorType !== item.value}
-														onClick={() => setAttributes({ captionColorType: item.value })}
-													>
-														{item.label}
-													</Button>
-												))}
-											</ButtonGroup>
 
-											{captionColorType === "normal" && (
-												<>
-													<PanelColorSettings
-														className={"eb-subpanel no-title"}
-														initialOpen={true}
-														colorSettings={[
-															{
-																value: captionColor,
-																onChange: (newColor) =>
-																	setAttributes({ captionColor: newColor }),
-																label: __("Caption Color"),
-															}
-														]}
-													/>
+											<PanelColorSettings
+												title={__('Color Controls')}
+												className={"eb-subpanel"}
+												initialOpen={true}
+												disableAlpha = {false}
+												colorSettings={[
+													{
+														value: captionColor,
+														onChange: (newColor) =>
+															setAttributes({ captionColor: newColor }),
+														label: __("Text Color"),
+													},
+													{
+														value: captionBGColor,
+														onChange: (newColor) =>
+															setAttributes({ captionBGColor: newColor }),
+														label: __("Background Color"),
 
-													<PanelColorSettings
-														className={"eb-subpanel no-title"}
-														initialOpen={true}
-														colorSettings={[
-															{
-																value: captionBGColor,
-																onChange: (newColor) =>
-																	setAttributes({ captionBGColor: newColor }),
-																label: __("Caption Background Color"),
-															}
-														]}
-													/>
-												</>
-											)}
-
-											{captionColorType === "hover" && (
-												<>
-													<PanelColorSettings
-														className={"eb-subpanel no-title"}
-														initialOpen={true}
-														colorSettings={[
-															{
-																value: captionHoverColor,
-																onChange: (newColor) =>
-																	setAttributes({ captionHoverColor: newColor }),
-																label: __("Caption Hover Color"),
-															}
-														]}
-													/>
-													<PanelColorSettings
-														className={"eb-subpanel no-title"}
-														initialOpen={true}
-														colorSettings={[
-															{
-																value: captionBGHoverColor,
-																onChange: (newColor) =>
-																	setAttributes({ captionBGHoverColor: newColor }),
-																label: __("Background Hover Color"),
-															}
-														]}
-													/>
-												</>
-											)}
+													}
+												]}
+											/>
 
 											<TypographyDropdown
 												baseLabel={__("Typography", "image-gallery-block")}
@@ -317,25 +277,6 @@ function Inspector(props) {
 															onClick={() =>
 																setAttributes({
 																	verticalAlign: item.value,
-																})
-															}
-														>
-															{item.label}
-														</Button>
-													))}
-												</ButtonGroup>
-											</BaseControl>
-					
-											<BaseControl label={__("Horizontal Align")}>
-												<ButtonGroup>
-													{HORIZONTAL_ALIGN.map((item) => (
-														<Button
-															isLarge
-															isPrimary={horizontalAlign === item.value}
-															isSecondary={horizontalAlign !== item.value}
-															onClick={() =>
-																setAttributes({
-																	horizontalAlign: item.value,
 																})
 															}
 														>

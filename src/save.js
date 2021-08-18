@@ -4,6 +4,7 @@ const Save = ({ attributes }) => {
 		layouts,
 		sources,
 		displayCaption,
+		captionOnHover,
 		styleNumber,
 	} = attributes;
 
@@ -11,17 +12,22 @@ const Save = ({ attributes }) => {
 
 	return (
 		<div 
-			className={`eb-gallery-img-wrapper ${blockId} ${layouts} caption-style-${styleNumber}`} 
+			className={`eb-gallery-img-wrapper ${blockId} ${layouts} caption-style-${styleNumber} ${captionOnHover ? 'caption-on-hover' : ''}`} 
 			data-id={blockId}
 		>
 			
 			{sources.map((source, index) => (
-				<div className={`eb-gallery-img-content`}>
+				<a
+					className={`eb-gallery-img-content`}
+					data-fslightbox={`gallery`}
+					data-caption={source.caption}
+					href={source.url}
+				>
 					<img className="eb-gallery-img" src={source.url} image-index={index} />
-					{displayCaption && (
+					{(displayCaption && source.caption && source.caption.length > 0) && (
 						<span className="eb-gallery-img-caption">{source.caption}</span>
 					)}
-				</div>
+				</a>
 			))}
 		</div>
 	);

@@ -14,9 +14,9 @@ export const CAPTION_PADDING = "captionMargin";
 export const CAPTION_TYPOGRAPHY = "captionTypo";
 
 export const VERTICAL_ALIGN = [
-	{ label: __("Top"), value: "flex-start" },
+	{ label: __("Top"), value: "top" },
 	{ label: __("Center"), value: "center" },
-	{ label: __("Bottom"), value: "flex-end" },
+	{ label: __("Bottom"), value: "bottom" },
 ];
 
 export const HORIZONTAL_ALIGN = [
@@ -35,14 +35,12 @@ export const TEXT_ALIGN = [
 export const LAYOUTS = [
 	{ label: __("Grid Layout"), value: "grid" },
 	{ label: __("Masonry Layout"), value: "masonry" },
-	{ label: __("Random"), value: "random" },
 ];
 
 export const STYLES = [
 	{ label: __("None"), value: "0" },
-	{ label: __("Style 1"), value: "1" },
-	{ label: __("Style 2"), value: "2" },
-	{ label: __("Style 3"), value: "3" },
+	{ label: __("Black & White"), value: "1" },
+	{ label: __("Color Overlay"), value: "2" },
 ];
 
 export const BORDER_STYLES = [

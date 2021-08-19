@@ -320,6 +320,7 @@ function Inspector(props) {
 										<BackgroundControl
 											controlName={WRAPPER_BG}
 											resRequiredProps={resRequiredProps}
+											noOverlay
 										/>
 									</PanelBody>
 									<PanelBody title={__("Border & Shadow")} initialOpen={false}>

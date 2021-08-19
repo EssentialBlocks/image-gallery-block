@@ -214,17 +214,11 @@ export default function Edit(props) {
 		hoverBackgroundStylesTab: wrapperHoverBackgroundStylesTab,
 		backgroundStylesMobile: wrapperBackgroundStylesMobile,
 		hoverBackgroundStylesMobile: wrapperHoverBackgroundStylesMobile,
-		overlayStylesDesktop: wrapperOverlayStylesDesktop,
-		hoverOverlayStylesDesktop: wrapperHoverOverlayStylesDesktop,
-		overlayStylesTab: wrapperOverlayStylesTab,
-		hoverOverlayStylesTab: wrapperHoverOverlayStylesTab,
-		overlayStylesMobile: wrapperOverlayStylesMobile,
-		hoverOverlayStylesMobile: wrapperHoverOverlayStylesMobile,
 		bgTransitionStyle: wrapperBgTransitionStyle,
-		ovlTransitionStyle: wrapperOvlTransitionStyle,
 	} = generateBackgroundControlStyles({
 		attributes,
 		controlName: WRAPPER_BG,
+		noOverlay : true
 	});
 
 	// generateBorderShadowStyles for Wrapper ⬇
@@ -288,14 +282,11 @@ export default function Edit(props) {
 			${wrapperPaddingDesktop}
 			${wrapperBDShadowDesktop}
 			${wrapperBackgroundStylesDesktop}
-			${wrapperOverlayStylesDesktop}
 			${wrapperBgTransitionStyle}
-			${wrapperOvlTransitionStyle}
 		}
 		.eb-gallery-img-wrapper.${blockId}:hover {
 			${wrapperBDShadowHoverDesktop}
 			${wrapperHoverBackgroundStylesDesktop}
-			${wrapperHoverOverlayStylesDesktop}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
 			grid-template-columns: repeat(${gridColumnsDesktop.replace(/[^0-9]/g, '')}, auto);
@@ -314,12 +305,10 @@ export default function Edit(props) {
 			${wrapperPaddingTab}
 			${wrapperBDShadowTab}
 			${wrapperBackgroundStylesTab}
-			${wrapperOverlayStylesTab}
 		}
 		.eb-gallery-img-wrapper.${blockId}:hover {
 			${wrapperBDShadowHoverTab}
 			${wrapperHoverBackgroundStylesTab}
-			${wrapperHoverOverlayStylesTab}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
 			grid-template-columns: repeat(${gridColumnsTab.replace(/[^0-9]/g, '')}, auto);
@@ -338,12 +327,10 @@ export default function Edit(props) {
 			${wrapperPaddingMobile}
 			${wrapperBDShadowMobile}
 			${wrapperBackgroundStylesMobile}
-			${wrapperOverlayStylesMobile}
 		}
 		.eb-gallery-img-wrapper.${blockId}:hover {
 			${wrapperBDShadowHoverMobile}
 			${wrapperHoverBackgroundStylesMobile}
-			${wrapperHoverOverlayStylesMobile}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
 			grid-template-columns: repeat(${gridColumnsMobile.replace(/[^0-9]/g, '')}, auto);

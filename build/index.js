@@ -12971,7 +12971,8 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
   // noBorder: true,
 
 })), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateBackgroundAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_BG"], {
-  defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)"
+  defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)",
+  noOverlay: true
 })), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateResponsiveRangeAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["GRID_COLUMNS"], {
   defaultRange: 3
 })), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateResponsiveRangeAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["IMAGE_GAP"], {
@@ -13333,7 +13334,8 @@ function Edit(props) {
 
   var _generateBackgroundCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBackgroundControlStyles"])({
     attributes: attributes,
-    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["WRAPPER_BG"]
+    controlName: _constants__WEBPACK_IMPORTED_MODULE_3__["WRAPPER_BG"],
+    noOverlay: true
   }),
       wrapperBackgroundStylesDesktop = _generateBackgroundCo.backgroundStylesDesktop,
       wrapperHoverBackgroundStylesDesktop = _generateBackgroundCo.hoverBackgroundStylesDesktop,
@@ -13341,14 +13343,7 @@ function Edit(props) {
       wrapperHoverBackgroundStylesTab = _generateBackgroundCo.hoverBackgroundStylesTab,
       wrapperBackgroundStylesMobile = _generateBackgroundCo.backgroundStylesMobile,
       wrapperHoverBackgroundStylesMobile = _generateBackgroundCo.hoverBackgroundStylesMobile,
-      wrapperOverlayStylesDesktop = _generateBackgroundCo.overlayStylesDesktop,
-      wrapperHoverOverlayStylesDesktop = _generateBackgroundCo.hoverOverlayStylesDesktop,
-      wrapperOverlayStylesTab = _generateBackgroundCo.overlayStylesTab,
-      wrapperHoverOverlayStylesTab = _generateBackgroundCo.hoverOverlayStylesTab,
-      wrapperOverlayStylesMobile = _generateBackgroundCo.overlayStylesMobile,
-      wrapperHoverOverlayStylesMobile = _generateBackgroundCo.hoverOverlayStylesMobile,
-      wrapperBgTransitionStyle = _generateBackgroundCo.bgTransitionStyle,
-      wrapperOvlTransitionStyle = _generateBackgroundCo.ovlTransitionStyle; // generateBorderShadowStyles for Wrapper ⬇
+      wrapperBgTransitionStyle = _generateBackgroundCo.bgTransitionStyle; // generateBorderShadowStyles for Wrapper ⬇
 
 
   var _generateBorderShadow = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBorderShadowStyles"])({
@@ -13392,9 +13387,9 @@ function Edit(props) {
   }; // wrapper styles css in strings ⬇
 
 
-  var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperOverlayStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t\t").concat(wrapperOvlTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperHoverOverlayStylesDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleDesktop.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
-  var wrapperStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleTab, "\n\t\t\t").concat(wrapperMarginTab, "\n\t\t\t").concat(wrapperPaddingTab, "\n\t\t\t").concat(wrapperBDShadowTab, "\n\t\t\t").concat(wrapperBackgroundStylesTab, "\n\t\t\t").concat(wrapperOverlayStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverTab, "\n\t\t\t").concat(wrapperHoverBackgroundStylesTab, "\n\t\t\t").concat(wrapperHoverOverlayStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleTab.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
-  var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleMobile, "\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t\t").concat(wrapperOverlayStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t\t").concat(wrapperHoverOverlayStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleMobile.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
+  var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleDesktop.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
+  var wrapperStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleTab, "\n\t\t\t").concat(wrapperMarginTab, "\n\t\t\t").concat(wrapperPaddingTab, "\n\t\t\t").concat(wrapperBDShadowTab, "\n\t\t\t").concat(wrapperBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverTab, "\n\t\t\t").concat(wrapperHoverBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleTab.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
+  var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleMobile, "\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleMobile.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
   var imageStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverDesktop, "\n\t\t\t").concat(imageBDShadowTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\tcolor: ").concat(captionColor, ";\n\t\t\tbackground-color: ").concat(captionBGColor, ";\n\t\t\ttext-align: ").concat(textAlign, ";\n\t\t\t").concat(verticalAlignStyles(verticalAlign), "\n\t\t\t").concat(captionMarginDesktop, "\n\t\t\t").concat(captionPaddingDesktop, "\n\t\t\t").concat(captionTypographyDesktop, "\n\t\t}\n\t");
   var imageStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\t").concat(captionMarginTab, "\n\t\t\t").concat(captionPaddingTab, "\n\t\t\t").concat(captionTypographyTab, "\n\t\t}\n\t");
   var imageStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\t").concat(captionMarginMobile, "\n\t\t\t").concat(captionPaddingMobile, "\n\t\t\t").concat(captionTypographyMobile, "\n\t\t}\n\t"); // all css styles for large screen width (desktop/laptop) in strings ⬇
@@ -13962,7 +13957,8 @@ function Inspector(props) {
       initialOpen: false
     }, /*#__PURE__*/React.createElement(_util_background_control__WEBPACK_IMPORTED_MODULE_6__["default"], {
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_BG"],
-      resRequiredProps: resRequiredProps
+      resRequiredProps: resRequiredProps,
+      noOverlay: true
     })), /*#__PURE__*/React.createElement(PanelBody, {
       title: __("Border & Shadow"),
       initialOpen: false

@@ -222,6 +222,7 @@ const attributes = {
 	// background attributes ⬇
 	...generateBackgroundAttributes(WRAPPER_BG, {
 		defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)",
+		noOverlay : true,
 	}),
 
 	// range controller Separator Line Grid Column

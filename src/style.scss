@@ -39,6 +39,11 @@
 
     .eb-gallery-img-content{
       break-inside: avoid;
+      display: block;
+
+      img {
+        display: block;
+      }
     }
   }
   &.caption-on-hover {

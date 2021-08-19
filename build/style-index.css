@@ -35,6 +35,10 @@
 .eb-gallery-img-wrapper.masonry .eb-gallery-img-content {
   -moz-column-break-inside: avoid;
        break-inside: avoid;
+  display: block;
+}
+.eb-gallery-img-wrapper.masonry .eb-gallery-img-content img {
+  display: block;
 }
 .eb-gallery-img-wrapper.caption-on-hover .eb-gallery-img-content .eb-gallery-img-caption {
   opacity: 0;

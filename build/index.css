@@ -372,6 +372,10 @@
   box-shadow: none;
 }
 
+.eb-panel-control .components-range-control__root {
+  z-index: 1000;
+}
+
 .eb-panel-control .components-range-control__track {
   margin-left: -8px;
   background-color: #b4b4cb;

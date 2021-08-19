@@ -271,7 +271,7 @@ export default function Edit(props) {
 			columns: ${gridColumnsDesktop.replace(/[^0-9]/g, '')};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: calc(${imageGapStyleDesktop.replace(/[^0-9]/g, '')}px - ${gridColumnsDesktop.replace(/[^0-9]/g, '')}px);
+			margin-bottom: ${imageGapStyleDesktop.replace(/[^0-9]/g, '')}px;
 		}
 	`;
 	const wrapperStylesTab = `

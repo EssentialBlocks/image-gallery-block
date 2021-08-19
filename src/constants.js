@@ -19,12 +19,6 @@ export const VERTICAL_ALIGN = [
 	{ label: __("Bottom"), value: "bottom" },
 ];
 
-export const HORIZONTAL_ALIGN = [
-	{ label: __("Left"), value: "flex-start" },
-	{ label: __("Center"), value: "center" },
-	{ label: __("Right"), value: "flex-end" },
-];
-
 export const TEXT_ALIGN = [
 	{ label: __("Left"), value: "left" },
 	{ label: __("Right"), value: "right" },
@@ -41,27 +35,4 @@ export const STYLES = [
 	{ label: __("None"), value: "0" },
 	{ label: __("Black & White"), value: "1" },
 	{ label: __("Color Overlay"), value: "2" },
-];
-
-export const BORDER_STYLES = [
-	{ label: __("None"), value: "none" },
-	{ label: __("Solid"), value: "solid" },
-	{ label: __("Dashed"), value: "dashed" },
-	{ label: __("Dotted"), value: "dotted" },
-	{ label: __("Double"), value: "double" },
-	{ label: __("Groove"), value: "groove" },
-	{ label: __("Inset"), value: "inset" },
-	{ label: __("Outset"), value: "outset" },
-	{ label: __("Ridge"), value: "ridge" },
-];
-
-export const NORMAL_HOVER = [
-	{ label: "Normal", value: "normal" },
-	{ label: "Hover", value: "hover" },
-];
-
-export const UNIT_TYPES = [
-	{ label: "px", value: "px" },
-	{ label: "%", value: "%" },
-	{ label: "em", value: "em" },
 ];

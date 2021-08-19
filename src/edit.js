@@ -3,16 +3,10 @@
  */
 const { __ } = wp.i18n;
 const { MediaUpload, MediaPlaceholder, BlockControls, useBlockProps } = wp.blockEditor;
-const { Toolbar, Button } = wp.components;
+const { ToolbarGroup, ToolbarItem, ToolbarButton, Button } = wp.components;
 const { Fragment } = wp.element;
 const { useEffect } = wp.element;
 const { select } = wp.data; 
-
-
-/**
- * External dependencies
- */
-import Masonry from "react-masonry-component";
 
 /**
   * Internal depencencies
@@ -51,33 +45,15 @@ export default function Edit(props) {
 		blockMeta,
 		images,
 		layouts,
-		selectedImgIndex,
-		columns,
 		sources,
 		displayCaption,
 		captionOnHover,
 		newImage,
-		captionFontSize,
-		captionSizeUnit,
 		captionColor,
 		captionBGColor,
-		horizontalAlign,
 		verticalAlign,
 		textAlign,
 		styleNumber,
-		paddingUnit,
-		paddingTop,
-		paddingRight,
-		paddingBottom,
-		paddingLeft,
-		borderColor,
-		borderWidth,
-		borderStyle,
-		shadowColor,
-		hOffset,
-		vOffset,
-		blur,
-		isMasonry,
 	} = attributes;
 
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
@@ -487,23 +463,27 @@ export default function Edit(props) {
 			{urls.length > 0 && (
 				<Fragment>
 					<BlockControls>
-						<Toolbar>
-							<MediaUpload
-								value={images.map((img) => img.id)}
-								onSelect={(images) => onImageSelect(images)}
-								allowedTypes={["image"]}
-								multiple
-								gallery
-								render={({ open }) => (
-									<Button
-										className="components-toolbar__control"
-										label={__("Edit gallery")}
-										icon="edit"
-										onClick={open}
+						<ToolbarGroup>
+							<ToolbarItem>
+								{ ( ) => (
+									<MediaUpload
+										value={images.map((img) => img.id)}
+										onSelect={(images) => onImageSelect(images)}
+										allowedTypes={["image"]}
+										multiple
+										gallery
+										render={({ open }) => (
+											<ToolbarButton
+												className="components-toolbar__control"
+												label={__("Edit gallery")}
+												icon="edit"
+												onClick={open}
+											/>
+										)}
 									/>
-								)}
-							/>
-						</Toolbar>
+								) }
+							</ToolbarItem>
+						</ToolbarGroup>
 					</BlockControls>
 
 					<div 

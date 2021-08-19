@@ -8,13 +8,10 @@ const {
 	PanelBody,
 	SelectControl,
 	ToggleControl,
-	TextControl,
-	TextareaControl,
 	Button,
 	ButtonGroup,
 	BaseControl,
 	TabPanel,
-	ColorPicker,
 } = wp.components;
 const { useEffect } = wp.element;
 const { select } = wp.data;
@@ -38,12 +35,8 @@ const { select } = wp.data;
 	CAPTION_TYPOGRAPHY,
 	LAYOUTS,
 	STYLES,
-	BORDER_STYLES,
 	TEXT_ALIGN,
-	HORIZONTAL_ALIGN,
 	VERTICAL_ALIGN,
-	NORMAL_HOVER,
-	UNIT_TYPES,
 } from "./constants";
 import {mimmikCssForResBtns, mimmikCssOnPreviewBtnClickWhileBlockSelected} from "../util/helpers";
 import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
@@ -52,41 +45,18 @@ import BorderShadowControl from "../util/border-shadow-control";
 import ResponsiveRangeController from "../util/responsive-range-control";
 import BackgroundControl from "../util/background-control";
 
-import objAttributes from "./attributes";
-
 function Inspector(props) {
 	const { attributes, setAttributes } = props;
 	const {
 		resOption,
 		layouts,
-		columns,
 		displayCaption,
 		captionOnHover,
-		captionFontSize,
-		captionSizeUnit,
-		captionColorType,
 		captionColor,
-		captionHoverColor,
-		captionBGColorType,
 		captionBGColor,
-		captionBGHoverColor,
-		horizontalAlign,
 		verticalAlign,
 		textAlign,
 		styleNumber,
-		paddingUnit,
-		paddingTop,
-		paddingRight,
-		paddingBottom,
-		paddingLeft,
-		borderColor,
-		borderWidth,
-		borderStyle,
-		shadowColor,
-		hOffset,
-		vOffset,
-		blur,
-		isMasonry,
 	} = attributes;
 
 	
@@ -117,6 +87,25 @@ function Inspector(props) {
 			cleanUp();
 		};
 	}, []);
+
+	const changeStyle = (selected) => {
+		setAttributes({styleNumber: selected});
+		switch(selected) {
+			case '0':
+				setAttributes({})
+				break;
+			case '1':
+				setAttributes({})
+				break;
+			case '2':
+				setAttributes({
+					displayCaption: true,
+				})
+				break;
+			default:
+				return false;
+		}
+	}
 
 	const resRequiredProps = {
 		setAttributes,
@@ -169,7 +158,7 @@ function Inspector(props) {
 											label={__("Styles")}
 											value={styleNumber}
 											options={STYLES}
-											onChange={(styleNumber) => setAttributes({ styleNumber })}
+											onChange={(styleNumber) => changeStyle( styleNumber )}
 										/>
 						
 										<ToggleControl

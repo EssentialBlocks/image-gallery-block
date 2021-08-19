@@ -1,12 +1,13 @@
-import { registerBlockType } from "@wordpress/blocks";
-import { __ } from "@wordpress/i18n";
+const { registerBlockType } = wp.blocks;
+const { __ } = wp.i18n;
 
 import "./style.scss";
 
 import Edit from "./edit";
-import save from "./save";
+import Save from "./save";
 import attributes from "./attributes";
 import icon from "./icon";
+import Example from "./example";
 
 registerBlockType("image-gallery-block/image-gallery-block", {
 	title: __("Image Gallery", "image-gallery-block"),
@@ -15,9 +16,9 @@ registerBlockType("image-gallery-block/image-gallery-block", {
 		"image-gallery-block"
 	),
 	keywords: [
-		__("images", "essential-blocks"),
-		__("photos", "essential-blocks"),
-		__("gallery", "essential-blocks"),
+		__("images", "image-gallery-block"),
+		__("photos", "image-gallery-block"),
+		__("gallery", "image-gallery-block"),
 	],
 	category: "widgets",
 	icon,
@@ -26,5 +27,6 @@ registerBlockType("image-gallery-block/image-gallery-block", {
 	},
 	attributes,
 	edit: Edit,
-	save,
+	save: Save,
+	example: Example,
 });

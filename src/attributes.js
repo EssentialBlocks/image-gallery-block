@@ -47,10 +47,6 @@ const attributes = {
 		type: "string",
 		default: "grid"
 	},
-	columns: {
-		type: "number",
-		default: 3,
-	},
 	sources: {
 		type: "array",
 		source: "query",
@@ -78,44 +74,16 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
-	clickedImage: {
-		type: "number",
-	},
 	newImage: {
 		type: "string",
-	},
-	captionFontSize: {
-		type: "number",
-	},
-	captionSizeUnit: {
-		type: "string",
-		default: "px",
-	},
-	captionColorType: {
-		type: "string",
-		default: "normal"
 	},
 	captionColor: {
 		type: "string",
 		default: "#333333"
 	},
-	captionHoverColor: {
-		type: "string",
-	},
-	captionBGColorType: {
-		type: "string",
-		default: "normal"
-	},
 	captionBGColor: {
 		type: "string",
 		default: "#e5e8e9"
-	},
-	captionBGHoverColor: {
-		type: "string",
-	},
-	horizontalAlign: {
-		type: "string",
-		default: "center",
 	},
 	verticalAlign: {
 		type: "string",
@@ -128,48 +96,6 @@ const attributes = {
 	styleNumber: {
 		type: "string",
 		default: "0",
-	},
-	paddingUnit: {
-		type: "string",
-		default: "px",
-	},
-	paddingTop: {
-		type: "number",
-	},
-	paddingRight: {
-		type: "number",
-	},
-	paddingBottom: {
-		type: "number",
-	},
-	paddingLeft: {
-		type: "number",
-	},
-	borderColor: {
-		type: "string",
-	},
-	borderWidth: {
-		type: "number",
-	},
-	borderStyle: {
-		type: "string",
-		default: "none",
-	},
-	hOffset: {
-		type: "number",
-	},
-	vOffset: {
-		type: "number",
-	},
-	blur: {
-		type: "number",
-	},
-	shadowColor: {
-		type: "string",
-	},
-	isMasonry: {
-		type: "boolean",
-		default: false,
 	},
 
 	// typography attributes ⬇

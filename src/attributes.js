@@ -1,4 +1,4 @@
-import * as typoPrefixs from "./typoConstants";
+import * as CAPTION_TYPOGRAPHY from "./typoConstants";
 
 import {
 	WRAPPER_BG,
@@ -101,7 +101,7 @@ const attributes = {
 	},
 
 	// typography attributes ⬇
-	...generateTypographyAttributes(Object.values(typoPrefixs)),
+	...generateTypographyAttributes(Object.values(CAPTION_TYPOGRAPHY)),
 
 	// margin padding attributes ⬇
 	...generateDimensionsAttributes(WRAPPER_MARGIN),

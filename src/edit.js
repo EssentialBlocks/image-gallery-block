@@ -336,6 +336,10 @@ export default function Edit(props) {
 			${captionPaddingDesktop}
 			${captionTypographyDesktop}
 		}
+		.eb-gallery-img-wrapper.${blockId}.caption-style-2 .eb-gallery-img-content:after {
+			color: ${captionColor};
+			background-color: ${captionBGColor};
+		}
 	`;
 
 	const imageStylesTab = `

@@ -79,11 +79,11 @@ const attributes = {
 	},
 	captionColor: {
 		type: "string",
-		default: "#333333"
+		default: "#ffffff"
 	},
 	captionBGColor: {
 		type: "string",
-		default: "#e5e8e9"
+		default: "rgba(195 195 195 / 0.7)"
 	},
 	verticalAlign: {
 		type: "string",

@@ -249,11 +249,11 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
   },
   captionColor: {
     type: "string",
-    "default": "#333333"
+    "default": "#ffffff"
   },
   captionBGColor: {
     type: "string",
-    "default": "#e5e8e9"
+    "default": "rgba(195 195 195 / 0.7)"
   },
   verticalAlign: {
     type: "string",
@@ -333,8 +333,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_ALIGN", function() { return TEXT_ALIGN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAYOUTS", function() { return LAYOUTS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STYLES", function() { return STYLES; });
-var __ = wp.i18n.__;
-var Dashicon = wp.components.Dashicon; // the consts defined here should be unique from one another
+var __ = wp.i18n.__; // the consts defined here should be unique from one another
 
 var WRAPPER_BG = "wrprBg";
 var WRAPPER_MARGIN = "wrpMargin";
@@ -635,7 +634,7 @@ function Edit(props) {
   var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: ").concat(imageGapStyleDesktop.replace(/[^0-9]/g, ''), "px;\n\t\t}\n\t");
   var wrapperStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleTab, "\n\t\t\t").concat(wrapperMarginTab, "\n\t\t\t").concat(wrapperPaddingTab, "\n\t\t\t").concat(wrapperBDShadowTab, "\n\t\t\t").concat(wrapperBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverTab, "\n\t\t\t").concat(wrapperHoverBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleTab.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
   var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleMobile, "\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleMobile.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
-  var imageStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverDesktop, "\n\t\t\t").concat(imageBDShadowTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\tcolor: ").concat(captionColor, ";\n\t\t\tbackground-color: ").concat(captionBGColor, ";\n\t\t\ttext-align: ").concat(textAlign, ";\n\t\t\t").concat(verticalAlignStyles(verticalAlign), "\n\t\t\t").concat(captionMarginDesktop, "\n\t\t\t").concat(captionPaddingDesktop, "\n\t\t\t").concat(captionTypographyDesktop, "\n\t\t}\n\t");
+  var imageStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverDesktop, "\n\t\t\t").concat(imageBDShadowTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\tcolor: ").concat(captionColor, ";\n\t\t\tbackground-color: ").concat(captionBGColor, ";\n\t\t\ttext-align: ").concat(textAlign, ";\n\t\t\t").concat(verticalAlignStyles(verticalAlign), "\n\t\t\t").concat(captionMarginDesktop, "\n\t\t\t").concat(captionPaddingDesktop, "\n\t\t\t").concat(captionTypographyDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".caption-style-2 .eb-gallery-img-content:after {\n\t\t\tcolor: ").concat(captionColor, ";\n\t\t\tbackground-color: ").concat(captionBGColor, ";\n\t\t}\n\t");
   var imageStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\t").concat(captionMarginTab, "\n\t\t\t").concat(captionPaddingTab, "\n\t\t\t").concat(captionTypographyTab, "\n\t\t}\n\t");
   var imageStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\t").concat(captionMarginMobile, "\n\t\t\t").concat(captionPaddingMobile, "\n\t\t\t").concat(captionTypographyMobile, "\n\t\t}\n\t"); // all css styles for large screen width (desktop/laptop) in strings ⬇
 
@@ -978,6 +977,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util_border_shadow_control__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/border-shadow-control */ "./util/border-shadow-control/index.js");
 /* harmony import */ var _util_responsive_range_control__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/responsive-range-control */ "./util/responsive-range-control/index.js");
 /* harmony import */ var _util_background_control__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/background-control */ "./util/background-control/index.js");
+/* harmony import */ var _util_color_control__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/color-control */ "./util/color-control/index.js");
 /**
  * WordPress dependencies
  */
@@ -1002,6 +1002,7 @@ var select = wp.data.select;
 /**
  * Internal depencencies
  */
+
 
 
 
@@ -1178,20 +1179,20 @@ function Inspector(props) {
           });
         },
         label: __("Text Color")
-      }, {
-        value: captionBGColor,
-        onChange: function onChange(newColor) {
-          return setAttributes({
-            captionBGColor: newColor
-          });
-        },
-        label: __("Background Color")
       }]
+    }), /*#__PURE__*/React.createElement(_util_color_control__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      label: __("Background Color"),
+      color: captionBGColor,
+      onChange: function onChange(backgroundColor) {
+        return setAttributes({
+          captionBGColor: backgroundColor
+        });
+      }
     }), /*#__PURE__*/React.createElement(_util_typography_control_v2__WEBPACK_IMPORTED_MODULE_3__["default"], {
       baseLabel: __("Typography", "image-gallery-block"),
       typographyPrefixConstant: _constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_TYPOGRAPHY"],
       resRequiredProps: resRequiredProps
-    }), /*#__PURE__*/React.createElement(BaseControl, {
+    }), displayCaption && styleNumber != '2' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(BaseControl, {
       label: __("Text Align")
     }, /*#__PURE__*/React.createElement(ButtonGroup, null, _constants__WEBPACK_IMPORTED_MODULE_0__["TEXT_ALIGN"].map(function (item) {
       return /*#__PURE__*/React.createElement(Button, {
@@ -1225,7 +1226,7 @@ function Inspector(props) {
       resRequiredProps: resRequiredProps,
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_PADDING"],
       baseLabel: "Padding"
-    }))), tab.name === "advance" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    })))), tab.name === "advance" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_2__["default"], {
       resRequiredProps: resRequiredProps,
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_MARGIN"],
       baseLabel: "Margin"

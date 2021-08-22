@@ -37,7 +37,12 @@ function create_block_image_gallery_block_init() {
 	wp_register_script(
 		'image-gallery-block-image-gallery-block-editor',
 		plugins_url( $index_js, __FILE__ ),
-		$script_asset['dependencies'],
+		array(
+			'wp-blocks',
+			'wp-i18n',
+			'wp-element',
+			'wp-block-editor',
+		),
 		$script_asset['version']
 	);
 

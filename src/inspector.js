@@ -44,6 +44,7 @@ import TypographyDropdown from "../util/typography-control-v2";
 import BorderShadowControl from "../util/border-shadow-control";
 import ResponsiveRangeController from "../util/responsive-range-control";
 import BackgroundControl from "../util/background-control";
+import ColorControl from "../util/color-control";
 
 function Inspector(props) {
 	const { attributes, setAttributes } = props;
@@ -224,15 +225,16 @@ function Inspector(props) {
 														onChange: (newColor) =>
 															setAttributes({ captionColor: newColor }),
 														label: __("Text Color"),
-													},
-													{
-														value: captionBGColor,
-														onChange: (newColor) =>
-															setAttributes({ captionBGColor: newColor }),
-														label: __("Background Color"),
-
 													}
 												]}
+											/>
+
+											<ColorControl
+                								label={__("Background Color")}
+												color={ captionBGColor }
+												onChange={(backgroundColor) =>
+													setAttributes({ captionBGColor: backgroundColor })
+												}
 											/>
 
 											<TypographyDropdown
@@ -240,52 +242,55 @@ function Inspector(props) {
 												typographyPrefixConstant={CAPTION_TYPOGRAPHY}
 												resRequiredProps={resRequiredProps}
 											/>
-					
-											<BaseControl label={__("Text Align")}>
-												<ButtonGroup>
-													{TEXT_ALIGN.map((item) => (
-														<Button
-															isLarge
-															isPrimary={textAlign === item.value}
-															isSecondary={textAlign !== item.value}
-															onClick={() => setAttributes({ textAlign: item.value })}
-														>
-															{item.label}
-														</Button>
-													))}
-												</ButtonGroup>
-											</BaseControl>
-					
-											<BaseControl label={__("Vertical Align")}>
-												<ButtonGroup>
-													{VERTICAL_ALIGN.map((item) => (
-														<Button
-															isLarge
-															isPrimary={verticalAlign === item.value}
-															isSecondary={verticalAlign !== item.value}
-															onClick={() =>
-																setAttributes({
-																	verticalAlign: item.value,
-																})
-															}
-														>
-															{item.label}
-														</Button>
-													))}
-												</ButtonGroup>
-											</BaseControl>
 
-											<ResponsiveDimensionsControl
-												resRequiredProps={resRequiredProps}
-												controlName={CAPTION_MARGIN}
-												baseLabel="Margin"
-											/>
+											{displayCaption && styleNumber != '2' && (
+												<>
+													<BaseControl label={__("Text Align")}>
+														<ButtonGroup>
+															{TEXT_ALIGN.map((item) => (
+																<Button
+																	isLarge
+																	isPrimary={textAlign === item.value}
+																	isSecondary={textAlign !== item.value}
+																	onClick={() => setAttributes({ textAlign: item.value })}
+																>
+																	{item.label}
+																</Button>
+															))}
+														</ButtonGroup>
+													</BaseControl>
+							
+													<BaseControl label={__("Vertical Align")}>
+														<ButtonGroup>
+															{VERTICAL_ALIGN.map((item) => (
+																<Button
+																	isLarge
+																	isPrimary={verticalAlign === item.value}
+																	isSecondary={verticalAlign !== item.value}
+																	onClick={() =>
+																		setAttributes({
+																			verticalAlign: item.value,
+																		})
+																	}
+																>
+																	{item.label}
+																</Button>
+															))}
+														</ButtonGroup>
+													</BaseControl>
+													<ResponsiveDimensionsControl
+														resRequiredProps={resRequiredProps}
+														controlName={CAPTION_MARGIN}
+														baseLabel="Margin"
+													/>
 
-											<ResponsiveDimensionsControl
-												resRequiredProps={resRequiredProps}
-												controlName={CAPTION_PADDING}
-												baseLabel="Padding"
-											/>
+													<ResponsiveDimensionsControl
+														resRequiredProps={resRequiredProps}
+														controlName={CAPTION_PADDING}
+														baseLabel="Padding"
+													/>
+												</>
+											)}
 										</PanelBody>
 									)}
 								</>

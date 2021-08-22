@@ -1,5 +1,4 @@
 const { __ } = wp.i18n;
-const {Dashicon} = wp.components;
 
 // the consts defined here should be unique from one another
 export const WRAPPER_BG = "wrprBg";

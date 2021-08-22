@@ -10,7 +10,6 @@ export const IMAGE_GAP = "imageGap";
 export const IMAGE_BORDER_SHADOW = "imgBorderShadow";
 export const CAPTION_MARGIN = "captionMargin";
 export const CAPTION_PADDING = "captionMargin";
-export const CAPTION_TYPOGRAPHY = "captionTypo";
 
 export const VERTICAL_ALIGN = [
 	{ label: __("Top"), value: "top" },

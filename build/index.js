@@ -179,13 +179,15 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/constants.js");
-/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
+/* harmony import */ var _typoConstants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./typoConstants */ "./src/typoConstants.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/constants.js");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -267,19 +269,19 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
     type: "string",
     "default": "0"
   }
-}, Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateTypographyAttributes"])(Object.values(_constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_TYPOGRAPHY"]))), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_MARGIN"])), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_PADDING"])), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_MARGIN"], {
+}, Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateTypographyAttributes"])(Object.values(_typoConstants__WEBPACK_IMPORTED_MODULE_0__))), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["WRAPPER_MARGIN"])), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["WRAPPER_PADDING"])), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["CAPTION_MARGIN"], {
   top: 0,
   bottom: 10,
   right: 0,
   left: 0,
   isLinked: false
-})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_PADDING"], {
+})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateDimensionsAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["CAPTION_PADDING"], {
   top: 5,
   bottom: 5,
   right: 10,
   left: 10,
   isLinked: false
-})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateBorderShadowAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_BORDER_SHADOW"], {
+})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateBorderShadowAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["WRAPPER_BORDER_SHADOW"], {
   bdrDefaults: {
     top: 0,
     bottom: 0,
@@ -288,7 +290,7 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
   } // noShadow: true,
   // noBorder: true,
 
-})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateBorderShadowAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["IMAGE_BORDER_SHADOW"], {
+})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateBorderShadowAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["IMAGE_BORDER_SHADOW"], {
   bdrDefaults: {
     top: 0,
     bottom: 0,
@@ -297,12 +299,12 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
   } // noShadow: true,
   // noBorder: true,
 
-})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateBackgroundAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_BG"], {
+})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateBackgroundAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["WRAPPER_BG"], {
   defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)",
   noOverlay: true
-})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateResponsiveRangeAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["GRID_COLUMNS"], {
+})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateResponsiveRangeAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["GRID_COLUMNS"], {
   defaultRange: 3
-})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["generateResponsiveRangeAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_0__["IMAGE_GAP"], {
+})), Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["generateResponsiveRangeAttributes"])(_constants__WEBPACK_IMPORTED_MODULE_1__["IMAGE_GAP"], {
   defaultRange: 10
 }));
 
@@ -314,7 +316,7 @@ var attributes = _objectSpread(_objectSpread(_objectSpread(_objectSpread(_object
 /*!**************************!*\
   !*** ./src/constants.js ***!
   \**************************/
-/*! exports provided: WRAPPER_BG, WRAPPER_MARGIN, WRAPPER_PADDING, WRAPPER_BORDER_SHADOW, GRID_COLUMNS, IMAGE_GAP, IMAGE_BORDER_SHADOW, CAPTION_MARGIN, CAPTION_PADDING, CAPTION_TYPOGRAPHY, VERTICAL_ALIGN, TEXT_ALIGN, LAYOUTS, STYLES */
+/*! exports provided: WRAPPER_BG, WRAPPER_MARGIN, WRAPPER_PADDING, WRAPPER_BORDER_SHADOW, GRID_COLUMNS, IMAGE_GAP, IMAGE_BORDER_SHADOW, CAPTION_MARGIN, CAPTION_PADDING, VERTICAL_ALIGN, TEXT_ALIGN, LAYOUTS, STYLES */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -328,7 +330,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IMAGE_BORDER_SHADOW", function() { return IMAGE_BORDER_SHADOW; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CAPTION_MARGIN", function() { return CAPTION_MARGIN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CAPTION_PADDING", function() { return CAPTION_PADDING; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CAPTION_TYPOGRAPHY", function() { return CAPTION_TYPOGRAPHY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VERTICAL_ALIGN", function() { return VERTICAL_ALIGN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT_ALIGN", function() { return TEXT_ALIGN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LAYOUTS", function() { return LAYOUTS; });
@@ -344,7 +345,6 @@ var IMAGE_GAP = "imageGap";
 var IMAGE_BORDER_SHADOW = "imgBorderShadow";
 var CAPTION_MARGIN = "captionMargin";
 var CAPTION_PADDING = "captionMargin";
-var CAPTION_TYPOGRAPHY = "captionTypo";
 var VERTICAL_ALIGN = [{
   label: __("Top"),
   value: "top"
@@ -402,7 +402,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./src/constants.js");
-/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
+/* harmony import */ var _typoConstants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./typoConstants */ "./src/typoConstants.js");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -433,8 +434,9 @@ var Fragment = wp.element.Fragment;
 var useEffect = wp.element.useEffect;
 var select = wp.data.select;
 /**
-  * Internal depencencies
-*/
+ * Internal depencencies
+ */
+
 
 
 
@@ -469,7 +471,7 @@ function Edit(props) {
 
   useEffect(function () {
     var BLOCK_PREFIX = "eb-image-gallery";
-    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["duplicateBlockIdFix"])({
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["duplicateBlockIdFix"])({
       BLOCK_PREFIX: BLOCK_PREFIX,
       blockId: blockId,
       setAttributes: setAttributes,
@@ -479,7 +481,7 @@ function Edit(props) {
   }, []); // this useEffect is for mimmiking css when responsive options clicked from wordpress's 'preview' button
 
   useEffect(function () {
-    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["mimmikCssForPreviewBtnClick"])({
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["mimmikCssForPreviewBtnClick"])({
       domObj: document,
       select: select
     });
@@ -489,12 +491,12 @@ function Edit(props) {
   });
   /**
    * CSS/styling Codes Starts from Here
-  */
-  // Caption Typography 
+   */
+  // Caption Typography
 
-  var _generateTypographySt = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateTypographyStyles"])({
+  var _generateTypographySt = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateTypographyStyles"])({
     attributes: attributes,
-    prefixConstant: _constants__WEBPACK_IMPORTED_MODULE_2__["CAPTION_TYPOGRAPHY"],
+    prefixConstant: _typoConstants__WEBPACK_IMPORTED_MODULE_3__["CAPTION_TYPOGRAPHY"],
     defaultFontSize: 13
   }),
       captionTypographyDesktop = _generateTypographySt.typoStylesDesktop,
@@ -503,7 +505,7 @@ function Edit(props) {
   /* Wrapper Margin */
 
 
-  var _generateDimensionsCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateDimensionsControlStyles"])({
+  var _generateDimensionsCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["WRAPPER_MARGIN"],
     styleFor: "margin",
     attributes: attributes
@@ -514,7 +516,7 @@ function Edit(props) {
   /* Wrapper Padding */
 
 
-  var _generateDimensionsCo2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateDimensionsControlStyles"])({
+  var _generateDimensionsCo2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["WRAPPER_PADDING"],
     styleFor: "padding",
     attributes: attributes
@@ -525,7 +527,7 @@ function Edit(props) {
   /* Caption Margin */
 
 
-  var _generateDimensionsCo3 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateDimensionsControlStyles"])({
+  var _generateDimensionsCo3 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["CAPTION_MARGIN"],
     styleFor: "margin",
     attributes: attributes
@@ -536,7 +538,7 @@ function Edit(props) {
   /* Caption Padding */
 
 
-  var _generateDimensionsCo4 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateDimensionsControlStyles"])({
+  var _generateDimensionsCo4 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateDimensionsControlStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["CAPTION_PADDING"],
     styleFor: "padding",
     attributes: attributes
@@ -546,17 +548,17 @@ function Edit(props) {
       captionPaddingMobile = _generateDimensionsCo4.dimensionStylesMobile; // range controller Separator Line Grid Column
 
 
-  var _generateResponsiveRa = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateResponsiveRangeStyles"])({
+  var _generateResponsiveRa = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["GRID_COLUMNS"],
     property: "",
     attributes: attributes
   }),
       gridColumnsDesktop = _generateResponsiveRa.rangeStylesDesktop,
       gridColumnsTab = _generateResponsiveRa.rangeStylesTab,
-      gridColumnsMobile = _generateResponsiveRa.rangeStylesMobile; // range controller Separator Line Grid Column Margin Bottom 
+      gridColumnsMobile = _generateResponsiveRa.rangeStylesMobile; // range controller Separator Line Grid Column Margin Bottom
 
 
-  var _generateResponsiveRa2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateResponsiveRangeStyles"])({
+  var _generateResponsiveRa2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["IMAGE_GAP"],
     property: "margin-bottom",
     attributes: attributes
@@ -566,7 +568,7 @@ function Edit(props) {
       gridColumnsMarginBottomMobile = _generateResponsiveRa2.rangeStylesMobile; // range controller Separator Image Gap
 
 
-  var _generateResponsiveRa3 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateResponsiveRangeStyles"])({
+  var _generateResponsiveRa3 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateResponsiveRangeStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["IMAGE_GAP"],
     property: "gap",
     attributes: attributes
@@ -576,7 +578,7 @@ function Edit(props) {
       imageGapStyleMobile = _generateResponsiveRa3.rangeStylesMobile; //Generate Background
 
 
-  var _generateBackgroundCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateBackgroundControlStyles"])({
+  var _generateBackgroundCo = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBackgroundControlStyles"])({
     attributes: attributes,
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["WRAPPER_BG"],
     noOverlay: true
@@ -590,7 +592,7 @@ function Edit(props) {
       wrapperBgTransitionStyle = _generateBackgroundCo.bgTransitionStyle; // generateBorderShadowStyles for Wrapper ⬇
 
 
-  var _generateBorderShadow = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateBorderShadowStyles"])({
+  var _generateBorderShadow = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBorderShadowStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["WRAPPER_BORDER_SHADOW"],
     attributes: attributes // noShadow: true,
     // noBorder: true,
@@ -605,7 +607,7 @@ function Edit(props) {
       wrapperBDShadowTransitionStyle = _generateBorderShadow.transitionStyle; // generateBorderShadowStyles for Images ⬇
 
 
-  var _generateBorderShadow2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["generateBorderShadowStyles"])({
+  var _generateBorderShadow2 = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["generateBorderShadowStyles"])({
     controlName: _constants__WEBPACK_IMPORTED_MODULE_2__["IMAGE_BORDER_SHADOW"],
     attributes: attributes // noShadow: true,
     // noBorder: true,
@@ -621,9 +623,9 @@ function Edit(props) {
 
 
   var verticalAlignStyles = function verticalAlignStyles(verticalAlign) {
-    if (verticalAlign === 'top') {
+    if (verticalAlign === "top") {
       return "\n\t\t\t\ttop: 0;\n\t\t\t";
-    } else if (verticalAlign === 'center') {
+    } else if (verticalAlign === "center") {
       return "\n\t\t\t\ttop: 50%;\n\t\t\t\ttransformY: translate(-50%);\n\t\t\t";
     } else {
       return "\n\t\t\t\tbottom: 0;\n\t\t\t";
@@ -631,18 +633,18 @@ function Edit(props) {
   }; // wrapper styles css in strings ⬇
 
 
-  var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: ").concat(imageGapStyleDesktop.replace(/[^0-9]/g, ''), "px;\n\t\t}\n\t");
-  var wrapperStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleTab, "\n\t\t\t").concat(wrapperMarginTab, "\n\t\t\t").concat(wrapperPaddingTab, "\n\t\t\t").concat(wrapperBDShadowTab, "\n\t\t\t").concat(wrapperBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverTab, "\n\t\t\t").concat(wrapperHoverBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleTab.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsTab.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
-  var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleMobile, "\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleMobile.replace(/[^0-9]/g, ''), "px - ").concat(gridColumnsMobile.replace(/[^0-9]/g, ''), "px);\n\t\t}\n\t");
+  var wrapperStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleDesktop, "\n\t\t\t").concat(wrapperMarginDesktop, "\n\t\t\t").concat(wrapperPaddingDesktop, "\n\t\t\t").concat(wrapperBDShadowDesktop, "\n\t\t\t").concat(wrapperBackgroundStylesDesktop, "\n\t\t\t").concat(wrapperBgTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverDesktop, "\n\t\t\t").concat(wrapperHoverBackgroundStylesDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsDesktop.replace(/[^0-9]/g, ""), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsDesktop.replace(/[^0-9]/g, ""), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: ").concat(imageGapStyleDesktop.replace(/[^0-9]/g, ""), "px;\n\t\t}\n\t");
+  var wrapperStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleTab, "\n\t\t\t").concat(wrapperMarginTab, "\n\t\t\t").concat(wrapperPaddingTab, "\n\t\t\t").concat(wrapperBDShadowTab, "\n\t\t\t").concat(wrapperBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverTab, "\n\t\t\t").concat(wrapperHoverBackgroundStylesTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsTab.replace(/[^0-9]/g, ""), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsTab.replace(/[^0-9]/g, ""), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleTab.replace(/[^0-9]/g, ""), "px - ").concat(gridColumnsTab.replace(/[^0-9]/g, ""), "px);\n\t\t}\n\t");
+  var wrapperStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, "{\n\t\t\t").concat(imageGapStyleMobile, "\n\t\t\t").concat(wrapperMarginMobile, "\n\t\t\t").concat(wrapperPaddingMobile, "\n\t\t\t").concat(wrapperBDShadowMobile, "\n\t\t\t").concat(wrapperBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ":hover {\n\t\t\t").concat(wrapperBDShadowHoverMobile, "\n\t\t\t").concat(wrapperHoverBackgroundStylesMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".grid{\n\t\t\tgrid-template-columns: repeat(").concat(gridColumnsMobile.replace(/[^0-9]/g, ""), ", auto);\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry{\n\t\t\tcolumns: ").concat(gridColumnsMobile.replace(/[^0-9]/g, ""), ";\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".masonry .eb-gallery-img-content{\n\t\t\tmargin-bottom: calc(").concat(imageGapStyleMobile.replace(/[^0-9]/g, ""), "px - ").concat(gridColumnsMobile.replace(/[^0-9]/g, ""), "px);\n\t\t}\n\t");
   var imageStylesDesktop = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverDesktop, "\n\t\t\t").concat(imageBDShadowTransitionStyle, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\tcolor: ").concat(captionColor, ";\n\t\t\tbackground-color: ").concat(captionBGColor, ";\n\t\t\ttext-align: ").concat(textAlign, ";\n\t\t\t").concat(verticalAlignStyles(verticalAlign), "\n\t\t\t").concat(captionMarginDesktop, "\n\t\t\t").concat(captionPaddingDesktop, "\n\t\t\t").concat(captionTypographyDesktop, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, ".caption-style-2 .eb-gallery-img-content:after {\n\t\t\tcolor: ").concat(captionColor, ";\n\t\t\tbackground-color: ").concat(captionBGColor, ";\n\t\t}\n\t");
   var imageStylesTab = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverTab, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\t").concat(captionMarginTab, "\n\t\t\t").concat(captionPaddingTab, "\n\t\t\t").concat(captionTypographyTab, "\n\t\t}\n\t");
   var imageStylesMobile = "\n\t\t.eb-gallery-img-wrapper.".concat(blockId, " .eb-gallery-img-content img{\n\t\t\t").concat(imageBDShadowMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content:hover img{\n\t\t\t").concat(imageBDShadowHoverMobile, "\n\t\t}\n\t\t.eb-gallery-img-wrapper.").concat(blockId, " .eb-gallery-img-content .eb-gallery-img-caption {\n\t\t\t").concat(captionMarginMobile, "\n\t\t\t").concat(captionPaddingMobile, "\n\t\t\t").concat(captionTypographyMobile, "\n\t\t}\n\t"); // all css styles for large screen width (desktop/laptop) in strings ⬇
 
-  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(wrapperStylesDesktop) ? wrapperStylesDesktop : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(imageStylesDesktop) ? imageStylesDesktop : " ", "\n\t")); // all css styles for Tab in strings ⬇
+  var desktopAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesDesktop) ? wrapperStylesDesktop : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(imageStylesDesktop) ? imageStylesDesktop : " ", "\n\t")); // all css styles for Tab in strings ⬇
 
-  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(wrapperStylesTab) ? wrapperStylesTab : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(imageStylesTab) ? imageStylesTab : " ", "\n\t")); // all css styles for Mobile in strings ⬇
+  var tabAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesTab) ? wrapperStylesTab : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(imageStylesTab) ? imageStylesTab : " ", "\n\t")); // all css styles for Mobile in strings ⬇
 
-  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(wrapperStylesMobile) ? wrapperStylesMobile : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["isCssExists"])(imageStylesMobile) ? imageStylesMobile : " ", "\n\t")); // Set All Style in "blockMeta" Attribute
+  var mobileAllStyles = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])("\n\t\t".concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(wrapperStylesMobile) ? wrapperStylesMobile : " ", "\n\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["isCssExists"])(imageStylesMobile) ? imageStylesMobile : " ", "\n\t")); // Set All Style in "blockMeta" Attribute
 
   useEffect(function () {
     var styleObject = {
@@ -690,7 +692,7 @@ function Edit(props) {
       title: "Images",
       instructions: "Drag media files, upload or select files from your library."
     }
-  })), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("style", null, "\n\t\t\t\t".concat(desktopAllStyles, "\n\n\t\t\t\t/* mimmikcssStart */\n\n\t\t\t\t").concat(resOption === "Tablet" ? tabAllStyles : " ", "\n\t\t\t\t").concat(resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " ", "\n\n\t\t\t\t/* mimmikcssEnd */\n\n\t\t\t\t@media all and (max-width: 1024px) {\t\n\n\t\t\t\t\t/* tabcssStart */\t\t\t\n\t\t\t\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(tabAllStyles), "\n\t\t\t\t\t/* tabcssEnd */\t\t\t\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\t@media all and (max-width: 767px) {\n\t\t\t\t\t\n\t\t\t\t\t/* mobcssStart */\t\t\t\n\t\t\t\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_3__["softMinifyCssStrings"])(mobileAllStyles), "\n\t\t\t\t\t/* mobcssEnd */\t\t\t\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t")), urls.length > 0 && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(ToolbarGroup, null, /*#__PURE__*/React.createElement(ToolbarItem, null, function () {
+  })), /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement("style", null, "\n\t\t\t\t".concat(desktopAllStyles, "\n\n\t\t\t\t/* mimmikcssStart */\n\n\t\t\t\t").concat(resOption === "Tablet" ? tabAllStyles : " ", "\n\t\t\t\t").concat(resOption === "Mobile" ? tabAllStyles + mobileAllStyles : " ", "\n\n\t\t\t\t/* mimmikcssEnd */\n\n\t\t\t\t@media all and (max-width: 1024px) {\t\n\n\t\t\t\t\t/* tabcssStart */\t\t\t\n\t\t\t\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])(tabAllStyles), "\n\t\t\t\t\t/* tabcssEnd */\t\t\t\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t\n\t\t\t\t@media all and (max-width: 767px) {\n\t\t\t\t\t\n\t\t\t\t\t/* mobcssStart */\t\t\t\n\t\t\t\t\t").concat(Object(_util_helpers__WEBPACK_IMPORTED_MODULE_4__["softMinifyCssStrings"])(mobileAllStyles), "\n\t\t\t\t\t/* mobcssEnd */\t\t\t\n\t\t\t\t\n\t\t\t\t}\n\t\t\t\t")), urls.length > 0 && /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(BlockControls, null, /*#__PURE__*/React.createElement(ToolbarGroup, null, /*#__PURE__*/React.createElement(ToolbarItem, null, function () {
     return /*#__PURE__*/React.createElement(MediaUpload, {
       value: images.map(function (img) {
         return img.id;
@@ -712,7 +714,7 @@ function Edit(props) {
       }
     });
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "eb-gallery-img-wrapper ".concat(blockId, " ").concat(layouts, " caption-style-").concat(styleNumber, " ").concat(captionOnHover ? 'caption-on-hover' : ''),
+    className: "eb-gallery-img-wrapper ".concat(blockId, " ").concat(layouts, " caption-style-").concat(styleNumber, " ").concat(captionOnHover ? "caption-on-hover" : ""),
     "data-id": blockId
   }, sources.map(function (source, index) {
     return /*#__PURE__*/React.createElement("a", {
@@ -753,7 +755,6 @@ function Edit(props) {
     }
   })))];
 }
-;
 
 /***/ }),
 
@@ -971,13 +972,14 @@ registerBlockType("image-gallery-block/image-gallery-block", {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/constants.js");
-/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
-/* harmony import */ var _util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/dimensions-control-v2 */ "./util/dimensions-control-v2/index.js");
-/* harmony import */ var _util_typography_control_v2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/typography-control-v2 */ "./util/typography-control-v2/index.js");
-/* harmony import */ var _util_border_shadow_control__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/border-shadow-control */ "./util/border-shadow-control/index.js");
-/* harmony import */ var _util_responsive_range_control__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/responsive-range-control */ "./util/responsive-range-control/index.js");
-/* harmony import */ var _util_background_control__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/background-control */ "./util/background-control/index.js");
-/* harmony import */ var _util_color_control__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/color-control */ "./util/color-control/index.js");
+/* harmony import */ var _typoConstants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./typoConstants */ "./src/typoConstants.js");
+/* harmony import */ var _util_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util/helpers */ "./util/helpers/index.js");
+/* harmony import */ var _util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/dimensions-control-v2 */ "./util/dimensions-control-v2/index.js");
+/* harmony import */ var _util_typography_control_v2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../util/typography-control-v2 */ "./util/typography-control-v2/index.js");
+/* harmony import */ var _util_border_shadow_control__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../util/border-shadow-control */ "./util/border-shadow-control/index.js");
+/* harmony import */ var _util_responsive_range_control__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/responsive-range-control */ "./util/responsive-range-control/index.js");
+/* harmony import */ var _util_background_control__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/background-control */ "./util/background-control/index.js");
+/* harmony import */ var _util_color_control__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../util/color-control */ "./util/color-control/index.js");
 /**
  * WordPress dependencies
  */
@@ -1012,6 +1014,7 @@ var select = wp.data.select;
 
 
 
+
 function Inspector(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
@@ -1032,14 +1035,14 @@ function Inspector(props) {
   }, []); // this useEffect is for mimmiking css for all the eb blocks on resOption changing
 
   useEffect(function () {
-    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["mimmikCssForResBtns"])({
+    Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["mimmikCssForResBtns"])({
       domObj: document,
       resOption: resOption
     });
   }, [resOption]); // this useEffect is to mimmik css for responsive preview in the editor page when clicking the buttons in the 'Preview button of wordpress' located beside the 'update' button while any block is selected and it's inspector panel is mounted in the DOM
 
   useEffect(function () {
-    var cleanUp = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_1__["mimmikCssOnPreviewBtnClickWhileBlockSelected"])({
+    var cleanUp = Object(_util_helpers__WEBPACK_IMPORTED_MODULE_2__["mimmikCssOnPreviewBtnClickWhileBlockSelected"])({
       domObj: document,
       select: select,
       setAttributes: setAttributes
@@ -1055,15 +1058,15 @@ function Inspector(props) {
     });
 
     switch (selected) {
-      case '0':
+      case "0":
         setAttributes({});
         break;
 
-      case '1':
+      case "1":
         setAttributes({});
         break;
 
-      case '2':
+      case "2":
         setAttributes({
           displayCaption: true
         });
@@ -1088,17 +1091,17 @@ function Inspector(props) {
     activeClass: "active-tab" // onSelect={onSelect}
     ,
     tabs: [{
-      name: 'general',
-      title: 'General',
-      className: 'eb-tab general'
+      name: "general",
+      title: "General",
+      className: "eb-tab general"
     }, {
-      name: 'styles',
-      title: 'Styles',
-      className: 'eb-tab styles'
+      name: "styles",
+      title: "Styles",
+      className: "eb-tab styles"
     }, {
-      name: 'advance',
-      title: 'Advance',
-      className: 'eb-tab advance'
+      name: "advance",
+      title: "Advance",
+      className: "eb-tab advance"
     }]
   }, function (tab) {
     return /*#__PURE__*/React.createElement("div", {
@@ -1130,7 +1133,7 @@ function Inspector(props) {
           displayCaption: !displayCaption
         });
       }
-    }), displayCaption && styleNumber === '0' && /*#__PURE__*/React.createElement(ToggleControl, {
+    }), displayCaption && styleNumber === "0" && /*#__PURE__*/React.createElement(ToggleControl, {
       label: __("Display Caption on Hover"),
       checked: captionOnHover,
       onChange: function onChange() {
@@ -1138,7 +1141,7 @@ function Inspector(props) {
           captionOnHover: !captionOnHover
         });
       }
-    }), /*#__PURE__*/React.createElement(_util_responsive_range_control__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), /*#__PURE__*/React.createElement(_util_responsive_range_control__WEBPACK_IMPORTED_MODULE_6__["default"], {
       baseLabel: __("Columns", "image-gallery-block"),
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["GRID_COLUMNS"],
       resRequiredProps: resRequiredProps,
@@ -1146,7 +1149,7 @@ function Inspector(props) {
       min: 1,
       max: 8,
       step: 1
-    }), /*#__PURE__*/React.createElement(_util_responsive_range_control__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), /*#__PURE__*/React.createElement(_util_responsive_range_control__WEBPACK_IMPORTED_MODULE_6__["default"], {
       baseLabel: __("Image Gap", "image-gallery-block"),
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["IMAGE_GAP"],
       resRequiredProps: resRequiredProps,
@@ -1159,7 +1162,7 @@ function Inspector(props) {
     }, /*#__PURE__*/React.createElement(PanelBody, {
       title: __("Border & Shadow"),
       initialOpen: true
-    }, /*#__PURE__*/React.createElement(_util_border_shadow_control__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, /*#__PURE__*/React.createElement(_util_border_shadow_control__WEBPACK_IMPORTED_MODULE_5__["default"], {
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["IMAGE_BORDER_SHADOW"],
       resRequiredProps: resRequiredProps // noShadow
       // noBorder
@@ -1167,7 +1170,7 @@ function Inspector(props) {
     }))), displayCaption && /*#__PURE__*/React.createElement(PanelBody, {
       title: __("Caption Styles")
     }, /*#__PURE__*/React.createElement(PanelColorSettings, {
-      title: __('Color Controls'),
+      title: __("Color Controls"),
       className: "eb-subpanel",
       initialOpen: true,
       disableAlpha: false,
@@ -1180,7 +1183,7 @@ function Inspector(props) {
         },
         label: __("Text Color")
       }]
-    }), /*#__PURE__*/React.createElement(_util_color_control__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }), /*#__PURE__*/React.createElement(_util_color_control__WEBPACK_IMPORTED_MODULE_8__["default"], {
       label: __("Background Color"),
       color: captionBGColor,
       onChange: function onChange(backgroundColor) {
@@ -1188,11 +1191,11 @@ function Inspector(props) {
           captionBGColor: backgroundColor
         });
       }
-    }), /*#__PURE__*/React.createElement(_util_typography_control_v2__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }), /*#__PURE__*/React.createElement(_util_typography_control_v2__WEBPACK_IMPORTED_MODULE_4__["default"], {
       baseLabel: __("Typography", "image-gallery-block"),
-      typographyPrefixConstant: _constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_TYPOGRAPHY"],
+      typographyPrefixConstant: _typoConstants__WEBPACK_IMPORTED_MODULE_1__["CAPTION_TYPOGRAPHY"],
       resRequiredProps: resRequiredProps
-    }), displayCaption && styleNumber != '2' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(BaseControl, {
+    }), displayCaption && styleNumber != "2" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(BaseControl, {
       label: __("Text Align")
     }, /*#__PURE__*/React.createElement(ButtonGroup, null, _constants__WEBPACK_IMPORTED_MODULE_0__["TEXT_ALIGN"].map(function (item) {
       return /*#__PURE__*/React.createElement(Button, {
@@ -1218,33 +1221,33 @@ function Inspector(props) {
           });
         }
       }, item.label);
-    }))), /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    }))), /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_3__["default"], {
       resRequiredProps: resRequiredProps,
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_MARGIN"],
       baseLabel: "Margin"
-    }), /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    }), /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_3__["default"], {
       resRequiredProps: resRequiredProps,
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["CAPTION_PADDING"],
       baseLabel: "Padding"
-    })))), tab.name === "advance" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    })))), tab.name === "advance" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_3__["default"], {
       resRequiredProps: resRequiredProps,
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_MARGIN"],
       baseLabel: "Margin"
-    }), /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    }), /*#__PURE__*/React.createElement(_util_dimensions_control_v2__WEBPACK_IMPORTED_MODULE_3__["default"], {
       resRequiredProps: resRequiredProps,
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_PADDING"],
       baseLabel: "Padding"
     })), /*#__PURE__*/React.createElement(PanelBody, {
       title: __("Background"),
       initialOpen: false
-    }, /*#__PURE__*/React.createElement(_util_background_control__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    }, /*#__PURE__*/React.createElement(_util_background_control__WEBPACK_IMPORTED_MODULE_7__["default"], {
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_BG"],
       resRequiredProps: resRequiredProps,
       noOverlay: true
     })), /*#__PURE__*/React.createElement(PanelBody, {
       title: __("Border & Shadow"),
       initialOpen: false
-    }, /*#__PURE__*/React.createElement(_util_border_shadow_control__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, /*#__PURE__*/React.createElement(_util_border_shadow_control__WEBPACK_IMPORTED_MODULE_5__["default"], {
       controlName: _constants__WEBPACK_IMPORTED_MODULE_0__["WRAPPER_BORDER_SHADOW"],
       resRequiredProps: resRequiredProps // noShadow
       // noBorder
@@ -1295,6 +1298,20 @@ var Save = function Save(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Save);
+
+/***/ }),
+
+/***/ "./src/typoConstants.js":
+/*!******************************!*\
+  !*** ./src/typoConstants.js ***!
+  \******************************/
+/*! exports provided: CAPTION_TYPOGRAPHY */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CAPTION_TYPOGRAPHY", function() { return CAPTION_TYPOGRAPHY; });
+var CAPTION_TYPOGRAPHY = "captionTypo";
 
 /***/ }),
 

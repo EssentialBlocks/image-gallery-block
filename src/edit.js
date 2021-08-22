@@ -2,15 +2,20 @@
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-const { MediaUpload, MediaPlaceholder, BlockControls, useBlockProps } = wp.blockEditor;
+const {
+	MediaUpload,
+	MediaPlaceholder,
+	BlockControls,
+	useBlockProps,
+} = wp.blockEditor;
 const { ToolbarGroup, ToolbarItem, ToolbarButton, Button } = wp.components;
 const { Fragment } = wp.element;
 const { useEffect } = wp.element;
-const { select } = wp.data; 
+const { select } = wp.data;
 
 /**
-  * Internal depencencies
-*/
+ * Internal depencencies
+ */
 import Inspector from "./inspector";
 import "./editor.scss";
 import {
@@ -23,8 +28,10 @@ import {
 	IMAGE_BORDER_SHADOW,
 	CAPTION_MARGIN,
 	CAPTION_PADDING,
-	CAPTION_TYPOGRAPHY,
 } from "./constants";
+
+import { CAPTION_TYPOGRAPHY } from "./typoConstants";
+
 import {
 	softMinifyCssStrings,
 	isCssExists,
@@ -63,7 +70,6 @@ export default function Edit(props) {
 		setAttributes({
 			resOption: select("core/edit-post").__experimentalGetPreviewDeviceType(),
 		});
-
 	}, []);
 
 	// this useEffect is for creating a unique id for each block's unique className by a random unique number
@@ -92,9 +98,9 @@ export default function Edit(props) {
 
 	/**
 	 * CSS/styling Codes Starts from Here
-	*/
+	 */
 
-	// Caption Typography 
+	// Caption Typography
 	const {
 		typoStylesDesktop: captionTypographyDesktop,
 		typoStylesTab: captionTypographyTab,
@@ -160,7 +166,7 @@ export default function Edit(props) {
 		attributes,
 	});
 
-	// range controller Separator Line Grid Column Margin Bottom 
+	// range controller Separator Line Grid Column Margin Bottom
 	const {
 		rangeStylesDesktop: gridColumnsMarginBottomDesktop,
 		rangeStylesTab: gridColumnsMarginBottomTab,
@@ -194,7 +200,7 @@ export default function Edit(props) {
 	} = generateBackgroundControlStyles({
 		attributes,
 		controlName: WRAPPER_BG,
-		noOverlay : true
+		noOverlay: true,
 	});
 
 	// generateBorderShadowStyles for Wrapper ⬇
@@ -231,24 +237,21 @@ export default function Edit(props) {
 
 	//Generate Caption Alignement
 	const verticalAlignStyles = (verticalAlign) => {
-		if (verticalAlign === 'top') {
+		if (verticalAlign === "top") {
 			return `
 				top: 0;
 			`;
-		}
-		else if (verticalAlign === 'center') {
+		} else if (verticalAlign === "center") {
 			return `
 				top: 50%;
 				transformY: translate(-50%);
 			`;
-		}
-		else {
+		} else {
 			return `
 				bottom: 0;
 			`;
 		}
 	};
-
 
 	// wrapper styles css in strings ⬇
 	const wrapperStylesDesktop = `
@@ -265,13 +268,16 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesDesktop}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsDesktop.replace(/[^0-9]/g, '')}, auto);
+			grid-template-columns: repeat(${gridColumnsDesktop.replace(
+				/[^0-9]/g,
+				""
+			)}, auto);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsDesktop.replace(/[^0-9]/g, '')};
+			columns: ${gridColumnsDesktop.replace(/[^0-9]/g, "")};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: ${imageGapStyleDesktop.replace(/[^0-9]/g, '')}px;
+			margin-bottom: ${imageGapStyleDesktop.replace(/[^0-9]/g, "")}px;
 		}
 	`;
 	const wrapperStylesTab = `
@@ -287,13 +293,16 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesTab}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsTab.replace(/[^0-9]/g, '')}, auto);
+			grid-template-columns: repeat(${gridColumnsTab.replace(/[^0-9]/g, "")}, auto);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsTab.replace(/[^0-9]/g, '')};
+			columns: ${gridColumnsTab.replace(/[^0-9]/g, "")};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: calc(${imageGapStyleTab.replace(/[^0-9]/g, '')}px - ${gridColumnsTab.replace(/[^0-9]/g, '')}px);
+			margin-bottom: calc(${imageGapStyleTab.replace(
+				/[^0-9]/g,
+				""
+			)}px - ${gridColumnsTab.replace(/[^0-9]/g, "")}px);
 		}
 	`;
 	const wrapperStylesMobile = `
@@ -309,13 +318,19 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesMobile}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsMobile.replace(/[^0-9]/g, '')}, auto);
+			grid-template-columns: repeat(${gridColumnsMobile.replace(
+				/[^0-9]/g,
+				""
+			)}, auto);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsMobile.replace(/[^0-9]/g, '')};
+			columns: ${gridColumnsMobile.replace(/[^0-9]/g, "")};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: calc(${imageGapStyleMobile.replace(/[^0-9]/g, '')}px - ${gridColumnsMobile.replace(/[^0-9]/g, '')}px);
+			margin-bottom: calc(${imageGapStyleMobile.replace(
+				/[^0-9]/g,
+				""
+			)}px - ${gridColumnsMobile.replace(/[^0-9]/g, "")}px);
 		}
 	`;
 
@@ -400,7 +415,6 @@ export default function Edit(props) {
 		}
 	}, [attributes]);
 
-
 	function onImageSelect(images) {
 		let sources = [];
 		images.map((image) => {
@@ -469,7 +483,7 @@ export default function Edit(props) {
 					<BlockControls>
 						<ToolbarGroup>
 							<ToolbarItem>
-								{ ( ) => (
+								{() => (
 									<MediaUpload
 										value={images.map((img) => img.id)}
 										onSelect={(images) => onImageSelect(images)}
@@ -485,24 +499,31 @@ export default function Edit(props) {
 											/>
 										)}
 									/>
-								) }
+								)}
 							</ToolbarItem>
 						</ToolbarGroup>
 					</BlockControls>
 
-					<div 
-						className={`eb-gallery-img-wrapper ${blockId} ${layouts} caption-style-${styleNumber} ${captionOnHover ? 'caption-on-hover' : ''}`} 
+					<div
+						className={`eb-gallery-img-wrapper ${blockId} ${layouts} caption-style-${styleNumber} ${
+							captionOnHover ? "caption-on-hover" : ""
+						}`}
 						data-id={blockId}
 					>
-						
 						{sources.map((source, index) => (
-							<a
-								className={`eb-gallery-img-content`}
-							>
-								<img className="eb-gallery-img" src={source.url} image-index={index} />
-								{(displayCaption && source.caption && source.caption.length > 0) && (
-									<span className="eb-gallery-img-caption">{source.caption}</span>
-								)}
+							<a className={`eb-gallery-img-content`}>
+								<img
+									className="eb-gallery-img"
+									src={source.url}
+									image-index={index}
+								/>
+								{displayCaption &&
+									source.caption &&
+									source.caption.length > 0 && (
+										<span className="eb-gallery-img-caption">
+											{source.caption}
+										</span>
+									)}
 							</a>
 						))}
 					</div>
@@ -541,4 +562,4 @@ export default function Edit(props) {
 			)}
 		</div>,
 	];
-};
+}

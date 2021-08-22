@@ -4,7 +4,7 @@
 
 const { __ } = wp.i18n;
 const { InspectorControls, PanelColorSettings } = wp.blockEditor;
-const { 
+const {
 	PanelBody,
 	SelectControl,
 	ToggleControl,
@@ -22,7 +22,7 @@ const { select } = wp.data;
 /**
  * Internal depencencies
  */
- import {
+import {
 	WRAPPER_BG,
 	WRAPPER_MARGIN,
 	WRAPPER_PADDING,
@@ -32,13 +32,18 @@ const { select } = wp.data;
 	IMAGE_BORDER_SHADOW,
 	CAPTION_MARGIN,
 	CAPTION_PADDING,
-	CAPTION_TYPOGRAPHY,
 	LAYOUTS,
 	STYLES,
 	TEXT_ALIGN,
 	VERTICAL_ALIGN,
 } from "./constants";
-import {mimmikCssForResBtns, mimmikCssOnPreviewBtnClickWhileBlockSelected} from "../util/helpers";
+
+import { CAPTION_TYPOGRAPHY } from "./typoConstants";
+
+import {
+	mimmikCssForResBtns,
+	mimmikCssOnPreviewBtnClickWhileBlockSelected,
+} from "../util/helpers";
 import ResponsiveDimensionsControl from "../util/dimensions-control-v2";
 import TypographyDropdown from "../util/typography-control-v2";
 import BorderShadowControl from "../util/border-shadow-control";
@@ -59,8 +64,6 @@ function Inspector(props) {
 		textAlign,
 		styleNumber,
 	} = attributes;
-
-	
 
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
 	useEffect(() => {
@@ -90,23 +93,23 @@ function Inspector(props) {
 	}, []);
 
 	const changeStyle = (selected) => {
-		setAttributes({styleNumber: selected});
-		switch(selected) {
-			case '0':
-				setAttributes({})
+		setAttributes({ styleNumber: selected });
+		switch (selected) {
+			case "0":
+				setAttributes({});
 				break;
-			case '1':
-				setAttributes({})
+			case "1":
+				setAttributes({});
 				break;
-			case '2':
+			case "2":
 				setAttributes({
 					displayCaption: true,
-				})
+				});
 				break;
 			default:
 				return false;
 		}
-	}
+	};
 
 	const resRequiredProps = {
 		setAttributes,
@@ -117,37 +120,33 @@ function Inspector(props) {
 	return (
 		<InspectorControls key="controls">
 			<div className="eb-panel-control">
-			
 				<TabPanel
 					className="eb-parent-tab-panel"
 					activeClass="active-tab"
 					// onSelect={onSelect}
-					tabs={ [
+					tabs={[
 						{
-							name: 'general',
-							title: 'General',
-							className: 'eb-tab general',
+							name: "general",
+							title: "General",
+							className: "eb-tab general",
 						},
 						{
-							name: 'styles',
-							title: 'Styles',
-							className: 'eb-tab styles',
+							name: "styles",
+							title: "Styles",
+							className: "eb-tab styles",
 						},
 						{
-							name: 'advance',
-							title: 'Advance',
-							className: 'eb-tab advance',
+							name: "advance",
+							title: "Advance",
+							className: "eb-tab advance",
 						},
-					] }
+					]}
 				>
-					{(tab) =>
+					{(tab) => (
 						<div className={"eb-tab-controls" + tab.name}>
 							{tab.name === "general" && (
 								<>
-									<PanelBody 
-										title={__("General")} 
-										initialOpen={true}
-									>
+									<PanelBody title={__("General")} initialOpen={true}>
 										<SelectControl
 											label={__("Layouts")}
 											value={layouts}
@@ -159,21 +158,25 @@ function Inspector(props) {
 											label={__("Styles")}
 											value={styleNumber}
 											options={STYLES}
-											onChange={(styleNumber) => changeStyle( styleNumber )}
+											onChange={(styleNumber) => changeStyle(styleNumber)}
 										/>
-						
+
 										<ToggleControl
 											label={__("Display Caption")}
 											checked={displayCaption}
-											onChange={() => setAttributes({ displayCaption: !displayCaption })}
+											onChange={() =>
+												setAttributes({ displayCaption: !displayCaption })
+											}
 										/>
 
-										{displayCaption && styleNumber === '0' && (
+										{displayCaption && styleNumber === "0" && (
 											<ToggleControl
-											label={__("Display Caption on Hover")}
-											checked={captionOnHover}
-											onChange={() => setAttributes({ captionOnHover: !captionOnHover })}
-										/>
+												label={__("Display Caption on Hover")}
+												checked={captionOnHover}
+												onChange={() =>
+													setAttributes({ captionOnHover: !captionOnHover })
+												}
+											/>
 										)}
 
 										<ResponsiveRangeController
@@ -213,25 +216,24 @@ function Inspector(props) {
 									</PanelBody>
 									{displayCaption && (
 										<PanelBody title={__("Caption Styles")}>
-
 											<PanelColorSettings
-												title={__('Color Controls')}
+												title={__("Color Controls")}
 												className={"eb-subpanel"}
 												initialOpen={true}
-												disableAlpha = {false}
+												disableAlpha={false}
 												colorSettings={[
 													{
 														value: captionColor,
 														onChange: (newColor) =>
 															setAttributes({ captionColor: newColor }),
 														label: __("Text Color"),
-													}
+													},
 												]}
 											/>
 
 											<ColorControl
-                								label={__("Background Color")}
-												color={ captionBGColor }
+												label={__("Background Color")}
+												color={captionBGColor}
 												onChange={(backgroundColor) =>
 													setAttributes({ captionBGColor: backgroundColor })
 												}
@@ -243,7 +245,7 @@ function Inspector(props) {
 												resRequiredProps={resRequiredProps}
 											/>
 
-											{displayCaption && styleNumber != '2' && (
+											{displayCaption && styleNumber != "2" && (
 												<>
 													<BaseControl label={__("Text Align")}>
 														<ButtonGroup>
@@ -252,14 +254,16 @@ function Inspector(props) {
 																	isLarge
 																	isPrimary={textAlign === item.value}
 																	isSecondary={textAlign !== item.value}
-																	onClick={() => setAttributes({ textAlign: item.value })}
+																	onClick={() =>
+																		setAttributes({ textAlign: item.value })
+																	}
 																>
 																	{item.label}
 																</Button>
 															))}
 														</ButtonGroup>
 													</BaseControl>
-							
+
 													<BaseControl label={__("Vertical Align")}>
 														<ButtonGroup>
 															{VERTICAL_ALIGN.map((item) => (
@@ -328,7 +332,7 @@ function Inspector(props) {
 								</>
 							)}
 						</div>
-					}
+					)}
 				</TabPanel>
 			</div>
 		</InspectorControls>

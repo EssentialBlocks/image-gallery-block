@@ -1,3 +1,5 @@
+import * as typoPrefixs from "./typoConstants";
+
 import {
 	WRAPPER_BG,
 	WRAPPER_MARGIN,
@@ -8,14 +10,14 @@ import {
 	IMAGE_BORDER_SHADOW,
 	CAPTION_MARGIN,
 	CAPTION_PADDING,
-	CAPTION_TYPOGRAPHY
 } from "./constants";
+
 import {
 	generateDimensionsAttributes,
 	generateTypographyAttributes,
 	generateBackgroundAttributes,
 	generateBorderShadowAttributes,
-	generateResponsiveRangeAttributes
+	generateResponsiveRangeAttributes,
 } from "../util/helpers";
 
 const attributes = {
@@ -45,7 +47,7 @@ const attributes = {
 	},
 	layouts: {
 		type: "string",
-		default: "grid"
+		default: "grid",
 	},
 	sources: {
 		type: "array",
@@ -79,11 +81,11 @@ const attributes = {
 	},
 	captionColor: {
 		type: "string",
-		default: "#ffffff"
+		default: "#ffffff",
 	},
 	captionBGColor: {
 		type: "string",
-		default: "rgba(195 195 195 / 0.7)"
+		default: "rgba(195 195 195 / 0.7)",
 	},
 	verticalAlign: {
 		type: "string",
@@ -99,7 +101,7 @@ const attributes = {
 	},
 
 	// typography attributes ⬇
-	...generateTypographyAttributes(Object.values(CAPTION_TYPOGRAPHY)),
+	...generateTypographyAttributes(Object.values(typoPrefixs)),
 
 	// margin padding attributes ⬇
 	...generateDimensionsAttributes(WRAPPER_MARGIN),
@@ -120,35 +122,31 @@ const attributes = {
 	}),
 
 	// border shadow attributes ⬇
-	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW, 
-		{
-			bdrDefaults: {
-				top: 0,
-				bottom: 0,
-				right: 0,
-				left: 0,
-			},
-			// noShadow: true,
-			// noBorder: true,
-		}
-	),
-	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW, 
-		{
-			bdrDefaults: {
-				top: 0,
-				bottom: 0,
-				right: 0,
-				left: 0,
-			},
-			// noShadow: true,
-			// noBorder: true,
-		}
-	),
+	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW, {
+		bdrDefaults: {
+			top: 0,
+			bottom: 0,
+			right: 0,
+			left: 0,
+		},
+		// noShadow: true,
+		// noBorder: true,
+	}),
+	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW, {
+		bdrDefaults: {
+			top: 0,
+			bottom: 0,
+			right: 0,
+			left: 0,
+		},
+		// noShadow: true,
+		// noBorder: true,
+	}),
 
 	// background attributes ⬇
 	...generateBackgroundAttributes(WRAPPER_BG, {
 		defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)",
-		noOverlay : true,
+		noOverlay: true,
 	}),
 
 	// range controller Separator Line Grid Column

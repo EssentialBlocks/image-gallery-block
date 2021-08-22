@@ -62,14 +62,14 @@ function create_block_image_gallery_block_init() {
 		filemtime( "$dir/$style_css" )
 	);
 
-  $lightbox_css = 'src/css/fslightbox.min.css';
+  $lightbox_css = 'lib/css/fslightbox.min.css';
   wp_register_style(
     'fslightbox-style',
     plugins_url($lightbox_css, __FILE__),
     array()
   );
 
-  $lightbox_js = 'src/js/fslightbox.min.js';
+  $lightbox_js = 'lib/js/fslightbox.min.js';
   wp_register_script(
       'fslightbox-js',
       plugins_url($lightbox_js, __FILE__),

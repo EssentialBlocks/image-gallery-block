@@ -83,6 +83,13 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
+= 1.1.0 =
+* Added: Dynamic asset generation for inline styles
+* Added: Responsive control
+* Added: Color Overlay Style
+* Added: Margin, Padding, Background, Border & Shadow controls for block wrapper
+* Improved: Controls and structure
+
 = 1.0.1 =
 * Fix: Missing css, js files
 

@@ -439,7 +439,8 @@ export default function Edit(props) {
 			{urls.length === 0 && (
 				<MediaPlaceholder
 					onSelect={(images) => onImageSelect(images)}
-					allowTypes={["image"]}
+					accept="image/*"
+					allowedTypes={["image"]}
 					multiple
 					labels={{
 						title: "Images",

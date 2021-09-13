@@ -20,7 +20,7 @@ const { select } = wp.data;
  * Internal dependencies
  */
 /**
- * Internal depencencies
+ * Internal depencencies 
  */
 import {
 	WRAPPER_BG,

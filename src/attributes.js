@@ -1,5 +1,3 @@
-import * as CAPTION_TYPOGRAPHY from "./typoConstants";
-
 import {
 	WRAPPER_BG,
 	WRAPPER_MARGIN,
@@ -10,14 +8,15 @@ import {
 	IMAGE_BORDER_SHADOW,
 	CAPTION_MARGIN,
 	CAPTION_PADDING,
+	CAPTION_WIDTH,
 } from "./constants";
-
+import * as CAPTION_TYPOGRAPHY from "./typoConstants";
 import {
 	generateDimensionsAttributes,
 	generateTypographyAttributes,
 	generateBackgroundAttributes,
 	generateBorderShadowAttributes,
-	generateResponsiveRangeAttributes,
+	generateResponsiveRangeAttributes
 } from "../util/helpers";
 
 const attributes = {
@@ -47,25 +46,10 @@ const attributes = {
 	},
 	layouts: {
 		type: "string",
-		default: "grid",
+		default: "grid"
 	},
 	sources: {
 		type: "array",
-		source: "query",
-		selector: ".eb-gallery-img-content",
-		query: {
-			url: {
-				type: "string",
-				selector: ".eb-gallery-img",
-				source: "attribute",
-				attribute: "src",
-			},
-			caption: {
-				type: "string",
-				selector: ".eb-gallery-img-caption",
-				source: "text",
-			},
-		},
 		default: [],
 	},
 	displayCaption: {
@@ -81,11 +65,19 @@ const attributes = {
 	},
 	captionColor: {
 		type: "string",
-		default: "#ffffff",
+		default: "#ffffff"
 	},
 	captionBGColor: {
 		type: "string",
-		default: "rgba(195 195 195 / 0.7)",
+		default: "rgba(195 195 195 / 0.7)"
+	},
+	overlayColor: {
+		type: "string",
+		default: "rgba(0 0 0 / 0.7)"
+	},
+	horizontalAlign: {
+		type: "string",
+		default: "center",
 	},
 	verticalAlign: {
 		type: "string",
@@ -99,6 +91,10 @@ const attributes = {
 		type: "string",
 		default: "0",
 	},
+	overlayStyle: {
+		type: "string",
+		default: "overlay-bottom",
+	},
 
 	// typography attributes ⬇
 	...generateTypographyAttributes(Object.values(CAPTION_TYPOGRAPHY)),
@@ -108,7 +104,7 @@ const attributes = {
 	...generateDimensionsAttributes(WRAPPER_PADDING),
 	...generateDimensionsAttributes(CAPTION_MARGIN, {
 		top: 0,
-		bottom: 10,
+		bottom: 0,
 		right: 0,
 		left: 0,
 		isLinked: false,
@@ -122,31 +118,35 @@ const attributes = {
 	}),
 
 	// border shadow attributes ⬇
-	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW, {
-		bdrDefaults: {
-			top: 0,
-			bottom: 0,
-			right: 0,
-			left: 0,
-		},
-		// noShadow: true,
-		// noBorder: true,
-	}),
-	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW, {
-		bdrDefaults: {
-			top: 0,
-			bottom: 0,
-			right: 0,
-			left: 0,
-		},
-		// noShadow: true,
-		// noBorder: true,
-	}),
+	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW, 
+		{
+			bdrDefaults: {
+				top: 0,
+				bottom: 0,
+				right: 0,
+				left: 0,
+			},
+			// noShadow: true,
+			// noBorder: true,
+		}
+	),
+	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW, 
+		{
+			bdrDefaults: {
+				top: 0,
+				bottom: 0,
+				right: 0,
+				left: 0,
+			},
+			noShadow: true,
+			// noBorder: true,
+		}
+	),
 
 	// background attributes ⬇
 	...generateBackgroundAttributes(WRAPPER_BG, {
 		defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)",
-		noOverlay: true,
+		noOverlay : true,
 	}),
 
 	// range controller Separator Line Grid Column
@@ -157,6 +157,8 @@ const attributes = {
 	...generateResponsiveRangeAttributes(IMAGE_GAP, {
 		defaultRange: 10,
 	}),
+	// range controller Separator Caption Width
+	...generateResponsiveRangeAttributes(CAPTION_WIDTH),
 };
 
 export default attributes;

@@ -83,7 +83,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.1.0 - 13/09/2021 =
+= 1.1.0 - 21/10/2021 =
 * Added: Dynamic asset generation for inline styles
 * Added: Responsive control
 * Added: Color Overlay Style
@@ -97,3 +97,4 @@ Yes, it will work with any standard WordPress theme.
 * Initial Release
 
 == Upgrade Notice ==
+[ Major update ] New structure and new options, It will break previously saved block.

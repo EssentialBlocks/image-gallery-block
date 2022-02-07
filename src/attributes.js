@@ -11,13 +11,14 @@ import {
 	CAPTION_WIDTH,
 } from "./constants";
 import * as CAPTION_TYPOGRAPHY from "./typoConstants";
-import {
+
+const {
 	generateDimensionsAttributes,
 	generateTypographyAttributes,
 	generateBackgroundAttributes,
 	generateBorderShadowAttributes,
 	generateResponsiveRangeAttributes
-} from "../util/helpers";
+} = window.EBImageGalleryControls;
 
 const attributes = {
 	resOption: {
@@ -94,6 +95,10 @@ const attributes = {
 	overlayStyle: {
 		type: "string",
 		default: "overlay-bottom",
+	},
+	disableLightBox: {
+		type: "boolean",
+		default: false,
 	},
 
 	// typography attributes ⬇

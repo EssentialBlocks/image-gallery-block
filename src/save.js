@@ -1,3 +1,5 @@
+import { useBlockProps } from "@wordpress/block-editor";
+
 const Save = ({ attributes }) => {
 	const {
 		blockId,
@@ -8,33 +10,46 @@ const Save = ({ attributes }) => {
 		styleNumber,
 		overlayStyle,
 		horizontalAlign,
-		verticalAlign
+		verticalAlign,
+		disableLightBox,
 	} = attributes;
 
 	if (sources.length === 0) return null;
 
 	return (
-		<div 
-			className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${captionOnHover ? 'caption-on-hover' : ''}`} 
-			data-id={blockId} 
-		>
-				
-			{sources.map((source, index) => (
-				<a
-					key={index}
-					data-fslightbox="gallery"
-					href={source.url}
-					className={`eb-gallery-img-content`}
-				>
-					<span className="eb-gallery-link-wrapper">
-						<img className="eb-gallery-img" src={source.url} image-index={index} />
-						{(displayCaption && source.caption && source.caption.length > 0) && (
-							<span className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}>{source.caption}</span>
-						)}
-					</span>
-					
-				</a>
-			))}
+		<div {...useBlockProps.save()}>
+			<div
+				className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${
+					captionOnHover ? "caption-on-hover" : ""
+				}`}
+				data-id={blockId}
+			>
+				{sources.map((source, index) => (
+					<a
+						key={index}
+						data-fslightbox="gallery"
+						href={!disableLightBox ? source.url : "javascript:void(0)"}
+						className={`eb-gallery-img-content`}
+					>
+						<span className="eb-gallery-link-wrapper">
+							<img
+								className="eb-gallery-img"
+								src={source.url}
+								image-index={index}
+							/>
+							{displayCaption &&
+								source.caption &&
+								source.caption.length > 0 && (
+									<span
+										className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
+									>
+										{source.caption}
+									</span>
+								)}
+						</span>
+					</a>
+				))}
+			</div>
 		</div>
 	);
 };

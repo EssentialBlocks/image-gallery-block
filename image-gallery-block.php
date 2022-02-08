@@ -78,7 +78,7 @@ function create_block_image_gallery_block_init()
 	wp_register_style(
 		'create-block-imagegallery-block-frontend-style',
 		$style_css,
-		array('fontawesome-frontend-css'),
+		array(),
 		IMAGEGALLERY_BLOCK_VERSION
 	);
 

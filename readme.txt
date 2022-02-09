@@ -1,9 +1,9 @@
 === Image Gallery Block ===
 Contributors: wpdevteam, re_enter_rupok, Asif2BD, jamilbd07, rahat89
 Tags: block, blocks, image, gallery, image gallery, image grid, lightbox, gutenberg, gutenberg blocks
-Requires at least: 5.0
-Tested up to: 5.8
-Stable tag: 1.1.0
+Requires at least: 5.6
+Tested up to: 5.9
+Stable tag: 1.2.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,16 +83,13 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-<<<<<<< HEAD
-= 1.1.0 - 21/10/2021 =
-=======
-= 1.2.0 - 08/02/2022 =
+
+= 1.2.0 - 09/02/2022 =
 * Fixed: Block Base theme support
 * Improved: Font Library Updated
 * Improved: Controls and structure
 
 = 1.1.0 - 13/09/2021 =
->>>>>>> 0a36533521d37dc8220e3c4928c6b0eef5b68d9a
 * Added: Dynamic asset generation for inline styles
 * Added: Responsive control
 * Added: Color Overlay Style

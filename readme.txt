@@ -83,7 +83,16 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
+<<<<<<< HEAD
 = 1.1.0 - 21/10/2021 =
+=======
+= 1.2.0 - 08/02/2022 =
+* Fixed: Block Base theme support
+* Improved: Font Library Updated
+* Improved: Controls and structure
+
+= 1.1.0 - 13/09/2021 =
+>>>>>>> 0a36533521d37dc8220e3c4928c6b0eef5b68d9a
 * Added: Dynamic asset generation for inline styles
 * Added: Responsive control
 * Added: Color Overlay Style

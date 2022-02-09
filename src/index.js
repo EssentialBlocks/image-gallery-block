@@ -1,32 +1,32 @@
-const { registerBlockType } = wp.blocks;
-const { __ } = wp.i18n;
+/**
+ * WordPress dependencies
+ */
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
 
-import "./style.scss";
-
-import Edit from "./edit";
+/**
+ * Internal dependencies
+ */
 import Save from "./save";
-import attributes from "./attributes";
-import icon from "./icon";
-import Example from "./example";
+import Edit from "./edit";
+import Attributes from "./attributes";
+import example from "./example";
+import { ImageGalleryIcon } from "./icon";
+import deprecated from "./deprecated";
+import "./style.scss";
+import metadata from "../block.json";
+const { ebConditionalRegisterBlockType } = EBImageGalleryControls;
 
-registerBlockType("image-gallery-block/image-gallery-block", {
-	title: __("Image Gallery", "image-gallery-block"),
-	description: __(
-		"Impress your audience with high-resolution images",
-		"image-gallery-block"
-	),
+ebConditionalRegisterBlockType(metadata, {
+	icon: ImageGalleryIcon,
+	attributes: Attributes,
 	keywords: [
-		__("images", "image-gallery-block"),
-		__("photos", "image-gallery-block"),
-		__("gallery", "image-gallery-block"),
+		__("images", "essential-blocks"),
+		__("photos", "essential-blocks"),
+		__("eb image gallery", "essential-blocks"),
 	],
-	category: "widgets",
-	icon,
-	supports: {
-		align: true,
-	},
-	attributes,
 	edit: Edit,
 	save: Save,
-	example: Example,
+	example,
+	deprecated,
 });

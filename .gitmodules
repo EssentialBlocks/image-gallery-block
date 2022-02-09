@@ -1,9 +1,6 @@
-[submodule "util/color-control"]
-	path = util/color-control
-	url = git@github.com:EssentialBlocks/color-control.git
-[submodule "util/dimensions-control"]
-	path = util/dimensions-control
-	url = git@github.com:EssentialBlocks/dimensions-control.git
-[submodule "util/unit-control"]
-	path = util/unit-control
-	url = git@github.com:EssentialBlocks/unit-control.git
+[submodule "lib/style-handler"]
+	path = lib/style-handler
+	url = git@github.com:EssentialBlocks/style-handler.git
+[submodule "controls"]
+	path = controls
+	url = git@github.com:EssentialBlocks/controls.git

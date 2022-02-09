@@ -1,5 +1,5 @@
 {
-	"name": "block/image-gallery-block",
+	"name": "image-gallery-block/image-gallery-block",
 	"title": "Image Gallery",
 	"category": "widgets",
 	"description": "Impress your audience with beautiful image gallery with lightbox.",
@@ -8,7 +8,5 @@
 	"supports": {
 		"align": true
 	},
-	"editorScript": "file:./build/index.js",
-	"editorStyle": "file:./build/index.css",
-	"style": "file:./build/style-index.css"
+	"editorScript": "file:./dist/index.js"
 }

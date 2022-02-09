@@ -1,267 +1,412 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies 
  */
 import { __ } from "@wordpress/i18n";
-import { InspectorControls } from "@wordpress/block-editor";
-import {
+import { InspectorControls, PanelColorSettings } from "@wordpress/block-editor";
+import { 
 	PanelBody,
-	ToggleControl,
-	RangeControl,
 	SelectControl,
-	BaseControl,
-	ButtonGroup,
+	ToggleControl,
 	Button,
+	ButtonGroup,
+	BaseControl,
+	TabPanel
 } from "@wordpress/components";
+import { useEffect } from "@wordpress/element";
+import { select } from "@wordpress/data";
 
 /**
- * Internal dependencies
+ * Internal depencencies
  */
-import UnitControl from "../util/unit-control";
-import {
+
+ import objAttributes from "./attributes";
+
+ import {
+	WRAPPER_BG,
+	WRAPPER_MARGIN,
+	WRAPPER_PADDING,
+	WRAPPER_BORDER_SHADOW,
+	GRID_COLUMNS,
+	IMAGE_GAP,
+	IMAGE_BORDER_SHADOW,
+	CAPTION_MARGIN,
+	CAPTION_PADDING,
+	CAPTION_TYPOGRAPHY,
+	CAPTION_WIDTH,
+	LAYOUTS,
+	STYLES,
+	OVERLAY_STYLES,
+	TEXT_ALIGN,
 	HORIZONTAL_ALIGN,
 	VERTICAL_ALIGN,
-	TEXT_ALIGN,
-	STYLES,
-	BORDER_STYLES,
+	UNIT_TYPES,
 } from "./constants";
-import DimensionControl from "../util/dimensions-control";
-import ColorControl from "../util/color-control";
 
-const Inspector = ({ attributes, setAttributes }) => {
+const {
+	// mimmikCssForResBtns, 
+	// mimmikCssOnPreviewBtnClickWhileBlockSelected,
+
+	// 
+	ResponsiveDimensionsControl,
+	TypographyDropdown,
+	BorderShadowControl,
+	ResponsiveRangeController,
+	BackgroundControl,
+	ColorControl,
+} = window.EBImageGalleryControls;
+
+const editorStoreForGettingPreivew =
+	eb_style_handler.editor_type === "edit-site"
+		? "core/edit-site"
+		: "core/edit-post";
+
+function Inspector(props) {
+	const { attributes, setAttributes } = props;
 	const {
-		columns,
+		resOption,
+		layouts,
 		displayCaption,
-		captionFontSize,
-		captionSizeUnit,
+		captionOnHover,
 		captionColor,
+		overlayColor,
+		captionBGColor,
 		horizontalAlign,
 		verticalAlign,
 		textAlign,
 		styleNumber,
-		paddingUnit,
-		paddingTop,
-		paddingRight,
-		paddingBottom,
-		paddingLeft,
-		borderColor,
-		borderWidth,
-		borderStyle,
-		shadowColor,
-		hOffset,
-		vOffset,
-		blur,
-		isMasonry,
+		overlayStyle,
+		disableLightBox,
 	} = attributes;
 
-	const captionSizeStep = captionSizeUnit === "em" ? 0.1 : 1;
-	const captionSizeMin = captionSizeUnit === "em" ? 0.1 : 8;
-	const captionSizeMax = captionSizeUnit === "em" ? 8 : 100;
+	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
+	useEffect(() => {
+		setAttributes({
+			resOption: select(editorStoreForGettingPreivew).__experimentalGetPreviewDeviceType(),
+		});
+	}, []);
+
+	// // this useEffect is for mimmiking css for all the eb blocks on resOption changing
+	// useEffect(() => {
+	// 	mimmikCssForResBtns({
+	// 		domObj: document,
+	// 		resOption,
+	// 	});
+	// }, [resOption]);
+
+	// // this useEffect is to mimmik css for responsive preview in the editor page when clicking the buttons in the 'Preview button of wordpress' located beside the 'update' button while any block is selected and it's inspector panel is mounted in the DOM
+	// useEffect(() => {
+	// 	const cleanUp = mimmikCssOnPreviewBtnClickWhileBlockSelected({
+	// 		domObj: document,
+	// 		select,
+	// 		setAttributes,
+	// 	});
+	// 	return () => {
+	// 		cleanUp();
+	// 	};
+	// }, []);
+
+	const changeStyle = (selected) => {
+		setAttributes({styleNumber: selected});
+		switch(selected) {
+			case '0':
+				setAttributes({})
+				break;
+			case '1':
+				setAttributes({})
+				break;
+			case '2':
+				setAttributes({
+					displayCaption: true,
+				})
+				break;
+			default:
+				return false;
+		}
+	}
+
+	const resRequiredProps = {
+		setAttributes,
+		resOption,
+		attributes,
+		objAttributes
+	};
 
 	return (
 		<InspectorControls key="controls">
-			<PanelBody title={__("General Settings")}>
-				<ToggleControl
-					label={__("Masonry Layout")}
-					checked={isMasonry}
-					onChange={() => setAttributes({ isMasonry: !isMasonry })}
-				/>
+			<div className="eb-panel-control">
+			
+				<TabPanel
+					className="eb-parent-tab-panel"
+					activeClass="active-tab"
+					// onSelect={onSelect}
+					tabs={ [
+						{
+							name: 'general',
+							title: 'General',
+							className: 'eb-tab general',
+						},
+						{
+							name: 'styles',
+							title: 'Style',
+							className: 'eb-tab styles',
+						},
+						{
+							name: 'advance',
+							title: 'Advanced',
+							className: 'eb-tab advance',
+						},
+					] }
+				>
+					{(tab) =>
+						<div className={"eb-tab-controls" + tab.name}>
+							{tab.name === "general" && (
+								<>
+									<PanelBody 
+										title={__("General", "essential-blocks")} 
+										initialOpen={true}
+									>
+										<SelectControl
+											label={__("Layouts", "essential-blocks")}
+											value={layouts}
+											options={LAYOUTS}
+											onChange={(layouts) => setAttributes({ layouts })}
+										/>
 
-				<ToggleControl
-					label={__("Display Caption")}
-					checked={displayCaption}
-					onChange={() => setAttributes({ displayCaption: !displayCaption })}
-				/>
+										<SelectControl
+											label={__("Styles", "essential-blocks")}
+											value={styleNumber}
+											options={STYLES}
+											onChange={(styleNumber) => changeStyle( styleNumber )}
+										/>
 
-				<RangeControl
-					label={__("Columns")}
-					value={columns}
-					onChange={(columns) => setAttributes({ columns })}
-					min={1}
-					max={8}
-				/>
+										{styleNumber === "2" && (
+											<SelectControl
+												label={__("Overlay Styles", "essential-blocks")}
+												value={overlayStyle}
+												options={OVERLAY_STYLES}
+												onChange={(overlayStyle) => setAttributes({ overlayStyle })}
+											/>
+										)}
+						
+										<ToggleControl
+											label={__("Display Caption", "essential-blocks")}
+											checked={displayCaption}
+											onChange={() => setAttributes({ displayCaption: !displayCaption })}
+										/>
 
-				<SelectControl
-					label={__("Styles")}
-					value={styleNumber}
-					options={STYLES}
-					onChange={(styleNumber) => setAttributes({ styleNumber })}
-				/>
-			</PanelBody>
+										{displayCaption && styleNumber === '0' && (
+											<ToggleControl
+											label={__("Display Caption on Hover", "essential-blocks")}
+											checked={captionOnHover}
+											onChange={() => setAttributes({ captionOnHover: !captionOnHover })}
+										/>
+										)}
 
-			{displayCaption && (
-				<PanelBody title={__("Caption Styles")}>
-					<ColorControl
-						label={__("Caption Color")}
-						color={captionColor}
-						onChange={(captionColor) => setAttributes({ captionColor })}
-					/>
+										<ResponsiveRangeController
+											baseLabel={__("Columns", "essential-blocks")}
+											controlName={GRID_COLUMNS}
+											resRequiredProps={resRequiredProps}
+											units={[]}
+											min={1}
+											max={8}
+											step={1}
+										/>
 
-					<UnitControl
-						selectedUnit={captionSizeUnit}
-						unitTypes={[
-							{ label: "px", value: "px" },
-							{ label: "em", value: "em" },
-							{ label: "%", value: "%" },
-						]}
-						onClick={(captionSizeUnit) => setAttributes({ captionSizeUnit })}
-					/>
+										<ResponsiveRangeController
+											baseLabel={__("Image Gap", "essential-blocks")}
+											controlName={IMAGE_GAP}
+											resRequiredProps={resRequiredProps}
+											units={[]}
+											min={0}
+											max={100}
+											step={1}
+										/>
+						
+										<ToggleControl
+											label={__("Disable Light Box", "essential-blocks")}
+											checked={disableLightBox}
+											onChange={() => setAttributes({ disableLightBox: !disableLightBox })}
+										/>
+									</PanelBody>
+								</>
+							)}
 
-					<RangeControl
-						label={__("Font Size")}
-						value={captionFontSize}
-						allowReset
-						onChange={(captionFontSize) => setAttributes({ captionFontSize })}
-						step={captionSizeStep}
-						min={captionSizeMin}
-						max={captionSizeMax}
-					/>
+							{tab.name === "styles" && (
+								<>
+									<PanelBody title={__("Image Settings", "essential-blocks")}>
+										<PanelBody title={__("Border", "essential-blocks")} initialOpen={true}>
+											<BorderShadowControl
+												controlName={IMAGE_BORDER_SHADOW}
+												resRequiredProps={resRequiredProps}
+												noShadow
+												// noBorder
+											/>
+										</PanelBody>
+									</PanelBody>
 
-					<BaseControl label={__("Text Align")}>
-						<ButtonGroup>
-							{TEXT_ALIGN.map((item) => (
-								<Button
-									isLarge
-									isPrimary={textAlign === item.value}
-									isSecondary={textAlign !== item.value}
-									onClick={() => setAttributes({ textAlign: item.value })}
-								>
-									{item.label}
-								</Button>
-							))}
-						</ButtonGroup>
-					</BaseControl>
+									{styleNumber === "2" && (
+										<PanelBody title={__("Overlay Styles", "essential-blocks")}>
+											<ColorControl
+                								label={__("Overlay Color", "essential-blocks")}
+												color={ overlayColor }
+												onChange={(color) => 
+													setAttributes({ overlayColor: color })
+												}
+											/>
+										</PanelBody>
+									)}
+									{displayCaption && (
+										<PanelBody title={__("Caption Styles", "essential-blocks")}>
 
-					<BaseControl label={__("Vertical Align")}>
-						<ButtonGroup>
-							{VERTICAL_ALIGN.map((item) => (
-								<Button
-									isLarge
-									isPrimary={verticalAlign === item.value}
-									isSecondary={verticalAlign !== item.value}
-									onClick={() =>
-										setAttributes({
-											verticalAlign: item.value,
-										})
-									}
-								>
-									{item.label}
-								</Button>
-							))}
-						</ButtonGroup>
-					</BaseControl>
+											<PanelColorSettings
+												title={__('Color Controls', 'essential-blocks')}
+												className={"eb-subpanel"}
+												initialOpen={true}
+												disableAlpha = {false}
+												colorSettings={[
+													{
+														value: captionColor,
+														onChange: (newColor) =>
+															setAttributes({ captionColor: newColor }),
+														label: __("Text Color", "essential-blocks"),
+													}
+												]}
+											/>
 
-					<BaseControl label={__("Horizontal Align")}>
-						<ButtonGroup>
-							{HORIZONTAL_ALIGN.map((item) => (
-								<Button
-									isLarge
-									isPrimary={horizontalAlign === item.value}
-									isSecondary={horizontalAlign !== item.value}
-									onClick={() =>
-										setAttributes({
-											horizontalAlign: item.value,
-										})
-									}
-								>
-									{item.label}
-								</Button>
-							))}
-						</ButtonGroup>
-					</BaseControl>
-				</PanelBody>
-			)}
+											<ColorControl
+                								label={__("Background Color", "essential-blocks")}
+												color={ captionBGColor }
+												onChange={(backgroundColor) =>
+													setAttributes({ captionBGColor: backgroundColor })
+												}
+											/>
 
-			<PanelBody title={__("Image Settings")}>
-				<UnitControl
-					selectedUnit={paddingUnit}
-					unitTypes={[
-						{ label: "px", value: "px" },
-						{ label: "em", value: "em" },
-						{ label: "%", value: "%" },
-					]}
-					onClick={(paddingUnit) => setAttributes({ paddingUnit })}
-				/>
+											<TypographyDropdown
+												baseLabel={__("Typography", "essential-blocks")}
+												typographyPrefixConstant={CAPTION_TYPOGRAPHY}
+												resRequiredProps={resRequiredProps}
+											/>
 
-				<DimensionControl
-					label={__("Padding")}
-					top={paddingTop}
-					right={paddingRight}
-					bottom={paddingBottom}
-					left={paddingLeft}
-					onChange={({ top, right, bottom, left }) =>
-						setAttributes({
-							paddingTop: top,
-							paddingRight: right,
-							paddingBottom: bottom,
-							paddingLeft: left,
-						})
+											<ResponsiveRangeController
+												baseLabel={__("Width", "essential-blocks")}
+												controlName={CAPTION_WIDTH}
+												resRequiredProps={resRequiredProps}
+												units={UNIT_TYPES}
+												min={0}
+												max={300}
+												step={1}
+											/>
+
+											{displayCaption && (
+												<>
+													<BaseControl label={__("Text Align", "essential-blocks")}>
+														<ButtonGroup>
+															{TEXT_ALIGN.map((item) => (
+																<Button
+																	// isLarge
+																	isPrimary={textAlign === item.value}
+																	isSecondary={textAlign !== item.value}
+																	onClick={() => setAttributes({ textAlign: item.value })}
+																>
+																	{item.label}
+																</Button>
+															))}
+														</ButtonGroup>
+													</BaseControl>
+							
+													<BaseControl label={__("Horizontal Align", "essential-blocks")}>
+														<ButtonGroup>
+															{HORIZONTAL_ALIGN.map((item) => (
+																<Button
+																	// isLarge
+																	isPrimary={horizontalAlign === item.value}
+																	isSecondary={horizontalAlign !== item.value}
+																	onClick={() =>
+																		setAttributes({
+																			horizontalAlign: item.value,
+																		})
+																	}
+																>
+																	{item.label}
+																</Button>
+															))}
+														</ButtonGroup>
+													</BaseControl>
+							
+													<BaseControl label={__("Vertical Align", "essential-blocks")}>
+														<ButtonGroup>
+															{VERTICAL_ALIGN.map((item) => (
+																<Button
+																	// isLarge
+																	isPrimary={verticalAlign === item.value}
+																	isSecondary={verticalAlign !== item.value}
+																	onClick={() =>
+																		setAttributes({
+																			verticalAlign: item.value,
+																		})
+																	}
+																>
+																	{item.label}
+																</Button>
+															))}
+														</ButtonGroup>
+													</BaseControl>
+
+													<ResponsiveDimensionsControl
+														resRequiredProps={resRequiredProps}
+														controlName={CAPTION_MARGIN}
+														baseLabel="Margin"
+													/>
+
+													<ResponsiveDimensionsControl
+														resRequiredProps={resRequiredProps}
+														controlName={CAPTION_PADDING}
+														baseLabel="Padding"
+													/>
+												</>
+											)}
+										</PanelBody>
+									)}
+								</>
+							)}
+
+							{tab.name === "advance" && (
+								<>
+									<PanelBody>
+										<ResponsiveDimensionsControl
+											resRequiredProps={resRequiredProps}
+											controlName={WRAPPER_MARGIN}
+											baseLabel="Margin"
+										/>
+										<ResponsiveDimensionsControl
+											resRequiredProps={resRequiredProps}
+											controlName={WRAPPER_PADDING}
+											baseLabel="Padding"
+										/>
+									</PanelBody>
+									<PanelBody title={__("Background", "essential-blocks")} initialOpen={false}>
+										<BackgroundControl
+											controlName={WRAPPER_BG}
+											resRequiredProps={resRequiredProps}
+											noOverlay
+										/>
+									</PanelBody>
+									<PanelBody title={__("Border & Shadow")} initialOpen={false}>
+										<BorderShadowControl
+											controlName={WRAPPER_BORDER_SHADOW}
+											resRequiredProps={resRequiredProps}
+											// noShadow
+											// noBorder
+										/>
+									</PanelBody>
+								</>
+							)}
+						</div>
 					}
-				/>
-
-				<PanelBody title={__("Border")} initialOpen={false}>
-					<SelectControl
-						label={__("Border Style")}
-						value={borderStyle}
-						options={BORDER_STYLES}
-						onChange={(borderStyle) => setAttributes({ borderStyle })}
-					/>
-
-					{borderStyle !== "none" && (
-						<RangeControl
-							label={__("Border Width")}
-							value={borderWidth}
-							onChange={(borderWidth) => setAttributes({ borderWidth })}
-							allowReset
-							min={0}
-							max={20}
-						/>
-					)}
-
-					{borderStyle !== "none" && (
-						<ColorControl
-							label={__("BorderColor")}
-							color={borderColor}
-							onChange={(borderColor) => setAttributes({ borderColor })}
-						/>
-					)}
-				</PanelBody>
-
-				<PanelBody title={__("Shadow")} initialOpen={false}>
-					<ColorControl
-						label={__("Shadow Color")}
-						color={shadowColor}
-						onChange={(shadowColor) => setAttributes({ shadowColor })}
-					/>
-
-					<RangeControl
-						label={__("Horizontal Offset")}
-						allowReset
-						value={hOffset}
-						onChange={(hOffset) => setAttributes({ hOffset })}
-						min={0}
-						max={20}
-					/>
-
-					<RangeControl
-						label={__("Vertical Offset")}
-						value={vOffset}
-						allowReset
-						onChange={(vOffset) => setAttributes({ vOffset })}
-						min={0}
-						max={20}
-					/>
-
-					<RangeControl
-						label={__("Shadow Blur")}
-						value={blur}
-						allowReset
-						onChange={(blur) => setAttributes({ blur })}
-						min={0}
-						max={20}
-					/>
-				</PanelBody>
-			</PanelBody>
+				</TabPanel>
+			</div>
 		</InspectorControls>
 	);
-};
+}
+
 export default Inspector;

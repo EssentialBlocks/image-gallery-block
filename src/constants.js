@@ -1,41 +1,57 @@
 import { __ } from "@wordpress/i18n";
 
-const VERTICAL_ALIGN = [
-	{ label: __("Top"), value: "flex-start" },
-	{ label: __("Center"), value: "center" },
-	{ label: __("Bottom"), value: "flex-end" },
+// the consts defined here should be unique from one another
+export const WRAPPER_BG = "wrprBg";
+export const WRAPPER_MARGIN = "wrpMargin";
+export const WRAPPER_PADDING = "wrpPadding";
+export const WRAPPER_BORDER_SHADOW = "wrpBorderShadow";
+export const GRID_COLUMNS = "columns";
+export const IMAGE_GAP = "imageGap";
+export const IMAGE_BORDER_SHADOW = "imgBorderShadow";
+export const CAPTION_MARGIN = "captionMargin";
+export const CAPTION_PADDING = "captionPadding";
+export const CAPTION_TYPOGRAPHY = "captionTypo";
+export const CAPTION_WIDTH = "captionWidth";
+
+export const VERTICAL_ALIGN = [
+	{ label: __("Top", "essential-blocks"), value: "top" },
+	{ label: __("Middle", "essential-blocks"), value: "middle" },
+	{ label: __("Bottom", "essential-blocks"), value: "bottom" },
 ];
 
-const HORIZONTAL_ALIGN = [
-	{ label: __("Left"), value: "flex-start" },
-	{ label: __("Center"), value: "center" },
-	{ label: __("Right"), value: "flex-end" },
+export const HORIZONTAL_ALIGN = [
+	{ label: __("Left", "essential-blocks"), value: "left" },
+	{ label: __("Center", "essential-blocks"), value: "center" },
+	{ label: __("Right", "essential-blocks"), value: "right" },
 ];
 
-const TEXT_ALIGN = [
-	{ label: __("Left"), value: "left" },
-	{ label: __("Right"), value: "right" },
-	{ label: __("Center"), value: "center" },
-	{ label: __("Justify"), value: "justify" },
+export const TEXT_ALIGN = [
+	{ label: __("Left", "essential-blocks"), value: "left" },
+	{ label: __("Right", "essential-blocks"), value: "right" },
+	{ label: __("Center", "essential-blocks"), value: "center" },
+	{ label: __("Justify", "essential-blocks"), value: "justify" },
 ];
 
-const STYLES = [
-	{ label: __("None"), value: "0" },
-	{ label: __("Style 1"), value: "1" },
-	{ label: __("Style 2"), value: "2" },
-	{ label: __("Style 3"), value: "3" },
+export const UNIT_TYPES = [
+	{ label: "px", value: "px" },
+	{ label: "%", value: "%" },
 ];
 
-const BORDER_STYLES = [
-	{ label: __("None"), value: "none" },
-	{ label: __("Solid"), value: "solid" },
-	{ label: __("Dashed"), value: "dashed" },
-	{ label: __("Dotted"), value: "dotted" },
-	{ label: __("Double"), value: "double" },
-	{ label: __("Groove"), value: "groove" },
-	{ label: __("Inset"), value: "inset" },
-	{ label: __("Outset"), value: "outset" },
-	{ label: __("Ridge"), value: "ridge" },
+export const LAYOUTS = [
+	{ label: __("Grid Layout", "essential-blocks"), value: "grid" },
+	{ label: __("Masonry Layout", "essential-blocks"), value: "masonry" },
 ];
 
-export { VERTICAL_ALIGN, HORIZONTAL_ALIGN, TEXT_ALIGN, STYLES, BORDER_STYLES };
+export const STYLES = [
+	{ label: __("None", "essential-blocks"), value: "0" },
+	{ label: __("Black & White"), value: "1" },
+	{ label: __("Color Overlay", "essential-blocks"), value: "2" },
+];
+
+export const OVERLAY_STYLES = [
+	{ label: __("From Top", "essential-blocks"), value: "overlay-top" },
+	{ label: __("From Bottom", "essential-blocks"), value: "overlay-bottom" },
+	{ label: __("From Left", "essential-blocks"), value: "overlay-left" },
+	{ label: __("From Right", "essential-blocks"), value: "overlay-right" },
+	{ label: __("Zoom In Out", "essential-blocks"), value: "zoom" },
+];

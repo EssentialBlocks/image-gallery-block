@@ -46,6 +46,7 @@ function create_block_image_gallery_block_init()
 		'wp-element',
 		'wp-block-editor',
 		'imagegallery-block-controls-util',
+		'essential-blocks-eb-animation'
 	));
 
 	wp_register_script(
@@ -73,12 +74,30 @@ function create_block_image_gallery_block_init()
 		true
 	);
 
+	$load_animation_js = IMAGEGALLERY_BLOCK_ADMIN_URL . 'lib/js/eb-animation-load.js';
+	wp_register_script(
+		'essential-blocks-eb-animation',
+		$load_animation_js,
+		array(),
+		IMAGEGALLERY_BLOCK_VERSION,
+		true
+	);
+
+	$animate_css = IMAGEGALLERY_BLOCK_ADMIN_URL . 'lib/css/animate.min.css';
+	wp_register_style(
+		'essential-blocks-animation',
+		$animate_css,
+		array(),
+		IMAGEGALLERY_BLOCK_VERSION
+	);
+
+
 	$style_css = IMAGEGALLERY_BLOCK_ADMIN_URL . 'dist/style.css';
 	//Frontend Style
 	wp_register_style(
 		'create-block-imagegallery-block-frontend-style',
 		$style_css,
-		array(),
+		array('essential-blocks-animation'),
 		IMAGEGALLERY_BLOCK_VERSION
 	);
 
@@ -93,6 +112,7 @@ function create_block_image_gallery_block_init()
 						wp_enqueue_style('create-block-imagegallery-block-frontend-style');
 						wp_enqueue_style('fslightbox-style');
 						wp_enqueue_script('fslightbox-js');
+						wp_enqueue_script('essential-blocks-eb-animation');
 					}
 					return $content;
 				}

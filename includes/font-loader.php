@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class Advanced_Heading_Font_Loader
+class Image_Gallery_Font_Loader
 {
 
     private static $instance;
@@ -91,4 +91,4 @@ class Advanced_Heading_Font_Loader
         }
     }
 }
-Advanced_Heading_Font_Loader::register();
+Image_Gallery_Font_Loader::register();

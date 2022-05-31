@@ -1,16 +1,16 @@
 /**
- * WordPress dependencies 
+ * WordPress dependencies
  */
 import { __ } from "@wordpress/i18n";
 import { InspectorControls, PanelColorSettings } from "@wordpress/block-editor";
-import { 
+import {
 	PanelBody,
 	SelectControl,
 	ToggleControl,
 	Button,
 	ButtonGroup,
 	BaseControl,
-	TabPanel
+	TabPanel,
 } from "@wordpress/components";
 import { useEffect } from "@wordpress/element";
 import { select } from "@wordpress/data";
@@ -19,9 +19,9 @@ import { select } from "@wordpress/data";
  * Internal depencencies
  */
 
- import objAttributes from "./attributes";
+import objAttributes from "./attributes";
 
- import {
+import {
 	WRAPPER_BG,
 	WRAPPER_MARGIN,
 	WRAPPER_PADDING,
@@ -43,20 +43,17 @@ import { select } from "@wordpress/data";
 } from "./constants";
 
 const {
-	// mimmikCssForResBtns, 
-	// mimmikCssOnPreviewBtnClickWhileBlockSelected,
-
-	// 
 	ResponsiveDimensionsControl,
 	TypographyDropdown,
 	BorderShadowControl,
 	ResponsiveRangeController,
 	BackgroundControl,
 	ColorControl,
+	AdvancedControls,
 } = window.EBImageGalleryControls;
 
 const editorStoreForGettingPreivew =
-	eb_style_handler.editor_type === "edit-site"
+	eb_conditional_localize.editor_type === "edit-site"
 		? "core/edit-site"
 		: "core/edit-post";
 
@@ -81,7 +78,9 @@ function Inspector(props) {
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class only the first time once
 	useEffect(() => {
 		setAttributes({
-			resOption: select(editorStoreForGettingPreivew).__experimentalGetPreviewDeviceType(),
+			resOption: select(
+				editorStoreForGettingPreivew
+			).__experimentalGetPreviewDeviceType(),
 		});
 	}, []);
 
@@ -106,63 +105,62 @@ function Inspector(props) {
 	// }, []);
 
 	const changeStyle = (selected) => {
-		setAttributes({styleNumber: selected});
-		switch(selected) {
-			case '0':
-				setAttributes({})
+		setAttributes({ styleNumber: selected });
+		switch (selected) {
+			case "0":
+				setAttributes({});
 				break;
-			case '1':
-				setAttributes({})
+			case "1":
+				setAttributes({});
 				break;
-			case '2':
+			case "2":
 				setAttributes({
 					displayCaption: true,
-				})
+				});
 				break;
 			default:
 				return false;
 		}
-	}
+	};
 
 	const resRequiredProps = {
 		setAttributes,
 		resOption,
 		attributes,
-		objAttributes
+		objAttributes,
 	};
 
 	return (
 		<InspectorControls key="controls">
 			<div className="eb-panel-control">
-			
 				<TabPanel
 					className="eb-parent-tab-panel"
 					activeClass="active-tab"
 					// onSelect={onSelect}
-					tabs={ [
+					tabs={[
 						{
-							name: 'general',
-							title: 'General',
-							className: 'eb-tab general',
+							name: "general",
+							title: "General",
+							className: "eb-tab general",
 						},
 						{
-							name: 'styles',
-							title: 'Style',
-							className: 'eb-tab styles',
+							name: "styles",
+							title: "Style",
+							className: "eb-tab styles",
 						},
 						{
-							name: 'advance',
-							title: 'Advanced',
-							className: 'eb-tab advance',
+							name: "advance",
+							title: "Advanced",
+							className: "eb-tab advance",
 						},
-					] }
+					]}
 				>
-					{(tab) =>
+					{(tab) => (
 						<div className={"eb-tab-controls" + tab.name}>
 							{tab.name === "general" && (
 								<>
-									<PanelBody 
-										title={__("General", "essential-blocks")} 
+									<PanelBody
+										title={__("General", "essential-blocks")}
 										initialOpen={true}
 									>
 										<SelectControl
@@ -176,7 +174,7 @@ function Inspector(props) {
 											label={__("Styles", "essential-blocks")}
 											value={styleNumber}
 											options={STYLES}
-											onChange={(styleNumber) => changeStyle( styleNumber )}
+											onChange={(styleNumber) => changeStyle(styleNumber)}
 										/>
 
 										{styleNumber === "2" && (
@@ -184,22 +182,31 @@ function Inspector(props) {
 												label={__("Overlay Styles", "essential-blocks")}
 												value={overlayStyle}
 												options={OVERLAY_STYLES}
-												onChange={(overlayStyle) => setAttributes({ overlayStyle })}
+												onChange={(overlayStyle) =>
+													setAttributes({ overlayStyle })
+												}
 											/>
 										)}
-						
+
 										<ToggleControl
 											label={__("Display Caption", "essential-blocks")}
 											checked={displayCaption}
-											onChange={() => setAttributes({ displayCaption: !displayCaption })}
+											onChange={() =>
+												setAttributes({ displayCaption: !displayCaption })
+											}
 										/>
 
-										{displayCaption && styleNumber === '0' && (
+										{displayCaption && styleNumber === "0" && (
 											<ToggleControl
-											label={__("Display Caption on Hover", "essential-blocks")}
-											checked={captionOnHover}
-											onChange={() => setAttributes({ captionOnHover: !captionOnHover })}
-										/>
+												label={__(
+													"Display Caption on Hover",
+													"essential-blocks"
+												)}
+												checked={captionOnHover}
+												onChange={() =>
+													setAttributes({ captionOnHover: !captionOnHover })
+												}
+											/>
 										)}
 
 										<ResponsiveRangeController
@@ -221,11 +228,13 @@ function Inspector(props) {
 											max={100}
 											step={1}
 										/>
-						
+
 										<ToggleControl
 											label={__("Disable Light Box", "essential-blocks")}
 											checked={disableLightBox}
-											onChange={() => setAttributes({ disableLightBox: !disableLightBox })}
+											onChange={() =>
+												setAttributes({ disableLightBox: !disableLightBox })
+											}
 										/>
 									</PanelBody>
 								</>
@@ -234,12 +243,15 @@ function Inspector(props) {
 							{tab.name === "styles" && (
 								<>
 									<PanelBody title={__("Image Settings", "essential-blocks")}>
-										<PanelBody title={__("Border", "essential-blocks")} initialOpen={true}>
+										<PanelBody
+											title={__("Border", "essential-blocks")}
+											initialOpen={true}
+										>
 											<BorderShadowControl
 												controlName={IMAGE_BORDER_SHADOW}
 												resRequiredProps={resRequiredProps}
 												noShadow
-												// noBorder
+											// noBorder
 											/>
 										</PanelBody>
 									</PanelBody>
@@ -247,9 +259,9 @@ function Inspector(props) {
 									{styleNumber === "2" && (
 										<PanelBody title={__("Overlay Styles", "essential-blocks")}>
 											<ColorControl
-                								label={__("Overlay Color", "essential-blocks")}
-												color={ overlayColor }
-												onChange={(color) => 
+												label={__("Overlay Color", "essential-blocks")}
+												color={overlayColor}
+												onChange={(color) =>
 													setAttributes({ overlayColor: color })
 												}
 											/>
@@ -257,25 +269,24 @@ function Inspector(props) {
 									)}
 									{displayCaption && (
 										<PanelBody title={__("Caption Styles", "essential-blocks")}>
-
 											<PanelColorSettings
-												title={__('Color Controls', 'essential-blocks')}
+												title={__("Color Controls", "essential-blocks")}
 												className={"eb-subpanel"}
 												initialOpen={true}
-												disableAlpha = {false}
+												disableAlpha={false}
 												colorSettings={[
 													{
 														value: captionColor,
 														onChange: (newColor) =>
 															setAttributes({ captionColor: newColor }),
 														label: __("Text Color", "essential-blocks"),
-													}
+													},
 												]}
 											/>
 
 											<ColorControl
-                								label={__("Background Color", "essential-blocks")}
-												color={ captionBGColor }
+												label={__("Background Color", "essential-blocks")}
+												color={captionBGColor}
 												onChange={(backgroundColor) =>
 													setAttributes({ captionBGColor: backgroundColor })
 												}
@@ -299,26 +310,32 @@ function Inspector(props) {
 
 											{displayCaption && (
 												<>
-													<BaseControl label={__("Text Align", "essential-blocks")}>
+													<BaseControl
+														label={__("Text Align", "essential-blocks")}
+													>
 														<ButtonGroup>
-															{TEXT_ALIGN.map((item) => (
+															{TEXT_ALIGN.map((item, index) => (
 																<Button
-																	// isLarge
+																	key={index}
 																	isPrimary={textAlign === item.value}
 																	isSecondary={textAlign !== item.value}
-																	onClick={() => setAttributes({ textAlign: item.value })}
+																	onClick={() =>
+																		setAttributes({ textAlign: item.value })
+																	}
 																>
 																	{item.label}
 																</Button>
 															))}
 														</ButtonGroup>
 													</BaseControl>
-							
-													<BaseControl label={__("Horizontal Align", "essential-blocks")}>
+
+													<BaseControl
+														label={__("Horizontal Align", "essential-blocks")}
+													>
 														<ButtonGroup>
-															{HORIZONTAL_ALIGN.map((item) => (
+															{HORIZONTAL_ALIGN.map((item, index) => (
 																<Button
-																	// isLarge
+																	key={index}
 																	isPrimary={horizontalAlign === item.value}
 																	isSecondary={horizontalAlign !== item.value}
 																	onClick={() =>
@@ -332,12 +349,14 @@ function Inspector(props) {
 															))}
 														</ButtonGroup>
 													</BaseControl>
-							
-													<BaseControl label={__("Vertical Align", "essential-blocks")}>
+
+													<BaseControl
+														label={__("Vertical Align", "essential-blocks")}
+													>
 														<ButtonGroup>
-															{VERTICAL_ALIGN.map((item) => (
+															{VERTICAL_ALIGN.map((item, index) => (
 																<Button
-																	// isLarge
+																	key={index}
 																	isPrimary={verticalAlign === item.value}
 																	isSecondary={verticalAlign !== item.value}
 																	onClick={() =>
@@ -384,7 +403,10 @@ function Inspector(props) {
 											baseLabel="Padding"
 										/>
 									</PanelBody>
-									<PanelBody title={__("Background", "essential-blocks")} initialOpen={false}>
+									<PanelBody
+										title={__("Background", "essential-blocks")}
+										initialOpen={false}
+									>
 										<BackgroundControl
 											controlName={WRAPPER_BG}
 											resRequiredProps={resRequiredProps}
@@ -395,14 +417,16 @@ function Inspector(props) {
 										<BorderShadowControl
 											controlName={WRAPPER_BORDER_SHADOW}
 											resRequiredProps={resRequiredProps}
-											// noShadow
-											// noBorder
+										// noShadow
+										// noBorder
 										/>
 									</PanelBody>
+
+									<AdvancedControls attributes={attributes} setAttributes={setAttributes} />
 								</>
 							)}
 						</div>
-					}
+					)}
 				</TabPanel>
 			</div>
 		</InspectorControls>

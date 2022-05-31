@@ -12,6 +12,14 @@ import {
 } from "./constants";
 import * as CAPTION_TYPOGRAPHY from "./typoConstants";
 
+// import {
+// 	generateDimensionsAttributes,
+// 	generateTypographyAttributes,
+// 	generateBackgroundAttributes,
+// 	generateBorderShadowAttributes,
+// 	generateResponsiveRangeAttributes
+// } from "../../../util/helpers";
+
 const {
 	generateDimensionsAttributes,
 	generateTypographyAttributes,

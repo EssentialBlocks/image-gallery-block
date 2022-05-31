@@ -1,18 +1,28 @@
 /**
- * WordPress dependencies 
+ * WordPress dependencies
  */
 import { __ } from "@wordpress/i18n";
-import { MediaUpload, MediaPlaceholder, BlockControls, useBlockProps } from "@wordpress/block-editor";
-import { ToolbarGroup, ToolbarItem, ToolbarButton, Button } from "@wordpress/components";
+import {
+	MediaUpload,
+	MediaPlaceholder,
+	BlockControls,
+	useBlockProps,
+} from "@wordpress/block-editor";
+import {
+	ToolbarGroup,
+	ToolbarItem,
+	ToolbarButton,
+	Button,
+} from "@wordpress/components";
 import { Fragment, useEffect } from "@wordpress/element";
-import { select } from "@wordpress/data"; 
+import { select } from "@wordpress/data";
 
 /**
-  * Internal depencencies
-*/
- import classnames from "classnames";
+ * Internal depencencies
+ */
+import classnames from "classnames";
 
-import Inspector from "./inspector"; 
+import Inspector from "./inspector";
 import {
 	WRAPPER_BG,
 	WRAPPER_MARGIN,
@@ -39,10 +49,9 @@ const {
 } = window.EBImageGalleryControls;
 
 const editorStoreForGettingPreivew =
-	eb_style_handler.editor_type === "edit-site"
+	eb_conditional_localize.editor_type === "edit-site"
 		? "core/edit-site"
 		: "core/edit-post";
-
 
 export default function Edit(props) {
 	const { attributes, setAttributes, className, clientId, isSelected } = props;
@@ -64,6 +73,7 @@ export default function Edit(props) {
 		textAlign,
 		styleNumber,
 		overlayStyle,
+		classHook,
 	} = attributes;
 
 	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
@@ -71,9 +81,10 @@ export default function Edit(props) {
 		const bodyClasses = document.body.className;
 
 		setAttributes({
-			resOption: select(editorStoreForGettingPreivew).__experimentalGetPreviewDeviceType(),
+			resOption: select(
+				editorStoreForGettingPreivew
+			).__experimentalGetPreviewDeviceType(),
 		});
-
 	}, []);
 
 	// this useEffect is for creating a unique id for each block's unique className by a random unique number
@@ -88,23 +99,15 @@ export default function Edit(props) {
 		});
 	}, []);
 
-	// // this useEffect is for mimmiking css when responsive options clicked from wordpress's 'preview' button
-	// useEffect(() => {
-	// 	mimmikCssForPreviewBtnClick({
-	// 		domObj: document,
-	// 		select,
-	// 	});
-	// }, []);
-
 	const blockProps = useBlockProps({
 		className: classnames(className, `eb-guten-block-main-parent-wrapper`),
 	});
 
 	/**
 	 * CSS/styling Codes Starts from Here
-	*/
+	 */
 
-	// Caption Typography 
+	// Caption Typography
 	const {
 		typoStylesDesktop: captionTypographyDesktop,
 		typoStylesTab: captionTypographyTab,
@@ -170,7 +173,7 @@ export default function Edit(props) {
 		attributes,
 	});
 
-	// range controller Separator Line Grid Column Margin Bottom 
+	// range controller Separator Line Grid Column Margin Bottom
 	const {
 		rangeStylesDesktop: captionWidthDesktop,
 		rangeStylesTab: captionWidthTab,
@@ -204,7 +207,7 @@ export default function Edit(props) {
 	} = generateBackgroundControlStyles({
 		attributes,
 		controlName: WRAPPER_BG,
-		noOverlay : true
+		noOverlay: true,
 	});
 
 	// generateBorderShadowStyles for Wrapper ⬇
@@ -239,7 +242,6 @@ export default function Edit(props) {
 		// noBorder: true,
 	});
 
-
 	// wrapper styles css in strings ⬇
 	const wrapperStylesDesktop = `
 		.eb-gallery-img-wrapper.${blockId}{
@@ -255,13 +257,16 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesDesktop}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsDesktop.replace(/[^0-9]/g, '')}, auto);
+			grid-template-columns: repeat(${gridColumnsDesktop.replace(
+		/[^0-9]/g,
+		""
+	)}, auto);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsDesktop.replace(/[^0-9]/g, '')};
+			columns: ${gridColumnsDesktop.replace(/[^0-9]/g, "")};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: ${imageGapStyleDesktop.replace(/[^0-9]/g, '')}px;
+			margin-bottom: ${imageGapStyleDesktop.replace(/[^0-9]/g, "")}px;
 		}
 	`;
 	const wrapperStylesTab = `
@@ -277,13 +282,16 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesTab}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsTab.replace(/[^0-9]/g, '')}, auto);
+			grid-template-columns: repeat(${gridColumnsTab.replace(/[^0-9]/g, "")}, auto);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsTab.replace(/[^0-9]/g, '')};
+			columns: ${gridColumnsTab.replace(/[^0-9]/g, "")};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: calc(${imageGapStyleTab.replace(/[^0-9]/g, '')}px - ${gridColumnsTab.replace(/[^0-9]/g, '')}px);
+			margin-bottom: calc(${imageGapStyleTab.replace(
+		/[^0-9]/g,
+		""
+	)}px - ${gridColumnsTab.replace(/[^0-9]/g, "")}px);
 		}
 	`;
 	const wrapperStylesMobile = `
@@ -299,13 +307,19 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesMobile}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsMobile.replace(/[^0-9]/g, '')}, auto);
+			grid-template-columns: repeat(${gridColumnsMobile.replace(
+		/[^0-9]/g,
+		""
+	)}, auto);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsMobile.replace(/[^0-9]/g, '')};
+			columns: ${gridColumnsMobile.replace(/[^0-9]/g, "")};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: calc(${imageGapStyleMobile.replace(/[^0-9]/g, '')}px - ${gridColumnsMobile.replace(/[^0-9]/g, '')}px);
+			margin-bottom: calc(${imageGapStyleMobile.replace(
+		/[^0-9]/g,
+		""
+	)}px - ${gridColumnsMobile.replace(/[^0-9]/g, "")}px);
 		}
 	`;
 
@@ -391,7 +405,6 @@ export default function Edit(props) {
 		}
 	}, [attributes]);
 
-
 	function onImageSelect(images) {
 		let sources = [];
 		images.map((image) => {
@@ -408,28 +421,29 @@ export default function Edit(props) {
 	let urls = [];
 	images.map((image) => urls.push(image.url));
 
-	return [
-		isSelected && images.length > 0 && (
-			<Inspector attributes={attributes} setAttributes={setAttributes} />
-		),
-		<Fragment>
-			{urls.length === 0 && (
-				<MediaPlaceholder
-					onSelect={(images) => onImageSelect(images)}
-					accept="image/*"
-					allowedTypes={["image"]}
-					multiple
-					labels={{
-						title: "Images",
-						instructions:
-							"Drag media files, upload or select files from your library.",
-					}}
-				/>
+	return (
+		<>
+			{isSelected && images.length > 0 && (
+				<Inspector attributes={attributes} setAttributes={setAttributes} />
 			)}
-		</Fragment>,
-		<div {...blockProps}>
-			<style>
-				{`
+			<>
+				{urls.length === 0 && (
+					<MediaPlaceholder
+						onSelect={(images) => onImageSelect(images)}
+						accept="image/*"
+						allowedTypes={["image"]}
+						multiple
+						labels={{
+							title: "Images",
+							instructions:
+								"Drag media files, upload or select files from your library.",
+						}}
+					/>
+				)}
+			</>
+			<div {...blockProps}>
+				<style>
+					{`
 				${desktopAllStyles}
 
 				/* mimmikcssStart */
@@ -455,87 +469,96 @@ export default function Edit(props) {
 				
 				}
 				`}
-			</style>
-			{urls.length > 0 && (
-				<Fragment>
-					<BlockControls>
-						<ToolbarGroup>
-							<ToolbarItem>
-								{ ( ) => (
-									<MediaUpload
-										value={images.map((img) => img.id)}
-										onSelect={(images) => onImageSelect(images)}
-										allowedTypes={["image"]}
-										multiple
-										gallery
-										render={({ open }) => (
-											<ToolbarButton
-												className="components-toolbar__control"
-												label={__("Edit gallery", "essential-blocks")}
-												icon="edit"
-												onClick={open}
-											/>
-										)}
-									/>
-								) }
-							</ToolbarItem>
-						</ToolbarGroup>
-					</BlockControls>
-
-					<div 
-						className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${captionOnHover ? 'caption-on-hover' : ''}`} 
-						data-id={blockId} 
-					>
-							
-						{sources.map((source, index) => (
-							<a
-								key={index}
-								className={`eb-gallery-img-content`}
-							>
-								<span className="eb-gallery-link-wrapper">
-									<img className="eb-gallery-img" src={source.url} image-index={index} />
-									{(displayCaption && source.caption && source.caption.length > 0) && (
-										<span className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}>{source.caption}</span>
+				</style>
+				{urls.length > 0 && (
+					<Fragment>
+						<BlockControls>
+							<ToolbarGroup>
+								<ToolbarItem>
+									{() => (
+										<MediaUpload
+											value={images.map((img) => img.id)}
+											onSelect={(images) => onImageSelect(images)}
+											allowedTypes={["image"]}
+											multiple
+											gallery
+											render={({ open }) => (
+												<ToolbarButton
+													className="components-toolbar__control"
+													label={__("Edit gallery", "essential-blocks")}
+													icon="edit"
+													onClick={open}
+												/>
+											)}
+										/>
 									)}
-								</span>
-								
-							</a>
-						))}
-					</div>
+								</ToolbarItem>
+							</ToolbarGroup>
+						</BlockControls>
 
-					<MediaUpload
-						onSelect={(newImage) => {
-							let updatedImages = [...images, ...newImage];
-							let sources = [];
+						<div className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}>
+							<div
+								className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${captionOnHover ? "caption-on-hover" : ""
+									}`}
+								data-id={blockId}
+							>
+								{sources.map((source, index) => (
+									<a key={index} className={`eb-gallery-img-content`}>
+										<span className="eb-gallery-link-wrapper">
+											<img
+												className="eb-gallery-img"
+												src={source.url}
+												image-index={index}
+											/>
+											{displayCaption &&
+												source.caption &&
+												source.caption.length > 0 && (
+													<span
+														className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
+													>
+														{source.caption}
+													</span>
+												)}
+										</span>
+									</a>
+								))}
+							</div>
+						</div>
 
-							updatedImages.map((image) => {
-								let item = {};
-								item.url = image.url;
-								item.caption = image.caption;
-								sources.push(item);
-							});
+						<MediaUpload
+							onSelect={(newImage) => {
+								let updatedImages = [...images, ...newImage];
+								let sources = [];
 
-							setAttributes({ images: updatedImages, sources });
-						}}
-						accept="image/*"
-						allowedTypes={["image"]}
-						multiple
-						value={newImage}
-						render={({ open }) =>
-							!newImage && (
-								<Button
-									className="eb-gallery-upload-button"
-									label={__("Add Image", "essential-blocks")}
-									icon="plus-alt"
-									onClick={open}
-								>
-									Add More Images
-								</Button>
-							)
-						}
-					/>
-				</Fragment>
-			)}
-		</div>,
-	];
-};
+								updatedImages.map((image) => {
+									let item = {};
+									item.url = image.url;
+									item.caption = image.caption;
+									sources.push(item);
+								});
+
+								setAttributes({ images: updatedImages, sources });
+							}}
+							accept="image/*"
+							allowedTypes={["image"]}
+							multiple
+							value={newImage}
+							render={({ open }) =>
+								!newImage && (
+									<Button
+										className="eb-gallery-upload-button"
+										label={__("Add Image", "essential-blocks")}
+										icon="plus-alt"
+										onClick={open}
+									>
+										Add More Images
+									</Button>
+								)
+							}
+						/>
+					</Fragment>
+				)}
+			</div>
+		</>
+	);
+}

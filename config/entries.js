@@ -10,6 +10,9 @@ export { default as TypographyDropdown } from "../controls/src/controls/typograp
 export { default as ColorControl } from "../controls/src/controls/color-control";
 export { default as faIcons } from "../controls/src/extras/faIcons";
 
+import "../controls/src/group-controls";
+export { default as AdvancedControls } from "../controls/src/group-controls/components/advanced-controls";
+
 //Export Helper Functions
 export {
 	mimmikCssForResBtns,
@@ -29,5 +32,5 @@ export {
 	generateResponsiveRangeAttributes,
 	textInsideForEdit,
 	getFlipTransform,
-	ebConditionalRegisterBlockType
+	ebConditionalRegisterBlockType,
 } from "../controls/src/helpers";

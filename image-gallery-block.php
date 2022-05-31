@@ -4,7 +4,7 @@
  * Plugin Name:     Image Gallery Block
  * Plugin URI:      https://essential-blocks.com
  * Description:     Impress your audience with beautiful image gallery with lightbox.
- * Version:         1.2.0
+ * Version:         1.2.1
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -28,7 +28,7 @@ require_once __DIR__ . '/lib/style-handler/style-handler.php';
 
 function create_block_image_gallery_block_init()
 {
-	define('IMAGEGALLERY_BLOCK_VERSION', "1.2.0");
+	define('IMAGEGALLERY_BLOCK_VERSION', "1.2.1");
 	define('IMAGEGALLERY_BLOCK_ADMIN_URL', plugin_dir_url(__FILE__));
 	define('IMAGEGALLERY_BLOCK_ADMIN_PATH', dirname(__FILE__));
 
@@ -46,6 +46,7 @@ function create_block_image_gallery_block_init()
 		'wp-element',
 		'wp-block-editor',
 		'imagegallery-block-controls-util',
+		'essential-blocks-eb-animation'
 	));
 
 	wp_register_script(
@@ -73,12 +74,30 @@ function create_block_image_gallery_block_init()
 		true
 	);
 
+	$load_animation_js = IMAGEGALLERY_BLOCK_ADMIN_URL . 'lib/js/eb-animation-load.js';
+	wp_register_script(
+		'essential-blocks-eb-animation',
+		$load_animation_js,
+		array(),
+		IMAGEGALLERY_BLOCK_VERSION,
+		true
+	);
+
+	$animate_css = IMAGEGALLERY_BLOCK_ADMIN_URL . 'lib/css/animate.min.css';
+	wp_register_style(
+		'essential-blocks-animation',
+		$animate_css,
+		array(),
+		IMAGEGALLERY_BLOCK_VERSION
+	);
+
+
 	$style_css = IMAGEGALLERY_BLOCK_ADMIN_URL . 'dist/style.css';
 	//Frontend Style
 	wp_register_style(
 		'create-block-imagegallery-block-frontend-style',
 		$style_css,
-		array(),
+		array('essential-blocks-animation'),
 		IMAGEGALLERY_BLOCK_VERSION
 	);
 
@@ -93,6 +112,7 @@ function create_block_image_gallery_block_init()
 						wp_enqueue_style('create-block-imagegallery-block-frontend-style');
 						wp_enqueue_style('fslightbox-style');
 						wp_enqueue_script('fslightbox-js');
+						wp_enqueue_script('essential-blocks-eb-animation');
 					}
 					return $content;
 				}
@@ -100,4 +120,4 @@ function create_block_image_gallery_block_init()
 		);
 	}
 }
-add_action('init', 'create_block_image_gallery_block_init');
+add_action('init', 'create_block_image_gallery_block_init', 99);

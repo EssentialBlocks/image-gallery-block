@@ -83,9 +83,9 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.2.1 - dev =
+= 1.2.1 - 31/05/2022 =
 * Added: Responsive control, animation and custom CSS options
-* Improved: Controls and structure 
+* Improved: Controls and structure
 
 = 1.2.0 - 09/02/2022 =
 * Fixed: Block Base theme support
@@ -106,4 +106,3 @@ Yes, it will work with any standard WordPress theme.
 * Initial Release
 
 == Upgrade Notice ==
-[ Major update ] New structure and new options, It will break previously saved block.

@@ -48,11 +48,6 @@ const {
 	duplicateBlockIdFix,
 } = window.EBImageGalleryControls;
 
-const editorStoreForGettingPreivew =
-	eb_conditional_localize.editor_type === "edit-site"
-		? "core/edit-site"
-		: "core/edit-post";
-
 export default function Edit(props) {
 	const { attributes, setAttributes, className, clientId, isSelected } = props;
 	const {
@@ -76,16 +71,7 @@ export default function Edit(props) {
 		classHook,
 	} = attributes;
 
-	// this useEffect is for setting the resOption attribute to desktop/tab/mobile depending on the added 'eb-res-option-' class
-	useEffect(() => {
-		const bodyClasses = document.body.className;
-
-		setAttributes({
-			resOption: select(
-				editorStoreForGettingPreivew
-			).__experimentalGetPreviewDeviceType(),
-		});
-	}, []);
+	// console.log("image gallery", resOption);
 
 	// this useEffect is for creating a unique id for each block's unique className by a random unique number
 	useEffect(() => {

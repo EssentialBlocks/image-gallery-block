@@ -84,7 +84,9 @@ Yes, it will work with any standard WordPress theme.
 == Changelog ==
 
 = 1.2.2 - dev =
-* Added: Converted style-handler to php for working perfectly with Reusable blocks and FSE
+* Fixed: Image Gallery lightbox not loading external images
+* Fixed: Image Gallery Masonary design issue with Twenty Twenty Two theme
+* Improved: Controls and structure
 
 = 1.2.1 - 31/05/2022 =
 * Added: Responsive control, animation and custom CSS options

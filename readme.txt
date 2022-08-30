@@ -83,7 +83,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.2.2 - dev =
+= 1.2.2 - 30/08/2022 =
 * Fixed: Image Gallery lightbox not loading external images
 * Fixed: Image Gallery Masonary design issue with Twenty Twenty Two theme
 * Improved: Controls and structure

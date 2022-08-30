@@ -17,6 +17,17 @@ const Save = ({ attributes }) => {
 
 	if (sources.length === 0) return null;
 
+	let lightBoxHtml = {
+		class: "eb-gallery-img-content",
+	}
+	if (!disableLightBox) {
+		lightBoxHtml = {
+			...lightBoxHtml,
+			["data-fslightbox"]: "gallery",
+			["data-type"]: "image",
+		}
+	}
+
 	return (
 		<div {...useBlockProps.save()}>
 			<div className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}>
@@ -28,9 +39,8 @@ const Save = ({ attributes }) => {
 					{sources.map((source, index) => (
 						<a
 							key={index}
-							data-fslightbox="gallery"
 							href={!disableLightBox ? source.url : "javascript:void(0)"}
-							className={`eb-gallery-img-content`}
+							{...lightBoxHtml}
 						>
 							<span className="eb-gallery-link-wrapper">
 								<img

@@ -83,7 +83,7 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.2.3 - dev = 
+= 1.2.3 - 26/09/2022 = 
 * Added: Feature Request - **[Image Height Width control and Image Size selection option in Image Gallery Block](https://wordpress.org/support/topic/how-to-adjust-the-images-in-the-gallery-that-covers)**
 
 = 1.2.2 - 30/08/2022 =

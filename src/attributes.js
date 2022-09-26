@@ -9,16 +9,12 @@ import {
 	CAPTION_MARGIN,
 	CAPTION_PADDING,
 	CAPTION_WIDTH,
+	IMAGE_WIDTH,
+	IMAGE_HEIGHT,
+	IMAGE_MAX_WIDTH,
+	IMAGE_MAX_HEIGHT,
 } from "./constants";
 import * as CAPTION_TYPOGRAPHY from "./typoConstants";
-
-// import {
-// 	generateDimensionsAttributes,
-// 	generateTypographyAttributes,
-// 	generateBackgroundAttributes,
-// 	generateBorderShadowAttributes,
-// 	generateResponsiveRangeAttributes
-// } from "../../../util/helpers";
 
 const {
 	generateDimensionsAttributes,
@@ -50,16 +46,19 @@ const attributes = {
 		type: "array",
 		default: [],
 	},
+	sources: {
+		type: "array",
+		default: [],
+	},
+	imageSize: {
+		type: "string",
+	},
 	selectedImgIndex: {
 		type: "number",
 	},
 	layouts: {
 		type: "string",
 		default: "grid"
-	},
-	sources: {
-		type: "array",
-		default: [],
 	},
 	displayCaption: {
 		type: "boolean",
@@ -108,6 +107,14 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	imageSizeType: {
+		type: "string",
+		default: "fixed",
+	},
+	imageAlignment: {
+		type: "string",
+		default: "flex-start",
+	},
 
 	// typography attributes ⬇
 	...generateTypographyAttributes(Object.values(CAPTION_TYPOGRAPHY)),
@@ -131,7 +138,7 @@ const attributes = {
 	}),
 
 	// border shadow attributes ⬇
-	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW, 
+	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW,
 		{
 			bdrDefaults: {
 				top: 0,
@@ -143,7 +150,7 @@ const attributes = {
 			// noBorder: true,
 		}
 	),
-	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW, 
+	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW,
 		{
 			bdrDefaults: {
 				top: 0,
@@ -159,7 +166,7 @@ const attributes = {
 	// background attributes ⬇
 	...generateBackgroundAttributes(WRAPPER_BG, {
 		defaultBgGradient: "linear-gradient(45deg,#ffffff,#ffffff)",
-		noOverlay : true,
+		noOverlay: true,
 	}),
 
 	// range controller Separator Line Grid Column
@@ -172,6 +179,21 @@ const attributes = {
 	}),
 	// range controller Separator Caption Width
 	...generateResponsiveRangeAttributes(CAPTION_WIDTH),
+
+	//Image Controls
+	...generateResponsiveRangeAttributes(IMAGE_HEIGHT, {
+		defaultRange: 300
+	}),
+	...generateResponsiveRangeAttributes(IMAGE_WIDTH, {
+		defaultRange: 100,
+		defaultUnit: "%"
+	}),
+	...generateResponsiveRangeAttributes(IMAGE_MAX_HEIGHT),
+	...generateResponsiveRangeAttributes(IMAGE_MAX_WIDTH, {
+		defaultRange: 100,
+		defaultUnit: "%"
+	}),
+
 };
 
 export default attributes;

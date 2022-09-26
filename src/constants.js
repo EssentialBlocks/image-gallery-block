@@ -1,4 +1,5 @@
 import { __ } from "@wordpress/i18n";
+import { Dashicon } from "@wordpress/components";
 
 // the consts defined here should be unique from one another
 export const WRAPPER_BG = "wrprBg";
@@ -12,6 +13,10 @@ export const CAPTION_MARGIN = "captionMargin";
 export const CAPTION_PADDING = "captionPadding";
 export const CAPTION_TYPOGRAPHY = "captionTypo";
 export const CAPTION_WIDTH = "captionWidth";
+export const IMAGE_WIDTH = "imageWidth";
+export const IMAGE_HEIGHT = "imageHeight";
+export const IMAGE_MAX_WIDTH = "imageMaxWidth";
+export const IMAGE_MAX_HEIGHT = "imageMaxHeight";
 
 export const VERTICAL_ALIGN = [
 	{ label: __("Top", "essential-blocks"), value: "top" },
@@ -37,9 +42,20 @@ export const UNIT_TYPES = [
 	{ label: "%", value: "%" },
 ];
 
+export const IMAGE_UNIT_TYPES = [
+	{ label: "px", value: "px" },
+	{ label: "em", value: "em" },
+	{ label: "%", value: "%" },
+];
+
 export const LAYOUTS = [
 	{ label: __("Grid Layout", "essential-blocks"), value: "grid" },
 	{ label: __("Masonry Layout", "essential-blocks"), value: "masonry" },
+];
+
+export const IMAGE_SIZE_TYPE = [
+	{ label: __("Fixed", "essential-blocks"), value: "fixed" },
+	{ label: __("Adaptive", "essential-blocks"), value: "adaptive" },
 ];
 
 export const STYLES = [
@@ -54,4 +70,10 @@ export const OVERLAY_STYLES = [
 	{ label: __("From Left", "essential-blocks"), value: "overlay-left" },
 	{ label: __("From Right", "essential-blocks"), value: "overlay-right" },
 	{ label: __("Zoom In Out", "essential-blocks"), value: "zoom" },
+];
+
+export const FLEX_ALIGN = [
+	{ label: __(<Dashicon icon={"editor-alignleft"} />), value: "flex-start" },
+	{ label: __(<Dashicon icon={"editor-aligncenter"} />), value: "center" },
+	{ label: __(<Dashicon icon={"editor-alignright"} />), value: "flex-end" }
 ];

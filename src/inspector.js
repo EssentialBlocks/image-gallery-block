@@ -40,7 +40,15 @@ import {
 	HORIZONTAL_ALIGN,
 	VERTICAL_ALIGN,
 	UNIT_TYPES,
+	IMAGE_UNIT_TYPES,
+	IMAGE_WIDTH,
+	IMAGE_HEIGHT,
+	IMAGE_MAX_WIDTH,
+	IMAGE_MAX_HEIGHT,
+	IMAGE_SIZE_TYPE,
+	FLEX_ALIGN,
 } from "./constants";
+import { useState } from "react";
 
 const {
 	ResponsiveDimensionsControl,
@@ -68,8 +76,35 @@ function Inspector(props) {
 		styleNumber,
 		overlayStyle,
 		disableLightBox,
+		imageSizeType,
+		imageSize,
+		imageAlignment,
 	} = attributes;
 
+	/**
+	 * Get All Image Sizes
+	*/
+	const [imageAllSizes, setImageAllSizes] = useState([]);
+	useEffect(() => {
+		const sizes = select('core/block-editor').getSettings().imageSizes;
+		if (typeof sizes === 'object' && sizes.length > 0) {
+			let updatedSize = [{
+				label: "Default",
+				value: ""
+			}];
+			sizes.map((item, index) => {
+				updatedSize.push({
+					label: item.name,
+					value: item.slug
+				})
+			});
+			setImageAllSizes(updatedSize);
+		}
+	}, []);
+
+	/**
+	 * Change Preset Styles
+	*/
 	const changeStyle = (selected) => {
 		setAttributes({ styleNumber: selected });
 		switch (selected) {
@@ -162,6 +197,15 @@ function Inspector(props) {
 											}
 										/>
 
+										<SelectControl
+											label={__("Image Size", "essential-blocks")}
+											value={imageSize}
+											options={imageAllSizes}
+											onChange={(val) =>
+												setAttributes({ imageSize: val })
+											}
+										/>
+
 										{displayCaption && styleNumber === "0" && (
 											<ToggleControl
 												label={__(
@@ -186,7 +230,7 @@ function Inspector(props) {
 										/>
 
 										<ResponsiveRangeController
-											baseLabel={__("Image Gap", "essential-blocks")}
+											baseLabel={__("Image Gap (px)", "essential-blocks")}
 											controlName={IMAGE_GAP}
 											resRequiredProps={resRequiredProps}
 											units={[]}
@@ -209,6 +253,95 @@ function Inspector(props) {
 							{tab.name === "styles" && (
 								<>
 									<PanelBody title={__("Image Settings", "essential-blocks")}>
+
+										{layouts === "grid" && (
+											<>
+												<BaseControl
+													label={__("Alignment", "essential-blocks")}
+												>
+													<ButtonGroup>
+														{FLEX_ALIGN.map((item, index) => (
+															<Button
+																key={index}
+																isPrimary={imageAlignment === item.value}
+																isSecondary={imageAlignment !== item.value}
+																onClick={() =>
+																	setAttributes({ imageAlignment: item.value })
+																}
+															>
+																{item.label}
+															</Button>
+														))}
+													</ButtonGroup>
+												</BaseControl>
+
+												<BaseControl
+													label={__("Image Size", "essential-blocks")}
+												>
+													<ButtonGroup>
+														{IMAGE_SIZE_TYPE.map((item, index) => (
+															<Button
+																key={index}
+																isPrimary={imageSizeType === item.value}
+																isSecondary={imageSizeType !== item.value}
+																onClick={() =>
+																	setAttributes({ imageSizeType: item.value })
+																}
+															>
+																{item.label}
+															</Button>
+														))}
+													</ButtonGroup>
+												</BaseControl>
+
+												{imageSizeType === "fixed" && (
+													<>
+														<ResponsiveRangeController
+															baseLabel={__("Image Height", "essential-blocks")}
+															controlName={IMAGE_HEIGHT}
+															resRequiredProps={resRequiredProps}
+															units={IMAGE_UNIT_TYPES}
+															min={0}
+															max={500}
+															step={1}
+														/>
+														<ResponsiveRangeController
+															baseLabel={__("Image Width", "essential-blocks")}
+															controlName={IMAGE_WIDTH}
+															resRequiredProps={resRequiredProps}
+															units={IMAGE_UNIT_TYPES}
+															min={0}
+															max={500}
+															step={1}
+														/>
+													</>
+												)}
+
+												{imageSizeType === "adaptive" && (
+													<>
+														<ResponsiveRangeController
+															baseLabel={__("Image Max Height", "essential-blocks")}
+															controlName={IMAGE_MAX_HEIGHT}
+															resRequiredProps={resRequiredProps}
+															units={IMAGE_UNIT_TYPES}
+															min={0}
+															max={500}
+															step={1}
+														/>
+														<ResponsiveRangeController
+															baseLabel={__("Image Max Width", "essential-blocks")}
+															controlName={IMAGE_MAX_WIDTH}
+															resRequiredProps={resRequiredProps}
+															units={IMAGE_UNIT_TYPES}
+															min={0}
+															max={500}
+															step={1}
+														/>
+													</>
+												)}
+											</>
+										)}
+
 										<PanelBody
 											title={__("Border", "essential-blocks")}
 											initialOpen={true}

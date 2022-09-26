@@ -35,7 +35,12 @@ import {
 	CAPTION_PADDING,
 	CAPTION_TYPOGRAPHY,
 	CAPTION_WIDTH,
+	IMAGE_WIDTH,
+	IMAGE_HEIGHT,
+	IMAGE_MAX_WIDTH,
+	IMAGE_MAX_HEIGHT,
 } from "./constants";
+import { useState } from "react";
 
 const {
 	softMinifyCssStrings,
@@ -68,6 +73,9 @@ export default function Edit(props) {
 		textAlign,
 		styleNumber,
 		overlayStyle,
+		imageSizeType,
+		imageSize,
+		imageAlignment,
 		classHook,
 	} = attributes;
 
@@ -155,7 +163,8 @@ export default function Edit(props) {
 		rangeStylesMobile: gridColumnsMobile,
 	} = generateResponsiveRangeStyles({
 		controlName: GRID_COLUMNS,
-		property: "",
+		property: null,
+		noUnits: true,
 		attributes,
 	});
 
@@ -178,6 +187,59 @@ export default function Edit(props) {
 	} = generateResponsiveRangeStyles({
 		controlName: IMAGE_GAP,
 		property: "gap",
+		attributes,
+	});
+
+	// range controller Separator Image Gap
+	const {
+		rangeStylesDesktop: imageMasonryGapStyleDesktop,
+		rangeStylesTab: imageMasonryGapStyleTab,
+		rangeStylesMobile: imageMasonryGapStyleMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: IMAGE_GAP,
+		property: null,
+		noUnits: true,
+		attributes,
+	});
+
+	// range controller Image Height Width
+	const {
+		rangeStylesDesktop: imageHeightDesktop,
+		rangeStylesTab: imageHeightTab,
+		rangeStylesMobile: imageHeightMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: IMAGE_HEIGHT,
+		property: "height",
+		attributes,
+	});
+
+	const {
+		rangeStylesDesktop: imageWidthDesktop,
+		rangeStylesTab: imageWidthTab,
+		rangeStylesMobile: imageWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: IMAGE_WIDTH,
+		property: "width",
+		attributes,
+	});
+
+	const {
+		rangeStylesDesktop: imageMaxHeightDesktop,
+		rangeStylesTab: imageMaxHeightTab,
+		rangeStylesMobile: imageMaxHeightMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: IMAGE_MAX_HEIGHT,
+		property: "max-height",
+		attributes,
+	});
+
+	const {
+		rangeStylesDesktop: imageMaxWidthDesktop,
+		rangeStylesTab: imageMaxWidthTab,
+		rangeStylesMobile: imageMaxWidthMobile,
+	} = generateResponsiveRangeStyles({
+		controlName: IMAGE_MAX_WIDTH,
+		property: "max-width",
 		attributes,
 	});
 
@@ -243,16 +305,18 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesDesktop}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsDesktop.replace(
-		/[^0-9]/g,
-		""
-	)}, auto);
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: ${imageAlignment};
+		}
+		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
+			width: calc((100% / ${gridColumnsDesktop}) - ${imageMasonryGapStyleDesktop}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsDesktop.replace(/[^0-9]/g, "")};
+			columns: ${gridColumnsDesktop};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: ${imageGapStyleDesktop.replace(/[^0-9]/g, "")}px;
+			margin-bottom: ${imageMasonryGapStyleDesktop}px;
 		}
 	`;
 	const wrapperStylesTab = `
@@ -267,17 +331,16 @@ export default function Edit(props) {
 			${wrapperBDShadowHoverTab}
 			${wrapperHoverBackgroundStylesTab}
 		}
-		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsTab.replace(/[^0-9]/g, "")}, auto);
+		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
+			width: calc((100% / ${gridColumnsTab || gridColumnsDesktop}) - ${
+		imageMasonryGapStyleTab || imageMasonryGapStyleDesktop
+	}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsTab.replace(/[^0-9]/g, "")};
+			columns: ${gridColumnsTab};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: calc(${imageGapStyleTab.replace(
-		/[^0-9]/g,
-		""
-	)}px - ${gridColumnsTab.replace(/[^0-9]/g, "")}px);
+			margin-bottom: ${imageMasonryGapStyleTab}px;
 		}
 	`;
 	const wrapperStylesMobile = `
@@ -292,29 +355,38 @@ export default function Edit(props) {
 			${wrapperBDShadowHoverMobile}
 			${wrapperHoverBackgroundStylesMobile}
 		}
-		.eb-gallery-img-wrapper.${blockId}.grid{
-			grid-template-columns: repeat(${gridColumnsMobile.replace(
-		/[^0-9]/g,
-		""
-	)}, auto);
+		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
+			width: calc((100% / ${gridColumnsMobile || gridColumnsDesktop}) - ${
+		imageMasonryGapStyleMobile || imageMasonryGapStyleDesktop
+	}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsMobile.replace(/[^0-9]/g, "")};
+			columns: ${gridColumnsMobile};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
-			margin-bottom: calc(${imageGapStyleMobile.replace(
-		/[^0-9]/g,
-		""
-	)}px - ${gridColumnsMobile.replace(/[^0-9]/g, "")}px);
+			margin-bottom: ${imageMasonryGapStyleMobile}px;
 		}
 	`;
 
 	const imageStylesDesktop = `
-		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content .eb-gallery-link-wrapper {
+		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
+			${
+				imageSizeType === "fixed"
+					? `
+				${imageHeightDesktop}
+				${imageWidthDesktop}
+			`
+					: `
+				${imageMaxHeightDesktop}
+				${imageMaxWidthDesktop}
+			`
+			}
+		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowDesktop}
 			transition:${imageBDShadowTransitionStyle};
 		}
-		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover .eb-gallery-link-wrapper {
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img {
 			${imageBDShadowHoverDesktop}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content .eb-gallery-img-caption {
@@ -332,10 +404,23 @@ export default function Edit(props) {
 	`;
 
 	const imageStylesTab = `
-		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img{
+		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
+			${
+				imageSizeType === "fixed"
+					? `
+				${imageHeightTab}
+				${imageWidthTab}
+			`
+					: `
+				${imageMaxHeightTab}
+				${imageMaxWidthTab}
+			`
+			}
+		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowTab}
 		}
-		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img{
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img {
 			${imageBDShadowHoverTab}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content .eb-gallery-img-caption {
@@ -347,10 +432,23 @@ export default function Edit(props) {
 	`;
 
 	const imageStylesMobile = `
-		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img{
+		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
+			${
+				imageSizeType === "fixed"
+					? `
+				${imageHeightMobile}
+				${imageWidthMobile}
+			`
+					: `
+				${imageMaxHeightMobile}
+				${imageMaxWidthMobile}
+			`
+			}
+		}
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowMobile}
 		}
-		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img{
+		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content:hover img {
 			${imageBDShadowHoverMobile}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content .eb-gallery-img-caption {
@@ -391,17 +489,24 @@ export default function Edit(props) {
 		}
 	}, [attributes]);
 
-	function onImageSelect(images) {
+	//Set Image Sources on Change Image/Size
+	useEffect(() => {
 		let sources = [];
 		images.map((image) => {
 			let item = {};
-			item.url = image.url;
+			if (image.sizes && imageSize && imageSize.length > 0) {
+				item.url = image.sizes[imageSize]
+					? image.sizes[imageSize].url
+					: image.url;
+			} else {
+				item.url = image.url;
+			}
 			item.caption = image.caption;
 			sources.push(item);
 		});
 
-		setAttributes({ images, sources });
-	}
+		setAttributes({ sources });
+	}, [images, imageSize]);
 
 	// Get only urls for Lightbox
 	let urls = [];
@@ -415,7 +520,7 @@ export default function Edit(props) {
 			<>
 				{urls.length === 0 && (
 					<MediaPlaceholder
-						onSelect={(images) => onImageSelect(images)}
+						onSelect={(images) => setAttributes({ images })}
 						accept="image/*"
 						allowedTypes={["image"]}
 						multiple
@@ -464,7 +569,7 @@ export default function Edit(props) {
 									{() => (
 										<MediaUpload
 											value={images.map((img) => img.id)}
-											onSelect={(images) => onImageSelect(images)}
+											onSelect={(images) => setAttributes({ images })}
 											allowedTypes={["image"]}
 											multiple
 											gallery
@@ -482,10 +587,13 @@ export default function Edit(props) {
 							</ToolbarGroup>
 						</BlockControls>
 
-						<div className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}>
+						<div
+							className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}
+						>
 							<div
-								className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${captionOnHover ? "caption-on-hover" : ""
-									}`}
+								className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${
+									captionOnHover ? "caption-on-hover" : ""
+								}`}
 								data-id={blockId}
 							>
 								{sources.map((source, index) => (

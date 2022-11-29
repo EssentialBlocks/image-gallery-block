@@ -46,7 +46,8 @@ function create_block_image_gallery_block_init()
 		'wp-element',
 		'wp-block-editor',
 		'imagegallery-block-controls-util',
-		'essential-blocks-eb-animation'
+		'essential-blocks-eb-animation',
+		'image-gallery-isotope-js'
 	));
 
 	wp_register_script(
@@ -70,6 +71,24 @@ function create_block_image_gallery_block_init()
 		'fslightbox-js',
 		$lightbox_js,
 		array("jquery"),
+		IMAGEGALLERY_BLOCK_VERSION,
+		true
+	);
+
+	$images_loaded_js = IMAGEGALLERY_BLOCK_ADMIN_URL . 'lib/js/images-loaded.min.js';
+	wp_register_script(
+		'image-gallery-images-loaded-js',
+		$images_loaded_js,
+		array(),
+		IMAGEGALLERY_BLOCK_VERSION,
+		true
+	);
+
+	$isotope_js = IMAGEGALLERY_BLOCK_ADMIN_URL . 'lib/js/isotope.pkgd.min.js';
+	wp_register_script(
+		'image-gallery-isotope-js',
+		$isotope_js,
+		array(),
 		IMAGEGALLERY_BLOCK_VERSION,
 		true
 	);
@@ -101,6 +120,19 @@ function create_block_image_gallery_block_init()
 		IMAGEGALLERY_BLOCK_VERSION
 	);
 
+	//Frontend Script
+	$frontend_js = IMAGEGALLERY_BLOCK_ADMIN_URL . 'dist/frontend/index.js';
+	wp_register_script(
+		'image-gallery-block-frontend-js',
+		$frontend_js,
+		array(
+			'image-gallery-isotope-js',
+			'image-gallery-images-loaded-js',
+		),
+		IMAGEGALLERY_BLOCK_VERSION,
+		true
+	);
+
 	if (!WP_Block_Type_Registry::get_instance()->is_registered('essential-blocks/advanced-heading')) {
 		register_block_type(
 			Image_Gallery_Helper::get_block_register_path("advanced-heading/advanced-heading", IMAGEGALLERY_BLOCK_ADMIN_PATH),
@@ -108,12 +140,20 @@ function create_block_image_gallery_block_init()
 				'editor_script'	=> 'create-block-imagegallery-block-editor-script',
 				'editor_style' 	=> 'create-block-imagegallery-block-frontend-style',
 				'render_callback' => function ($attributes, $content) {
+					
+
 					if (!is_admin()) {
 						wp_enqueue_style('create-block-imagegallery-block-frontend-style');
 						wp_enqueue_style('fslightbox-style');
 						wp_enqueue_script('fslightbox-js');
 						wp_enqueue_script('essential-blocks-eb-animation');
+						wp_enqueue_script('image-gallery-images-loaded-js');
+						wp_enqueue_script('image-gallery-isotope-js');
+						wp_enqueue_script('image-gallery-block-frontend-js');
 					}
+
+					
+
 					return $content;
 				}
 			)

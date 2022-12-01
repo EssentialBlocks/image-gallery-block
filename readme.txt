@@ -3,7 +3,7 @@ Contributors: wpdevteam, re_enter_rupok, Asif2BD, jamilbd07, rahat89, fencermoni
 Tags: block, blocks, image, gallery, image gallery, image grid, lightbox, gutenberg, gutenberg blocks
 Requires at least: 5.6
 Tested up to: 6.0
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -24,20 +24,20 @@ You can easily use this block plugin in Gutenberg and grab the attention of your
 
 ## 🚀 BACKED BY A TRUSTED TEAM ##
 
-This Block is brought to you by [WPDeveloper](https://wpdeveloper.net), the team behind the most popular elements library [Essential Addons for Elementor](https://wordpress.org/plugins/essential-addons-for-elementor-lite/) (used by almost 700,000 happy users from 180+ countries).
+This Block is brought to you by [WPDeveloper](https://wpdeveloper.com), the team behind the most popular elements library [Essential Addons for Elementor](https://wordpress.org/plugins/essential-addons-for-elementor-lite/) (used by almost 1 million+ happy users from 180+ countries).
 
 ## 👨‍💻 DOCUMENTATION AND SUPPORT ##
 
 - For documentation and tutorials go to our [documentation](https://essential-blocks.com/docs/)
 - To report issue and contribution visit [Github](https://github.com/EssentialBlocks/image-gallery-block/).
 - If you have any more questions, visit our support on the [Plugin's Forum](https://wordpress.org/support/plugin/image-gallery-block/).
-- For more information about features, FAQs and documentation, check out our website at [WPDeveloper](https://wpdeveloper.net/).
+- For more information about features, FAQs and documentation, check out our website at [WPDeveloper](https://wpdeveloper.com/).
 
 ## 🙌 JOIN THE COMMUNITY ##
 
 🎦 Subscribe to our [Youtube Channel](https://www.youtube.com/wpdevelopernet/?sub_confirmation=1) to watch video tutorials on WordPress.
 
-🤝 Join our [Facebook Community](https://www.facebook.com/groups/wpdeveloper.net/) & get connected with expert web creators like yourself.
+🤝 Join our [Facebook Community](https://www.facebook.com/groups/wpdeveloper.com/) & get connected with expert web creators like yourself.
 
 🧡 LOVED Image Gallery Block? Rate us on [WordPress Repository](https://wordpress.org/support/plugin/image-gallery-block/reviews/#new-post)
 
@@ -82,6 +82,11 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.3.0 - 01/12/2022 =
+* Added: Category Filter support
+* Fixed: Image Gallery lightbox animation issue with Twenty Twenty Two theme & Twenty Three Two theme
+* Improved: Controls 
 
 = 1.2.3 - 26/09/2022 = 
 * Added: Feature Request - **[Image Height Width control and Image Size selection option in Image Gallery Block](https://wordpress.org/support/topic/how-to-adjust-the-images-in-the-gallery-that-covers)**

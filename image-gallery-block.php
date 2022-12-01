@@ -47,7 +47,8 @@ function create_block_image_gallery_block_init()
 		'wp-block-editor',
 		'imagegallery-block-controls-util',
 		'essential-blocks-eb-animation',
-		'image-gallery-isotope-js'
+		'image-gallery-isotope-js',
+		'image-gallery-images-loaded-js',
 	));
 
 	wp_register_script(
@@ -140,7 +141,6 @@ function create_block_image_gallery_block_init()
 				'editor_script'	=> 'create-block-imagegallery-block-editor-script',
 				'editor_style' 	=> 'create-block-imagegallery-block-frontend-style',
 				'render_callback' => function ($attributes, $content) {
-					
 
 					if (!is_admin()) {
 						wp_enqueue_style('create-block-imagegallery-block-frontend-style');
@@ -151,8 +151,6 @@ function create_block_image_gallery_block_init()
 						wp_enqueue_script('image-gallery-isotope-js');
 						wp_enqueue_script('image-gallery-block-frontend-js');
 					}
-
-					
 
 					return $content;
 				}

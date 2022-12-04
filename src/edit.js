@@ -14,7 +14,7 @@ import {
 	ToolbarButton,
 	Button,
 } from "@wordpress/components";
-import { Fragment, useEffect } from "@wordpress/element";
+import { Fragment, useEffect, useState, useRef } from "@wordpress/element";
 import { select } from "@wordpress/data";
 
 /**
@@ -39,8 +39,14 @@ import {
 	IMAGE_HEIGHT,
 	IMAGE_MAX_WIDTH,
 	IMAGE_MAX_HEIGHT,
+	FILTER_PADDING,
+	FILTER_MARGIN,
+	FILTER_BORDER_SHADOW,
 } from "./constants";
-import { useState } from "react";
+
+import { FILTER_TYPOGRAPHY } from "./typoConstants";
+
+// import { useState } from "react";
 
 const {
 	softMinifyCssStrings,
@@ -77,9 +83,50 @@ export default function Edit(props) {
 		imageSize,
 		imageAlignment,
 		classHook,
-	} = attributes;
+		filterItems,
+		enableFilter,
+		enableFilterAll,
+		filterAllTitle,
+		filterColor,
+		filterHoverColor,
+		filterBGColor,
+		filterHoverBGColor,
+		filterActColor,
+		filterActBGColor,
+		imageGapRange,
+		MOBimageGapRange,
+		TABimageGapRange,
+		columnsRange,
+		TABcolumnsRange,
+		MOBcolumnsRange,
 
-	// console.log("image gallery", resOption);
+		imageHeightRange,
+		MOBimageHeightRange,
+		TABimageHeightRange,
+
+		imageWidthRange,
+		MOBimageWidthRange,
+		TABimageWidthRange,
+
+		imageMaxHeightRange,
+		MOBimageMaxHeightRange,
+		TABimageMaxHeightRange,
+
+		imageMaxWidthRange,
+		MOBimageMaxWidthRange,
+		TABimageMaxWidthRange,
+
+		imgBorderShadowborderStyle,
+		imgBorderShadowborderColor,
+		imgBorderShadowBdr_Bottom,
+		imgBorderShadowBdr_Left,
+		imgBorderShadowBdr_Right,
+		imgBorderShadowBdr_Top,
+		imgBorderShadowRds_Bottom,
+		imgBorderShadowRds_Left,
+		imgBorderShadowRds_Right,
+		imgBorderShadowRds_Top,
+	} = attributes;
 
 	// this useEffect is for creating a unique id for each block's unique className by a random unique number
 	useEffect(() => {
@@ -290,6 +337,53 @@ export default function Edit(props) {
 		// noBorder: true,
 	});
 
+	// filter
+	const {
+		dimensionStylesDesktop: filterMarginDesktop,
+		dimensionStylesTab: filterMarginTab,
+		dimensionStylesMobile: filterMarginMobile,
+	} = generateDimensionsControlStyles({
+		controlName: FILTER_MARGIN,
+		styleFor: "margin",
+		attributes,
+	});
+
+	/* Button Padding */
+	const {
+		dimensionStylesDesktop: filterPaddingDesktop,
+		dimensionStylesTab: filterPaddingTab,
+		dimensionStylesMobile: filterPaddingMobile,
+	} = generateDimensionsControlStyles({
+		controlName: FILTER_PADDING,
+		styleFor: "padding",
+		attributes,
+	});
+
+	const {
+		typoStylesDesktop: filterTypographyDesktop,
+		typoStylesTab: filterTypographyTab,
+		typoStylesMobile: filterTypographyMobile,
+	} = generateTypographyStyles({
+		attributes,
+		prefixConstant: FILTER_TYPOGRAPHY,
+		defaultFontSize: 13,
+	});
+
+	const {
+		styesDesktop: filterBDShadowDesktop,
+		styesTab: filterBDShadowTab,
+		styesMobile: filterBDShadowMobile,
+		stylesHoverDesktop: filterBDShadowHoverDesktop,
+		stylesHoverTab: filterBDShadowHoverTab,
+		stylesHoverMobile: filterBDShadowHoverMobile,
+		transitionStyle: filterBDShadowTransitionStyle,
+	} = generateBorderShadowStyles({
+		controlName: FILTER_BORDER_SHADOW,
+		attributes,
+		// noShadow: true,
+		// noBorder: true,
+	});
+
 	// wrapper styles css in strings ⬇
 	const wrapperStylesDesktop = `
 		.eb-gallery-img-wrapper.${blockId}{
@@ -310,7 +404,7 @@ export default function Edit(props) {
 			justify-content: ${imageAlignment};
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsDesktop}) - ${imageMasonryGapStyleDesktop}px);
+			width: calc((99.5% / ${gridColumnsDesktop}) - ${imageMasonryGapStyleDesktop}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
 			columns: ${gridColumnsDesktop};
@@ -332,9 +426,8 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesTab}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsTab || gridColumnsDesktop}) - ${
-		imageMasonryGapStyleTab || imageMasonryGapStyleDesktop
-	}px);
+			width: calc((100% / ${gridColumnsTab || gridColumnsDesktop}) - ${imageMasonryGapStyleTab || imageMasonryGapStyleDesktop
+		}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
 			columns: ${gridColumnsTab};
@@ -356,9 +449,8 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesMobile}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsMobile || gridColumnsDesktop}) - ${
-		imageMasonryGapStyleMobile || imageMasonryGapStyleDesktop
-	}px);
+			width: calc((100% / ${gridColumnsMobile || gridColumnsDesktop}) - ${imageMasonryGapStyleMobile || imageMasonryGapStyleDesktop
+		}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
 			columns: ${gridColumnsMobile};
@@ -370,17 +462,16 @@ export default function Edit(props) {
 
 	const imageStylesDesktop = `
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
-			${
-				imageSizeType === "fixed"
-					? `
+			${imageSizeType === "fixed"
+			? `
 				${imageHeightDesktop}
 				${imageWidthDesktop}
 			`
-					: `
+			: `
 				${imageMaxHeightDesktop}
 				${imageMaxWidthDesktop}
 			`
-			}
+		}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowDesktop}
@@ -405,17 +496,16 @@ export default function Edit(props) {
 
 	const imageStylesTab = `
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
-			${
-				imageSizeType === "fixed"
-					? `
+			${imageSizeType === "fixed"
+			? `
 				${imageHeightTab}
 				${imageWidthTab}
 			`
-					: `
+			: `
 				${imageMaxHeightTab}
 				${imageMaxWidthTab}
 			`
-			}
+		}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowTab}
@@ -433,17 +523,16 @@ export default function Edit(props) {
 
 	const imageStylesMobile = `
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
-			${
-				imageSizeType === "fixed"
-					? `
+			${imageSizeType === "fixed"
+			? `
 				${imageHeightMobile}
 				${imageWidthMobile}
 			`
-					: `
+			: `
 				${imageMaxHeightMobile}
 				${imageMaxWidthMobile}
 			`
-			}
+		}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowMobile}
@@ -459,22 +548,93 @@ export default function Edit(props) {
 		}
 	`;
 
+	const filterStylesDesktop = `
+		.eb-parent-${blockId} .eb-img-gallery-filter-item {
+			${filterMarginDesktop}
+			${filterPaddingDesktop}
+			${filterTypographyDesktop}
+			${filterBDShadowDesktop}
+			transition:${filterBDShadowTransitionStyle};
+			color: ${filterColor};
+			background-color: ${filterBGColor};
+		}
+
+		.eb-parent-${blockId} .eb-img-gallery-filter-item:hover {
+			${filterBDShadowHoverDesktop}
+			color: ${filterHoverColor};
+			background-color: ${filterHoverBGColor};
+		}
+
+		.eb-parent-${blockId} .eb-img-gallery-filter-item.is-checked {
+			color: ${filterActColor};
+			background-color: ${filterActBGColor};
+		}
+
+		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery .eb-gallery-img-content {
+			margin: calc(${imageGapRange}px / 2);
+		}
+
+		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
+			width: calc((100% / ${gridColumnsDesktop}) - ${imageMasonryGapStyleDesktop}px);
+		}
+		
+	`;
+
+	const filterStylesTab = `
+		.eb-parent-${blockId} .eb-img-gallery-filter-item {
+			${filterMarginTab}
+			${filterPaddingTab}
+			${filterTypographyTab}
+			${filterBDShadowTab}
+		}
+
+		.eb-parent-${blockId} .eb-img-gallery-filter-item:hover {
+			${filterBDShadowHoverTab}
+		}
+
+		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
+			width: calc((100% / ${gridColumnsTab}) - ${imageMasonryGapStyleTab}px);
+		}
+		
+	`;
+
+	const filterStylesMobile = `
+		.eb-parent-${blockId} .eb-img-gallery-filter-item {
+			${filterMarginMobile}
+			${filterPaddingMobile}
+			${filterTypographyMobile}
+			${filterBDShadowMobile}
+		}
+
+		.eb-parent-${blockId} .eb-img-gallery-filter-item:hover {
+			${filterBDShadowHoverMobile}
+		}
+
+		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
+			width: calc((100% / ${gridColumnsMobile}) - ${imageMasonryGapStyleMobile}px);
+		}
+		
+	`;
+
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
 	const desktopAllStyles = softMinifyCssStrings(`
 		${wrapperStylesDesktop}
 		${imageStylesDesktop}
+		${filterStylesDesktop}
 	`);
 
 	// all css styles for Tab in strings ⬇
 	const tabAllStyles = softMinifyCssStrings(`
 		${wrapperStylesTab}
 		${imageStylesTab}
+		${filterStylesTab}
 	`);
 
 	// all css styles for Mobile in strings ⬇
 	const mobileAllStyles = softMinifyCssStrings(`
 		${wrapperStylesMobile}
 		${imageStylesMobile}
+		${filterStylesMobile}
 	`);
 
 	// Set All Style in "blockMeta" Attribute
@@ -491,7 +651,8 @@ export default function Edit(props) {
 
 	//Set Image Sources on Change Image/Size
 	useEffect(() => {
-		let sources = [];
+		const currentSources = [];
+		// let sources = [];
 		images.map((image) => {
 			let item = {};
 			if (image.sizes && imageSize && imageSize.length > 0) {
@@ -502,15 +663,152 @@ export default function Edit(props) {
 				item.url = image.url;
 			}
 			item.caption = image.caption;
-			sources.push(item);
+			item.id = image.id;
+			sources.length > 0 &&
+				sources.map((source) => {
+					if (source.filter && source.id === image.id) {
+						item.filter = source.filter;
+					}
+				});
+			currentSources.push(item);
 		});
 
-		setAttributes({ sources });
+		setAttributes({ sources: currentSources });
 	}, [images, imageSize]);
 
 	// Get only urls for Lightbox
 	let urls = [];
 	images.map((image) => urls.push(image.url));
+
+	// handle deprecation
+	useEffect(() => {
+		if (enableFilter == null) {
+			setAttributes({ enableFilter: false });
+		}
+		if (filterItems == null) {
+			setAttributes({
+				filterItems: [
+					{
+						value: "filter-item-1",
+						label: __("Filter Item 1", "essential-blocks"),
+					},
+				],
+			});
+		}
+		if (enableFilterAll == null) {
+			setAttributes({ enableFilterAll: true });
+		}
+		if (filterAllTitle == null) {
+			setAttributes({ filterAllTitle: "All" });
+		}
+	}, []);
+
+	// isotopeEA filter
+	const isotopeEA = useRef(null);
+	// store the filter keyword in a state
+	const [filterKey, setFilterKey] = useState("*");
+
+	// initialize an Isotope object with configs
+	useEffect(() => {
+		if (isotopeEA.current && typeof isotopeEA.current === 'object' && Object.keys(isotopeEA.current).length === 0) {
+			return
+		}
+
+		if (enableFilter) {
+			const imageGallery = document.querySelector(`.${blockId}`);
+			if (imageGallery) {
+				imagesLoaded(imageGallery, function () {
+					if (layouts == "grid") {
+						isotopeEA.current = new Isotope(`.${blockId}`, {
+							itemSelector: ".eb-gallery-img-content",
+							layoutMode: "fitRows",
+							percentPosition: true,
+						});
+					} else {
+						isotopeEA.current = new Isotope(`.${blockId}`, {
+							itemSelector: ".eb-gallery-img-content",
+							percentPosition: true,
+							masonry: {
+								columnWidth: ".eb-gallery-img-content",
+							},
+						});
+					}
+
+					// cleanup
+					if (resOption === 'Desktop') {
+						return () => isotopeEA.current.destroy();
+					}
+				});
+			}
+		}
+	}, [
+		enableFilter,
+		layouts,
+		images,
+		imageSize,
+		enableFilterAll,
+		filterItems,
+		sources,
+		columnsRange,
+		// TABcolumnsRange,
+		// MOBcolumnsRange,
+		imageGapRange,
+		// MOBimageGapRange,
+		// TABimageGapRange,
+
+		imageHeightRange,
+		// MOBimageHeightRange,
+		// TABimageHeightRange,
+
+		imageWidthRange,
+		// MOBimageWidthRange,
+		// TABimageWidthRange,
+
+		imageMaxHeightRange,
+		// MOBimageMaxHeightRange,
+		// TABimageMaxHeightRange,
+
+		imageMaxWidthRange,
+		// MOBimageMaxWidthRange,
+		// TABimageMaxWidthRange,
+
+		imgBorderShadowborderStyle,
+		imgBorderShadowborderColor,
+		imgBorderShadowBdr_Bottom,
+		imgBorderShadowBdr_Left,
+		imgBorderShadowBdr_Right,
+		imgBorderShadowBdr_Top,
+		imgBorderShadowRds_Bottom,
+		imgBorderShadowRds_Left,
+		imgBorderShadowRds_Right,
+		imgBorderShadowRds_Top,
+	]);
+
+	// handling filter key change
+	useEffect(() => {
+		if (isotopeEA.current && typeof isotopeEA.current === 'object' && Object.keys(isotopeEA.current).length === 0) {
+			return
+		}
+
+		if (enableFilter) {
+			const imageGallery = document.querySelector(`.${blockId}`);
+			if (imageGallery) {
+				imagesLoaded(imageGallery, function () {
+					filterKey === "*"
+						? isotopeEA.current.arrange({ filter: `*` })
+						: isotopeEA.current.arrange({ filter: `.${filterKey}` });
+				})
+			}
+		}
+
+	}, [enableFilter, filterKey]);
+
+	const handleFilterKeyChange = (event, value) => {
+		setFilterKey(value);
+		var buttonGroup = event.target.closest(".eb-img-gallery-filter-wrapper");
+		buttonGroup.querySelector(".is-checked").classList.remove("is-checked");
+		event.target.classList.add("is-checked");
+	};
 
 	return (
 		<>
@@ -589,49 +887,113 @@ export default function Edit(props) {
 
 						<div
 							className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}
+							ref={isotopeEA}
 						>
+							{enableFilter && (
+								<ul className={`eb-img-gallery-filter-wrapper`}>
+									{enableFilterAll && (
+										<li
+											className={`eb-img-gallery-filter-item ${enableFilterAll ? "is-checked" : ""
+												}`}
+											data-filter="*"
+											onClick={(event) => handleFilterKeyChange(event, "*")}
+										>
+											{filterAllTitle !== "" ? filterAllTitle : "All"}
+										</li>
+									)}
+									{filterItems.map(({ value, label }, index) => {
+										return (
+											<li
+												key={index}
+												className={`eb-img-gallery-filter-item ${enableFilterAll ? "" : "is-checked"
+													}`}
+												data-filter={`.eb-filter-img-${value}`}
+												onClick={(event) =>
+													handleFilterKeyChange(event, `eb-filter-img-${value}`)
+												}
+											>
+												{label}
+											</li>
+										);
+									})}
+								</ul>
+							)}
+
 							<div
-								className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${
-									captionOnHover ? "caption-on-hover" : ""
-								}`}
+								className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${captionOnHover ? "caption-on-hover" : ""
+									} ${enableFilter ? "eb-filterable-img-gallery" : ""}`}
 								data-id={blockId}
 							>
-								{sources.map((source, index) => (
-									<a key={index} className={`eb-gallery-img-content`}>
-										<span className="eb-gallery-link-wrapper">
-											<img
-												className="eb-gallery-img"
-												src={source.url}
-												image-index={index}
-											/>
-											{displayCaption &&
-												source.caption &&
-												source.caption.length > 0 && (
-													<span
-														className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
-													>
-														{source.caption}
-													</span>
-												)}
-										</span>
-									</a>
-								))}
+								{sources.map((source, index) => {
+									let filters;
+
+									if (
+										source.hasOwnProperty("filter") &&
+										source.filter.length > 0
+									) {
+										filters = JSON.parse(source.filter);
+
+										filters = filters.map((filter) => filter.value);
+
+										filters = filters.toString();
+
+										filters = filters.replaceAll(",", " eb-filter-img-");
+									} else {
+										filters = "";
+									}
+
+									return (
+										<a
+											key={index}
+											className={`eb-gallery-img-content eb-filter-img-${filters}`}
+										>
+											<span className="eb-gallery-link-wrapper">
+												<img
+													className="eb-gallery-img"
+													src={source.url}
+													image-index={index}
+												/>
+												{displayCaption &&
+													source.caption &&
+													source.caption.length > 0 && (
+														<span
+															className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
+														>
+															{source.caption}
+														</span>
+													)}
+											</span>
+										</a>
+									);
+								})}
 							</div>
 						</div>
 
 						<MediaUpload
 							onSelect={(newImage) => {
 								let updatedImages = [...images, ...newImage];
-								let sources = [];
+								let newSources = [];
 
 								updatedImages.map((image) => {
 									let item = {};
 									item.url = image.url;
 									item.caption = image.caption;
-									sources.push(item);
+									item.id = image.id;
+
+									sources.length > 0 &&
+										sources.map((source) => {
+											if (source.filter && source.id === image.id) {
+												item.filter = source.filter;
+											}
+										});
+
+									newSources.push(item);
 								});
 
-								setAttributes({ images: updatedImages, sources });
+								setAttributes({
+									images: updatedImages,
+									sources: newSources,
+								});
 							}}
 							accept="image/*"
 							allowedTypes={["image"]}

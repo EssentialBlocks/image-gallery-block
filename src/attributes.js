@@ -13,15 +13,19 @@ import {
 	IMAGE_HEIGHT,
 	IMAGE_MAX_WIDTH,
 	IMAGE_MAX_HEIGHT,
+	FILTER_PADDING,
+	FILTER_MARGIN,
+	FILTER_BORDER_SHADOW,
 } from "./constants";
 import * as CAPTION_TYPOGRAPHY from "./typoConstants";
+import { __ } from "@wordpress/i18n";
 
 const {
 	generateDimensionsAttributes,
 	generateTypographyAttributes,
 	generateBackgroundAttributes,
 	generateBorderShadowAttributes,
-	generateResponsiveRangeAttributes
+	generateResponsiveRangeAttributes,
 } = window.EBImageGalleryControls;
 
 const attributes = {
@@ -58,7 +62,7 @@ const attributes = {
 	},
 	layouts: {
 		type: "string",
-		default: "grid"
+		default: "grid",
 	},
 	displayCaption: {
 		type: "boolean",
@@ -73,15 +77,15 @@ const attributes = {
 	},
 	captionColor: {
 		type: "string",
-		default: "#ffffff"
+		default: "#ffffff",
 	},
 	captionBGColor: {
 		type: "string",
-		default: "rgba(195 195 195 / 0.7)"
+		default: "rgba(195 195 195 / 0.7)",
 	},
 	overlayColor: {
 		type: "string",
-		default: "rgba(0 0 0 / 0.7)"
+		default: "rgba(0 0 0 / 0.7)",
 	},
 	horizontalAlign: {
 		type: "string",
@@ -116,6 +120,60 @@ const attributes = {
 		default: "flex-start",
 	},
 
+	enableFilter: {
+		type: "boolean",
+		default: false,
+	},
+	filterItems: {
+		type: "array",
+		default: [
+			{
+				value: "filter-item-1",
+				label: __("Filter Item 1", "essential-blocks"),
+			},
+		],
+	},
+	enableFilterAll: {
+		type: "boolean",
+		default: true,
+	},
+	filterAllTitle: {
+		type: "string",
+		default: "All",
+	},
+	filterColorType: {
+		type: "string",
+		default: "normal",
+	},
+	filterColor: {
+		type: "string",
+		default: "#555555",
+	},
+	filterActColor: {
+		type: "string",
+		default: "#ffffff",
+	},
+	filterHoverColor: {
+		type: "string",
+		default: "#ffffff",
+	},
+	filterBGColor: {
+		type: "string",
+		default: "#EEEDF0",
+	},
+	filterActBGColor: {
+		type: "string",
+		default: "#7967ff",
+	},
+	filterHoverBGColor: {
+		type: "string",
+		default: "#333333",
+	},
+	select2Options: {
+		type: "string",
+		default: "",
+	},
+
 	// typography attributes ⬇
 	...generateTypographyAttributes(Object.values(CAPTION_TYPOGRAPHY)),
 
@@ -138,30 +196,26 @@ const attributes = {
 	}),
 
 	// border shadow attributes ⬇
-	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW,
-		{
-			bdrDefaults: {
-				top: 0,
-				bottom: 0,
-				right: 0,
-				left: 0,
-			},
-			// noShadow: true,
-			// noBorder: true,
-		}
-	),
-	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW,
-		{
-			bdrDefaults: {
-				top: 0,
-				bottom: 0,
-				right: 0,
-				left: 0,
-			},
-			noShadow: true,
-			// noBorder: true,
-		}
-	),
+	...generateBorderShadowAttributes(WRAPPER_BORDER_SHADOW, {
+		bdrDefaults: {
+			top: 0,
+			bottom: 0,
+			right: 0,
+			left: 0,
+		},
+		// noShadow: true,
+		// noBorder: true,
+	}),
+	...generateBorderShadowAttributes(IMAGE_BORDER_SHADOW, {
+		bdrDefaults: {
+			top: 0,
+			bottom: 0,
+			right: 0,
+			left: 0,
+		},
+		noShadow: true,
+		// noBorder: true,
+	}),
 
 	// background attributes ⬇
 	...generateBackgroundAttributes(WRAPPER_BG, {
@@ -182,18 +236,43 @@ const attributes = {
 
 	//Image Controls
 	...generateResponsiveRangeAttributes(IMAGE_HEIGHT, {
-		defaultRange: 300
+		defaultRange: 300,
 	}),
 	...generateResponsiveRangeAttributes(IMAGE_WIDTH, {
 		defaultRange: 100,
-		defaultUnit: "%"
+		defaultUnit: "%",
 	}),
 	...generateResponsiveRangeAttributes(IMAGE_MAX_HEIGHT),
 	...generateResponsiveRangeAttributes(IMAGE_MAX_WIDTH, {
 		defaultRange: 100,
-		defaultUnit: "%"
+		defaultUnit: "%",
 	}),
 
+	...generateDimensionsAttributes(FILTER_MARGIN, {
+		top: 0,
+		bottom: 0,
+		right: 5,
+		left: 5,
+		isLinked: false,
+	}),
+	...generateDimensionsAttributes(FILTER_PADDING, {
+		top: 5,
+		bottom: 5,
+		right: 10,
+		left: 10,
+		isLinked: false,
+	}),
+	// border shadow attributes ⬇
+	...generateBorderShadowAttributes(FILTER_BORDER_SHADOW, {
+		bdrDefaults: {
+			top: 0,
+			bottom: 0,
+			right: 0,
+			left: 0,
+		},
+		// noShadow: true,
+		// noBorder: true,
+	}),
 };
 
 export default attributes;

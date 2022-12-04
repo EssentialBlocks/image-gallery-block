@@ -37,7 +37,7 @@ This Block is brought to you by [WPDeveloper](https://wpdeveloper.com), the team
 
 🎦 Subscribe to our [Youtube Channel](https://www.youtube.com/wpdevelopernet/?sub_confirmation=1) to watch video tutorials on WordPress.
 
-🤝 Join our [Facebook Community](https://www.facebook.com/groups/wpdeveloper.com/) & get connected with expert web creators like yourself.
+🤝 Join our [Facebook Community](https://www.facebook.com/groups/wpdeveloper.net/) & get connected with expert web creators like yourself.
 
 🧡 LOVED Image Gallery Block? Rate us on [WordPress Repository](https://wordpress.org/support/plugin/image-gallery-block/reviews/#new-post)
 
@@ -83,12 +83,12 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.3.0 - 01/12/2022 =
+= 1.3.0 - 04/12/2022 =
 * Added: Category Filter support
 * Fixed: Image Gallery lightbox animation issue with Twenty Twenty Two theme & Twenty Three Two theme
-* Improved: Controls 
+* Improved: Controls
 
-= 1.2.3 - 26/09/2022 = 
+= 1.2.3 - 26/09/2022 =
 * Added: Feature Request - **[Image Height Width control and Image Size selection option in Image Gallery Block](https://wordpress.org/support/topic/how-to-adjust-the-images-in-the-gallery-that-covers)**
 
 = 1.2.2 - 30/08/2022 =

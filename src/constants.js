@@ -18,6 +18,10 @@ export const IMAGE_HEIGHT = "imageHeight";
 export const IMAGE_MAX_WIDTH = "imageMaxWidth";
 export const IMAGE_MAX_HEIGHT = "imageMaxHeight";
 
+export const FILTER_MARGIN = "filterMargin";
+export const FILTER_PADDING = "filterPadding";
+export const FILTER_BORDER_SHADOW = "filterBorderShadow";
+
 export const VERTICAL_ALIGN = [
 	{ label: __("Top", "essential-blocks"), value: "top" },
 	{ label: __("Middle", "essential-blocks"), value: "middle" },
@@ -75,5 +79,12 @@ export const OVERLAY_STYLES = [
 export const FLEX_ALIGN = [
 	{ label: __(<Dashicon icon={"editor-alignleft"} />), value: "flex-start" },
 	{ label: __(<Dashicon icon={"editor-aligncenter"} />), value: "center" },
-	{ label: __(<Dashicon icon={"editor-alignright"} />), value: "flex-end" }
+	{ label: __(<Dashicon icon={"editor-alignright"} />), value: "flex-end" },
+];
+
+
+export const NORMAL_HOVER = [
+	{ label: "Normal", value: "normal" },
+	{ label: "Hover", value: "hover" },
+	{ label: "Active", value: "active" },
 ];

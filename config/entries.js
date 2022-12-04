@@ -33,4 +33,5 @@ export {
 	textInsideForEdit,
 	getFlipTransform,
 	ebConditionalRegisterBlockType,
+	EbImageSizeSelector,
 } from "../controls/src/helpers";

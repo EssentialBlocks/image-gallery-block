@@ -348,6 +348,7 @@
   margin: 0px 0px 20px 0px;
   padding: 0px;
   text-align: center;
+  display: block;
 }
 .eb-img-gallery-filter-wrapper li {
   font-size: 13px;
@@ -365,6 +366,11 @@
 
 .fslightbox-container.fslightbox-fade-in-strong {
   animation: fslightbox-fade-in-complete 0.25s forwards;
+}
+
+.eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry {
+  -moz-columns: unset;
+       columns: unset;
 }
 
 /*# sourceMappingURL=style.css.map*/

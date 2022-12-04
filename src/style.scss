@@ -37,39 +37,6 @@
 			}
 		}
 	}
-	// &.grid {
-	//   display: flex;
-	//   flex-wrap: wrap;
-	//   justify-content: flex-start;
-	//   gap: 10px;
-
-	//   .eb-gallery-img-content{
-	//     width: calc((100% / 3) - 10px);
-
-	//     img {
-	//       width: 100%;
-	//       height: 300px;
-	//       object-fit: cover;
-	//     }
-	//   }
-	// }
-
-	// &.masonry {
-	// 	display: block;
-	// 	columns: 3;
-
-	// 	.eb-gallery-img-content {
-	// 		break-inside: avoid;
-	// 		display: block;
-
-	// 		img {
-	// 			display: block;
-	// 			height: auto;
-	// 			max-width: 100%;
-	// 			box-sizing: border-box;
-	// 		}
-	// 	}
-	// }
 
 	&.caption-on-hover {
 		.eb-gallery-img-content {
@@ -407,6 +374,7 @@
 	padding: 0px;
 	text-align: center;
 
+	display: block;
 	li {
 		font-size: 13px;
 		line-height: 1.8;
@@ -422,9 +390,14 @@
 	}
 }
 
-
 // Twenty Twenty Two & Twenty Twenty Three
 
 .fslightbox-container.fslightbox-fade-in-strong {
-	animation: fslightbox-fade-in-complete .25s forwards;
+	animation: fslightbox-fade-in-complete 0.25s forwards;
+}
+
+// firefox issue
+
+.eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry {
+	columns: unset;
 }

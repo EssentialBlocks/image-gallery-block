@@ -426,8 +426,9 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesTab}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsTab || gridColumnsDesktop}) - ${imageMasonryGapStyleTab || imageMasonryGapStyleDesktop
-		}px);
+			width: calc((100% / ${gridColumnsTab || gridColumnsDesktop}) - ${
+		imageMasonryGapStyleTab || imageMasonryGapStyleDesktop
+	}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
 			columns: ${gridColumnsTab};
@@ -449,8 +450,9 @@ export default function Edit(props) {
 			${wrapperHoverBackgroundStylesMobile}
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsMobile || gridColumnsDesktop}) - ${imageMasonryGapStyleMobile || imageMasonryGapStyleDesktop
-		}px);
+			width: calc((100% / ${gridColumnsMobile || gridColumnsDesktop}) - ${
+		imageMasonryGapStyleMobile || imageMasonryGapStyleDesktop
+	}px);
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry{
 			columns: ${gridColumnsMobile};
@@ -462,16 +464,17 @@ export default function Edit(props) {
 
 	const imageStylesDesktop = `
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
-			${imageSizeType === "fixed"
-			? `
+			${
+				imageSizeType === "fixed"
+					? `
 				${imageHeightDesktop}
 				${imageWidthDesktop}
 			`
-			: `
+					: `
 				${imageMaxHeightDesktop}
 				${imageMaxWidthDesktop}
 			`
-		}
+			}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowDesktop}
@@ -496,16 +499,17 @@ export default function Edit(props) {
 
 	const imageStylesTab = `
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
-			${imageSizeType === "fixed"
-			? `
+			${
+				imageSizeType === "fixed"
+					? `
 				${imageHeightTab}
 				${imageWidthTab}
 			`
-			: `
+					: `
 				${imageMaxHeightTab}
 				${imageMaxWidthTab}
 			`
-		}
+			}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowTab}
@@ -523,16 +527,17 @@ export default function Edit(props) {
 
 	const imageStylesMobile = `
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content img {
-			${imageSizeType === "fixed"
-			? `
+			${
+				imageSizeType === "fixed"
+					? `
 				${imageHeightMobile}
 				${imageWidthMobile}
 			`
-			: `
+					: `
 				${imageMaxHeightMobile}
 				${imageMaxWidthMobile}
 			`
-		}
+			}
 		}
 		.eb-gallery-img-wrapper.${blockId} .eb-gallery-img-content img {
 			${imageBDShadowMobile}
@@ -575,9 +580,9 @@ export default function Edit(props) {
 		}
 
 		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsDesktop}) - ${imageMasonryGapStyleDesktop}px);
+			width: calc((100% / ${gridColumnsDesktop}) - ${imageMasonryGapStyleDesktop}px) ;
 		}
-		
+
 	`;
 
 	const filterStylesTab = `
@@ -593,9 +598,13 @@ export default function Edit(props) {
 		}
 
 		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsTab}) - ${imageMasonryGapStyleTab}px);
+			width: calc((100% / ${gridColumnsTab}) - ${
+		imageMasonryGapStyleTab
+			? imageMasonryGapStyleTab
+			: imageMasonryGapStyleDesktop
+	}px);
 		}
-		
+
 	`;
 
 	const filterStylesMobile = `
@@ -611,9 +620,13 @@ export default function Edit(props) {
 		}
 
 		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
-			width: calc((100% / ${gridColumnsMobile}) - ${imageMasonryGapStyleMobile}px);
+			width: calc((100% / ${gridColumnsMobile}) - ${
+		imageMasonryGapStyleMobile
+			? imageMasonryGapStyleMobile
+			: imageMasonryGapStyleDesktop
+	}px);
 		}
-		
+
 	`;
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
@@ -652,7 +665,7 @@ export default function Edit(props) {
 	//Set Image Sources on Change Image/Size
 	useEffect(() => {
 		const currentSources = [];
-		// let sources = [];
+
 		images.map((image) => {
 			let item = {};
 			if (image.sizes && imageSize && imageSize.length > 0) {
@@ -710,8 +723,12 @@ export default function Edit(props) {
 
 	// initialize an Isotope object with configs
 	useEffect(() => {
-		if (isotopeEA.current && typeof isotopeEA.current === 'object' && Object.keys(isotopeEA.current).length === 0) {
-			return
+		if (
+			isotopeEA.current &&
+			typeof isotopeEA.current === "object" &&
+			Object.keys(isotopeEA.current).length === 0
+		) {
+			return;
 		}
 
 		if (enableFilter) {
@@ -735,7 +752,7 @@ export default function Edit(props) {
 					}
 
 					// cleanup
-					if (resOption === 'Desktop') {
+					if (resOption === "Desktop") {
 						return () => isotopeEA.current.destroy();
 					}
 				});
@@ -786,8 +803,12 @@ export default function Edit(props) {
 
 	// handling filter key change
 	useEffect(() => {
-		if (isotopeEA.current && typeof isotopeEA.current === 'object' && Object.keys(isotopeEA.current).length === 0) {
-			return
+		if (
+			isotopeEA.current &&
+			typeof isotopeEA.current === "object" &&
+			Object.keys(isotopeEA.current).length === 0
+		) {
+			return;
 		}
 
 		if (enableFilter) {
@@ -797,10 +818,9 @@ export default function Edit(props) {
 					filterKey === "*"
 						? isotopeEA.current.arrange({ filter: `*` })
 						: isotopeEA.current.arrange({ filter: `.${filterKey}` });
-				})
+				});
 			}
 		}
-
 	}, [enableFilter, filterKey]);
 
 	const handleFilterKeyChange = (event, value) => {
@@ -842,20 +862,37 @@ export default function Edit(props) {
 
 				/* mimmikcssEnd */
 
-				@media all and (max-width: 1024px) {	
+				@media all and (max-width: 1024px) {
 
-					/* tabcssStart */			
+					/* tabcssStart */
 					${softMinifyCssStrings(tabAllStyles)}
-					/* tabcssEnd */			
-				
+					.eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry {
+						display: block;
+
+
+					}
+					.eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
+						break-inside: avoid;
+						display: initial;
+
+
+					}
+					.eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry .eb-gallery-img-content img {
+						display: block;
+						height: auto;
+						max-width: 100%;
+						box-sizing: border-box;
+					}
+					/* tabcssEnd */
+
 				}
-				
+
 				@media all and (max-width: 767px) {
-					
-					/* mobcssStart */			
+
+					/* mobcssStart */
 					${softMinifyCssStrings(mobileAllStyles)}
-					/* mobcssEnd */			
-				
+					/* mobcssEnd */
+
 				}
 				`}
 				</style>
@@ -893,8 +930,9 @@ export default function Edit(props) {
 								<ul className={`eb-img-gallery-filter-wrapper`}>
 									{enableFilterAll && (
 										<li
-											className={`eb-img-gallery-filter-item ${enableFilterAll ? "is-checked" : ""
-												}`}
+											className={`eb-img-gallery-filter-item ${
+												enableFilterAll ? "is-checked" : ""
+											}`}
 											data-filter="*"
 											onClick={(event) => handleFilterKeyChange(event, "*")}
 										>
@@ -905,8 +943,9 @@ export default function Edit(props) {
 										return (
 											<li
 												key={index}
-												className={`eb-img-gallery-filter-item ${enableFilterAll ? "" : "is-checked"
-													}`}
+												className={`eb-img-gallery-filter-item ${
+													enableFilterAll ? "" : "is-checked"
+												}`}
 												data-filter={`.eb-filter-img-${value}`}
 												onClick={(event) =>
 													handleFilterKeyChange(event, `eb-filter-img-${value}`)
@@ -920,8 +959,9 @@ export default function Edit(props) {
 							)}
 
 							<div
-								className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${captionOnHover ? "caption-on-hover" : ""
-									} ${enableFilter ? "eb-filterable-img-gallery" : ""}`}
+								className={`eb-gallery-img-wrapper ${blockId} ${layouts} ${overlayStyle} caption-style-${styleNumber} ${
+									captionOnHover ? "caption-on-hover" : ""
+								} ${enableFilter ? "eb-filterable-img-gallery" : ""}`}
 								data-id={blockId}
 							>
 								{sources.map((source, index) => {

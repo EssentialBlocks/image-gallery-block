@@ -13,6 +13,7 @@ import {
 	TabPanel,
 	TextControl,
 	PanelRow,
+	__experimentalDivider as Divider,
 } from "@wordpress/components";
 import { useState, useEffect } from "@wordpress/element";
 import { select } from "@wordpress/data";
@@ -255,7 +256,9 @@ function Inspector(props) {
 												value={overlayStyle}
 												options={OVERLAY_STYLES}
 												onChange={(overlayStyle) =>
-													setAttributes({ overlayStyle })
+													setAttributes({
+														overlayStyle,
+													})
 												}
 											/>
 										)}
@@ -264,7 +267,9 @@ function Inspector(props) {
 											label={__("Display Caption", "essential-blocks")}
 											checked={displayCaption}
 											onChange={() =>
-												setAttributes({ displayCaption: !displayCaption })
+												setAttributes({
+													displayCaption: !displayCaption,
+												})
 											}
 										/>
 
@@ -282,7 +287,9 @@ function Inspector(props) {
 												)}
 												checked={captionOnHover}
 												onChange={() =>
-													setAttributes({ captionOnHover: !captionOnHover })
+													setAttributes({
+														captionOnHover: !captionOnHover,
+													})
 												}
 											/>
 										)}
@@ -311,7 +318,9 @@ function Inspector(props) {
 											label={__("Disable Light Box", "essential-blocks")}
 											checked={disableLightBox}
 											onChange={() =>
-												setAttributes({ disableLightBox: !disableLightBox })
+												setAttributes({
+													disableLightBox: !disableLightBox,
+												})
 											}
 										/>
 									</PanelBody>
@@ -324,7 +333,9 @@ function Inspector(props) {
 											label={__("Enable Filter", "essential-blocks")}
 											checked={enableFilter}
 											onChange={() =>
-												setAttributes({ enableFilter: !enableFilter })
+												setAttributes({
+													enableFilter: !enableFilter,
+												})
 											}
 										/>
 
@@ -333,7 +344,9 @@ function Inspector(props) {
 												label={__('Enable "All"', "essential-blocks")}
 												checked={enableFilterAll}
 												onChange={() =>
-													setAttributes({ enableFilterAll: !enableFilterAll })
+													setAttributes({
+														enableFilterAll: !enableFilterAll,
+													})
 												}
 											/>
 										)}
@@ -343,15 +356,19 @@ function Inspector(props) {
 												label={__('"ALL" Text', "essential-blocks")}
 												value={filterAllTitle}
 												onChange={(newtitle) =>
-													setAttributes({ filterAllTitle: newtitle })
+													setAttributes({
+														filterAllTitle: newtitle,
+													})
 												}
 											/>
 										)}
 
 										{enableFilter && (
 											<>
-												<hr />
-												<h3>{__("Filter Items", "essential-blocks")}</h3>
+												<Divider />
+												<PanelRow>
+													{__("Filter Items", "essential-blocks")}
+												</PanelRow>
 												<SortableFilterItems
 													filterItems={attributes.filterItems}
 													setAttributes={setAttributes}
@@ -381,7 +398,9 @@ function Inspector(props) {
 														title={"Image " + (index + 1)}
 														initialOpen={false}
 														onToggle={() =>
-															setAttributes({ initialSlide: index })
+															setAttributes({
+																initialSlide: index,
+															})
 														}
 														className="eb-img-gallery-item-single-panel"
 														key={index}
@@ -402,8 +421,10 @@ function Inspector(props) {
 															Placeholder="Select Filter"
 														/>
 
-														<hr />
-														<h3>{__("Image", "essential-blocks")}</h3>
+														<Divider />
+														<PanelRow>
+															{__("Image", "essential-blocks")}
+														</PanelRow>
 														<img src={item.url} />
 													</PanelBody>
 												);
@@ -451,7 +472,9 @@ function Inspector(props) {
 																isPrimary={imageSizeType === item.value}
 																isSecondary={imageSizeType !== item.value}
 																onClick={() =>
-																	setAttributes({ imageSizeType: item.value })
+																	setAttributes({
+																		imageSizeType: item.value,
+																	})
 																}
 															>
 																{item.label}
@@ -533,7 +556,9 @@ function Inspector(props) {
 												label={__("Overlay Color", "essential-blocks")}
 												color={overlayColor}
 												onChange={(color) =>
-													setAttributes({ overlayColor: color })
+													setAttributes({
+														overlayColor: color,
+													})
 												}
 											/>
 										</PanelBody>
@@ -549,7 +574,9 @@ function Inspector(props) {
 													{
 														value: captionColor,
 														onChange: (newColor) =>
-															setAttributes({ captionColor: newColor }),
+															setAttributes({
+																captionColor: newColor,
+															}),
 														label: __("Text Color", "essential-blocks"),
 													},
 												]}
@@ -559,7 +586,9 @@ function Inspector(props) {
 												label={__("Background Color", "essential-blocks")}
 												color={captionBGColor}
 												onChange={(backgroundColor) =>
-													setAttributes({ captionBGColor: backgroundColor })
+													setAttributes({
+														captionBGColor: backgroundColor,
+													})
 												}
 											/>
 
@@ -591,7 +620,9 @@ function Inspector(props) {
 																	isPrimary={textAlign === item.value}
 																	isSecondary={textAlign !== item.value}
 																	onClick={() =>
-																		setAttributes({ textAlign: item.value })
+																		setAttributes({
+																			textAlign: item.value,
+																		})
 																	}
 																>
 																	{item.label}
@@ -686,7 +717,9 @@ function Inspector(props) {
 															isPrimary={filterColorType === item.value}
 															isSecondary={filterColorType !== item.value}
 															onClick={() =>
-																setAttributes({ filterColorType: item.value })
+																setAttributes({
+																	filterColorType: item.value,
+																})
 															}
 														>
 															{item.label}
@@ -703,13 +736,17 @@ function Inspector(props) {
 															{
 																value: filterColor,
 																onChange: (newColor) =>
-																	setAttributes({ filterColor: newColor }),
+																	setAttributes({
+																		filterColor: newColor,
+																	}),
 																label: __("Color", "essential-blocks"),
 															},
 															{
 																value: filterBGColor,
 																onChange: (newColor) =>
-																	setAttributes({ filterBGColor: newColor }),
+																	setAttributes({
+																		filterBGColor: newColor,
+																	}),
 																label: __(
 																	"Background Color",
 																	"essential-blocks"
@@ -728,7 +765,9 @@ function Inspector(props) {
 															{
 																value: filterHoverColor,
 																onChange: (newColor) =>
-																	setAttributes({ filterHoverColor: newColor }),
+																	setAttributes({
+																		filterHoverColor: newColor,
+																	}),
 																label: __("Color", "essential-blocks"),
 															},
 															{
@@ -755,13 +794,17 @@ function Inspector(props) {
 															{
 																value: filterActColor,
 																onChange: (newColor) =>
-																	setAttributes({ filterActColor: newColor }),
+																	setAttributes({
+																		filterActColor: newColor,
+																	}),
 																label: __("Color", "essential-blocks"),
 															},
 															{
 																value: filterActBGColor,
 																onChange: (newColor) =>
-																	setAttributes({ filterActBGColor: newColor }),
+																	setAttributes({
+																		filterActBGColor: newColor,
+																	}),
 																label: __(
 																	"Background Color",
 																	"essential-blocks"

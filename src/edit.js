@@ -665,7 +665,6 @@ export default function Edit(props) {
 	//Set Image Sources on Change Image/Size
 	useEffect(() => {
 		const currentSources = [];
-
 		images.map((image) => {
 			let item = {};
 			if (image.sizes && imageSize && imageSize.length > 0) {
@@ -677,6 +676,7 @@ export default function Edit(props) {
 			}
 			item.caption = image.caption;
 			item.id = image.id;
+			item.alt = image?.alt ? image.alt : image.caption;
 			sources.length > 0 &&
 				sources.map((source) => {
 					if (source.filter && source.id === image.id) {
@@ -817,7 +817,9 @@ export default function Edit(props) {
 				imagesLoaded(imageGallery, function () {
 					filterKey === "*"
 						? isotopeEA.current.arrange({ filter: `*` })
-						: isotopeEA.current.arrange({ filter: `.${filterKey}` });
+						: isotopeEA.current.arrange({
+								filter: `.${filterKey}`,
+						  });
 				});
 			}
 		}
@@ -829,7 +831,6 @@ export default function Edit(props) {
 		buttonGroup.querySelector(".is-checked").classList.remove("is-checked");
 		event.target.classList.add("is-checked");
 	};
-
 	return (
 		<>
 			{isSelected && images.length > 0 && (
@@ -992,6 +993,7 @@ export default function Edit(props) {
 													className="eb-gallery-img"
 													src={source.url}
 													image-index={index}
+													alt={source?.alt}
 												/>
 												{displayCaption &&
 													source.caption &&

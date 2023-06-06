@@ -15,7 +15,7 @@ import { ImageGalleryIcon } from "./icon";
 import deprecated from "./deprecated";
 import "./style.scss";
 import metadata from "../block.json";
-const { ebConditionalRegisterBlockType } = EBImageGalleryControls;
+const { ebConditionalRegisterBlockType } = window.EBImageGalleryControls;
 
 ebConditionalRegisterBlockType(metadata, {
 	icon: ImageGalleryIcon,

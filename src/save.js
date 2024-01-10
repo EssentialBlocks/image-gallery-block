@@ -17,6 +17,8 @@ const Save = ({ attributes }) => {
         enableFilter,
         enableFilterAll,
         filterAllTitle,
+        addCustomLink,
+        defaultFilter,
     } = attributes;
 
     if (sources.length === 0) return null;
@@ -45,7 +47,7 @@ const Save = ({ attributes }) => {
                         {enableFilterAll && (
                             <li
                                 className="eb-img-gallery-filter-item"
-                                data-filter="*"
+                                data-filter={"*"}
                                 data-id={blockId}
                             >
                                 {filterAllTitle !== "" ? filterAllTitle : "All"}
@@ -70,6 +72,7 @@ const Save = ({ attributes }) => {
                         captionOnHover ? "caption-on-hover" : ""
                     } ${enableFilter ? "eb-filterable-img-gallery" : ""}`}
                     data-id={blockId}
+                    data-default-filter={defaultFilter}
                 >
                     {sources.map((source, index) => {
                         let filters;
@@ -91,36 +94,73 @@ const Save = ({ attributes }) => {
                         } else {
                             filters = "";
                         }
-                        return (
-                            <a
-                                key={index}
-                                href={
-                                    !disableLightBox
-                                        ? source.url
-                                        : "javascript:void(0)"
-                                }
-                                {...lightBoxHtml}
-                                className={`eb-gallery-img-content eb-filter-img-${filters}`}
-                            >
-                                <span className="eb-gallery-link-wrapper">
-                                    <img
-                                        className="eb-gallery-img"
-                                        src={source.url}
-                                        image-index={index}
-                                        alt={source?.alt}
-                                    />
-                                    {displayCaption &&
-                                        source.caption &&
-                                        source.caption.length > 0 && (
-                                            <span
-                                                className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
-                                            >
-                                                {source.caption}
-                                            </span>
-                                        )}
-                                </span>
-                            </a>
+
+                        let innerHtml = (
+                            <span className="eb-gallery-link-wrapper">
+                                <img
+                                    className="eb-gallery-img"
+                                    src={source.url}
+                                    image-index={index}
+                                    alt={source.alt}
+                                />
+                                {displayCaption &&
+                                    source.caption &&
+                                    source.caption.length > 0 && (
+                                        <span
+                                            className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
+                                        >
+                                            {source.caption}
+                                        </span>
+                                    )}
+                            </span>
                         );
+
+                        if (!addCustomLink) {
+                            return (
+                                <a
+                                    key={index}
+                                    href={
+                                        !disableLightBox
+                                            ? source.url
+                                            : "javascript:void(0)"
+                                    }
+                                    {...lightBoxHtml}
+                                    className={`eb-gallery-img-content eb-filter-img-${filters}`}
+                                    rel="noopener"
+                                >
+                                    {innerHtml}
+                                </a>
+                            );
+                        }
+
+                        if (addCustomLink) {
+                            return (
+                                <a
+                                    key={index}
+                                    href={
+                                        !disableLightBox
+                                            ? source.url
+                                            : addCustomLink &&
+                                              source.customLink &&
+                                              source.isValidUrl
+                                            ? source.customLink
+                                            : "#"
+                                    }
+                                    {...lightBoxHtml}
+                                    target={
+                                        disableLightBox &&
+                                        addCustomLink &&
+                                        source.openNewTab
+                                            ? "_blank"
+                                            : "_self"
+                                    }
+                                    className={`eb-gallery-img-content eb-filter-img-${filters}`}
+                                    rel="noopener"
+                                >
+                                    {innerHtml}
+                                </a>
+                            );
+                        }
                     })}
                 </div>
             </div>

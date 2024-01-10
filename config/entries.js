@@ -34,4 +34,5 @@ export {
 	getFlipTransform,
 	ebConditionalRegisterBlockType,
 	EbImageSizeSelector,
+	StyleComponent
 } from "../controls/src/helpers";

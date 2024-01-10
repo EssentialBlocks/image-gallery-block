@@ -111,6 +111,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	addCustomLink: {
+		type: "boolean",
+		default: false,
+	},
 	imageSizeType: {
 		type: "string",
 		default: "fixed",
@@ -140,6 +144,9 @@ const attributes = {
 	filterAllTitle: {
 		type: "string",
 		default: "All",
+	},
+	defaultFilter: {
+		type: "string"
 	},
 	filterColorType: {
 		type: "string",

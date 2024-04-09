@@ -22,9 +22,11 @@ import {
 	FILTER_PADDING,
 	FILTER_MARGIN,
 	FILTER_BORDER_SHADOW,
+	LOADMORE_PADDING,
+	LOADMORE_BORDER,
 } from "./constants";
 
-import { FILTER_TYPOGRAPHY } from "./typoConstants";
+import { FILTER_TYPOGRAPHY, LOADMORE_TYPOGRAPHY } from "./typoConstants";
 
 // import { useState } from "react";
 
@@ -60,6 +62,15 @@ export default function Style(props) {
 		filterActColor,
 		filterActBGColor,
 		imageGapRange,
+		TABimageGapRange,
+		MOBimageGapRange,
+		loadmoreColor,
+		loadmoreHvColor,
+		loadmoreBGColor,
+		loadmoreHvBGColor,
+		imagesPerPage,
+		enableFilter,
+		enableIsotope
 	} = attributes;
 
 	/**
@@ -276,6 +287,15 @@ export default function Style(props) {
 		styleFor: "padding",
 		attributes,
 	});
+	const {
+		dimensionStylesDesktop: loadmorePaddingDesktop,
+		dimensionStylesTab: loadmorePaddingTab,
+		dimensionStylesMobile: loadmorePaddingMobile,
+	} = generateDimensionsControlStyles({
+		controlName: LOADMORE_PADDING,
+		styleFor: "padding",
+		attributes,
+	});
 
 	const {
 		typoStylesDesktop: filterTypographyDesktop,
@@ -285,6 +305,15 @@ export default function Style(props) {
 		attributes,
 		prefixConstant: FILTER_TYPOGRAPHY,
 		defaultFontSize: 13,
+	});
+	const {
+		typoStylesDesktop: loadmoreTypographyDesktop,
+		typoStylesTab: loadmoreTypographyTab,
+		typoStylesMobile: loadmoreTypographyMobile,
+	} = generateTypographyStyles({
+		attributes,
+		prefixConstant: LOADMORE_TYPOGRAPHY,
+		defaultFontSize: 16,
 	});
 
 	const {
@@ -302,6 +331,21 @@ export default function Style(props) {
 		// noBorder: true,
 	});
 
+	const {
+		styesDesktop: loadmoreBDShadowDesktop,
+		styesTab: loadmoreBDShadowTab,
+		styesMobile: loadmoreBDShadowMobile,
+		stylesHoverDesktop: loadmoreBDShadowHoverDesktop,
+		stylesHoverTab: loadmoreBDShadowHoverTab,
+		stylesHoverMobile: loadmoreBDShadowHoverMobile,
+		transitionStyle: loadmoreBDShadowTransitionStyle,
+	} = generateBorderShadowStyles({
+		controlName: LOADMORE_BORDER,
+		attributes,
+		// noShadow: true,
+		// noBorder: true,
+	});
+
 	const calcWidth = (column, gap) => {
 		const item = gap / column
 		return `calc((100% / ${column}) - ${(item * (column - 1))}px)`
@@ -310,13 +354,15 @@ export default function Style(props) {
 	// wrapper styles css in strings ⬇
 	const wrapperStylesDesktop = `
 		.eb-gallery-img-wrapper.${blockId}{
-			${imageGapStyleDesktop}
 			${wrapperMarginDesktop}
 			${wrapperPaddingDesktop}
 			${wrapperBDShadowDesktop}
 			${wrapperBackgroundStylesDesktop}
 			transition:${wrapperBgTransitionStyle}, ${wrapperBDShadowTransitionStyle};
 		}
+        .eb-gallery-img-wrapper.${blockId}.no-isotope{
+            ${!enableFilter ? imageGapStyleDesktop : ''}
+        }
 		.eb-gallery-img-wrapper.${blockId}:hover {
 			${wrapperBDShadowHoverDesktop}
 			${wrapperHoverBackgroundStylesDesktop}
@@ -325,13 +371,17 @@ export default function Style(props) {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: ${imageAlignment};
+            min-width: 1px;
 		}
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
 			width: ${calcWidth(gridColumnsDesktop, imageMasonryGapStyleDesktop)};
             box-sizing: border-box;
+            min-width: 1px;
 		}
-		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsDesktop};
+		.eb-gallery-img-wrapper.${blockId}.masonry:not(.eb-filterable-img-gallery){
+			column-count: ${gridColumnsDesktop};
+            -moz-column-count: ${gridColumnsDesktop};
+            -webkit-column-count: ${gridColumnsDesktop};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
 			margin-bottom: ${imageMasonryGapStyleDesktop}px;
@@ -339,12 +389,14 @@ export default function Style(props) {
 	`;
 	const wrapperStylesTab = `
 		.eb-gallery-img-wrapper.${blockId}{
-			${imageGapStyleTab}
 			${wrapperMarginTab}
 			${wrapperPaddingTab}
 			${wrapperBDShadowTab}
 			${wrapperBackgroundStylesTab}
 		}
+        .eb-gallery-img-wrapper.${blockId}.no-isotope{
+            ${!enableFilter ? imageGapStyleTab : ''}
+        }
 		.eb-gallery-img-wrapper.${blockId}:hover {
 			${wrapperBDShadowHoverTab}
 			${wrapperHoverBackgroundStylesTab}
@@ -352,8 +404,10 @@ export default function Style(props) {
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
 			width: ${calcWidth(gridColumnsTab || gridColumnsDesktop, imageMasonryGapStyleTab || imageMasonryGapStyleDesktop)};
 		}
-		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsTab};
+		.eb-gallery-img-wrapper.${blockId}.masonry:not(.eb-filterable-img-gallery){
+            column-count: ${gridColumnsTab};
+            -moz-column-count: ${gridColumnsTab};
+            -webkit-column-count: ${gridColumnsTab};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
 			margin-bottom: ${imageMasonryGapStyleTab}px;
@@ -361,12 +415,14 @@ export default function Style(props) {
 	`;
 	const wrapperStylesMobile = `
 		.eb-gallery-img-wrapper.${blockId}{
-			${imageGapStyleMobile}
 			${wrapperMarginMobile}
 			${wrapperPaddingMobile}
 			${wrapperBDShadowMobile}
 			${wrapperBackgroundStylesMobile}
 		}
+        .eb-gallery-img-wrapper.${blockId}.no-isotope{
+            ${!enableFilter ? imageGapStyleMobile : ''}
+        }
 		.eb-gallery-img-wrapper.${blockId}:hover {
 			${wrapperBDShadowHoverMobile}
 			${wrapperHoverBackgroundStylesMobile}
@@ -374,8 +430,10 @@ export default function Style(props) {
 		.eb-gallery-img-wrapper.${blockId}.grid .eb-gallery-img-content {
 			width: ${calcWidth(gridColumnsMobile || gridColumnsDesktop, imageMasonryGapStyleMobile || imageMasonryGapStyleDesktop)};
 		}
-		.eb-gallery-img-wrapper.${blockId}.masonry{
-			columns: ${gridColumnsMobile};
+		.eb-gallery-img-wrapper.${blockId}.masonry:not(.eb-filterable-img-gallery){
+            column-count: ${gridColumnsMobile};
+            -moz-column-count: ${gridColumnsMobile};
+            -webkit-column-count: ${gridColumnsMobile};
 		}
 		.eb-gallery-img-wrapper.${blockId}.masonry .eb-gallery-img-content{
 			margin-bottom: ${imageMasonryGapStyleMobile}px;
@@ -414,6 +472,10 @@ export default function Style(props) {
 		.eb-gallery-img-wrapper.${blockId}.caption-style-2 .eb-gallery-link-wrapper:after {
 			background-color: ${overlayColor};
 		}
+        .eb-gallery-img-wrapper.${blockId}.enable-isotope .eb-gallery-img-content {
+			margin: calc(${imageGapRange}px / 2);
+            width: calc(100% / ${gridColumnsDesktop} - ${imageMasonryGapStyleDesktop}px);
+		}
 	`;
 
 	const imageStylesTab = `
@@ -440,6 +502,10 @@ export default function Style(props) {
 			${captionPaddingTab}
 			${captionTypographyTab}
 			${captionWidthTab}
+		}
+        .eb-gallery-img-wrapper.${blockId}.enable-isotope .eb-gallery-img-content {
+			margin: calc(${TABimageGapRange}px / 2);
+            width: calc(100% / ${gridColumnsTab} - ${imageMasonryGapStyleTab}px);
 		}
 	`;
 
@@ -468,6 +534,10 @@ export default function Style(props) {
 			${captionTypographyMobile}
 			${captionWidthMobile}
 		}
+        .eb-gallery-img-wrapper.${blockId}.enable-isotope .eb-gallery-img-content {
+			margin: calc(${MOBimageGapRange}px / 2);
+            width: calc(100% / ${gridColumnsMobile} - ${imageMasonryGapStyleMobile}px);
+		}
 	`;
 
 	const filterStylesDesktop = `
@@ -494,7 +564,7 @@ export default function Style(props) {
 
 		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery .eb-gallery-img-content {
 			margin: calc(${imageGapRange}px / 2);
-            width: calc(100% / ${gridColumnsDesktop} - ${imageMasonryGapStyleDesktop}px);
+            width: calc(99.99% / ${gridColumnsDesktop} - ${imageMasonryGapStyleDesktop}px);
 		}
 	`;
 
@@ -509,6 +579,11 @@ export default function Style(props) {
 		.eb-parent-${blockId} .eb-img-gallery-filter-item:hover {
 			${filterBDShadowHoverTab}
 		}
+
+        .eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery .eb-gallery-img-content {
+			margin: calc(${TABimageGapRange ? TABimageGapRange : imageGapRange}px / 2);
+            width: calc(95% / ${gridColumnsTab} - ${imageMasonryGapStyleTab ? imageMasonryGapStyleTab : imageMasonryGapStyleDesktop}px);
+		}
 	`;
 
 	const filterStylesMobile = `
@@ -522,6 +597,41 @@ export default function Style(props) {
 		.eb-parent-${blockId} .eb-img-gallery-filter-item:hover {
 			${filterBDShadowHoverMobile}
 		}
+
+        .eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery .eb-gallery-img-content {
+			margin: calc(${MOBimageGapRange ? MOBimageGapRange : imageGapRange}px / 2);
+            width: calc(99.99% / ${gridColumnsMobile ? gridColumnsMobile : gridColumnsDesktop} - ${imageMasonryGapStyleMobile ? imageMasonryGapStyleMobile : imageMasonryGapStyleDesktop}px);
+		}
+	`;
+
+	const loadmoreStylesDesktop = `
+		.eb-parent-${blockId} .eb-img-gallery-loadmore {
+            color: ${loadmoreColor};
+			background-color: ${loadmoreBGColor};
+			${loadmoreTypographyDesktop}
+			${loadmorePaddingDesktop}
+			${loadmoreBDShadowDesktop}
+			transition:${loadmoreBDShadowTransitionStyle};
+		}
+		.eb-parent-${blockId} .eb-img-gallery-loadmore:hover {
+            color: ${loadmoreHvColor};
+			background-color: ${loadmoreHvBGColor};
+			${loadmoreBDShadowHoverDesktop}
+		}
+	`;
+	const loadmoreStylesTab = `
+		.eb-parent-${blockId} .eb-img-gallery-loadmore {
+			${loadmoreTypographyTab}
+			${loadmorePaddingTab}
+			${loadmoreBDShadowTab}
+		}
+	`;
+	const loadmoreStylesMobile = `
+		.eb-parent-${blockId} .eb-img-gallery-loadmore {
+			${loadmoreTypographyTab}
+			${loadmorePaddingMobile}
+			${loadmoreBDShadowMobile}
+		}
 	`;
 
 	// all css styles for large screen width (desktop/laptop) in strings ⬇
@@ -529,6 +639,7 @@ export default function Style(props) {
 		${wrapperStylesDesktop}
 		${imageStylesDesktop}
 		${filterStylesDesktop}
+		${loadmoreStylesDesktop}
 	`);
 
 	// all css styles for Tab in strings ⬇
@@ -536,6 +647,7 @@ export default function Style(props) {
 		${wrapperStylesTab}
 		${imageStylesTab}
 		${filterStylesTab}
+		${loadmoreStylesTab}
 	`);
 
 	// all css styles for Mobile in strings ⬇
@@ -543,6 +655,7 @@ export default function Style(props) {
 		${wrapperStylesMobile}
 		${imageStylesMobile}
 		${filterStylesMobile}
+		${loadmoreStylesMobile}
 	`);
 
 	return (
@@ -558,13 +671,13 @@ export default function Style(props) {
 
 			<style>
 				{`
-                    @media all and (max-width: 1024px) {
+                    @media (max-width: 1024px) {
                         .eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry {
-                            display: block;
+                            // display: block;
                         }
                         .eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry .eb-gallery-img-content {
-                            break-inside: avoid;
-                            display: initial;
+                            // break-inside: avoid;
+                            // display: initial;
                         }
                         .eb-gallery-img-wrapper.eb-filterable-img-gallery.masonry .eb-gallery-img-content img {
                             display: block;

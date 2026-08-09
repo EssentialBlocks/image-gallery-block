@@ -1,54 +1,93 @@
-# A set of files you probably don't want in your WordPress.org distribution
-.babelrc
-.deployignore
-.distignore
-.editorconfig
-.eslintignore
-.eslintrc
-.gitmodules
+# Files and folders excluded from the production/WordPress.org ZIP.
+# Everything the plugin needs at runtime — image-gallery-block.php, block.json,
+# readme.txt, includes/, dist/ (minus source maps) and lib/ — must stay OUT of this list.
+
+# --- Version control ---
+# `**/` variants matter: submodules carry a `.git` *file* (a gitdir pointer),
+# which a bare top-level `.git` pattern does not catch.
 .git
+**/.git
 .gitignore
-.github
+**/.gitignore
 .gitattributes
+**/.gitattributes
+.gitmodules
+.github
 .gitlab-ci.yml
-.travis.yml
+
+# --- Editor / OS cruft ---
+.editorconfig
+.idea
+.vscode
 .DS_Store
+**/.DS_Store
 Thumbs.db
-behat.yml
-bitbucket-pipelines.yml
-bin
-.circleci/config.yml
-composer.json
-composer.lock
-dependencies.yml
+
+# --- Build tooling config ---
+.babelrc
+.babelrc.js
+.babelrc.json
+babel.config.js
+babel.config.json
+webpack.config.js
 Gruntfile.js
+gulpfile.js
+postcss.config.js
+tsconfig.json
+config
+
+# --- Package managers ---
 package.json
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
+composer.json
+composer.lock
+node_modules
+node_modules/**/*.*
+vendor
+
+# --- Source (compiled into dist/) ---
+src
+controls
+lib/style-handler/style-handler.js
+lib/style-handler/helpers.js
+
+# Stale wp-scripts default output. webpack.config.js emits to dist/,
+# and nothing in the plugin references build/.
+build
+
+# Source maps — ~3.5MB of the 4.6MB dist/ folder, dev-only.
+*.map
+
+# --- Linting / testing / CI ---
+.eslintignore
+.eslintrc
+.eslintrc.js
+.prettierrc
+.phpcs.xml
+.phpcs.xml.dist
+phpcs.xml
+phpcs.xml.dist
 phpunit.xml
 phpunit.xml.dist
 multisite.xml
 multisite.xml.dist
-.phpcs.xml
-phpcs.xml
-.phpcs.xml.dist
-phpcs.xml.dist
-README.md
-webpack.config.js
-wp-cli.local.yml
-yarn.lock
+behat.yml
 tests
-vendor
-node_modules
+bin
+.travis.yml
+.circleci/config.yml
+bitbucket-pipelines.yml
+dependencies.yml
+
+# --- Deploy / docs / release artifacts ---
+.deployignore
+.distignore
+.wordpress-org
+wp-cli.local.yml
+README.md
+compatibility-report.md
 *.sql
 *.tar.gz
 *.zip
-gulpfile.js
-.git
-node_modules/**/*.*
-src
-controls
-config
-lib/style-handler/style-handler.js
-lib/style-handler/helpers.js
-.wordpress-org
-.idea

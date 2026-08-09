@@ -1,9 +1,10 @@
 === Image Gallery Block ===
 Contributors: wpdevteam, re_enter_rupok, Asif2BD, jamilbd07, rahat89, fencermonir
 Tags: block, blocks, image, gallery, image gallery, image grid, lightbox, gutenberg, gutenberg blocks
-Requires at least: 5.6
-Tested up to: 6.5
-Stable tag: 1.3.4
+Requires at least: 6.0
+Tested up to: 7.0
+Stable tag: 1.5.0
+Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -82,6 +83,15 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.5.0 =
+* Fixed: Fatal error when the bundled style-handler library was missing
+* Fixed: Fatal error on PHP versions below 8.0 in the editor asset loader
+* Fixed: Block registration on WordPress 5.6 - 5.7
+* Fixed: PHP 8.1+ deprecation notices in the Google Fonts loader
+* Improved: WordPress version detection no longer relies on float casting
+* Improved: Compatibility with WordPress 7.0 and PHP 8.5
+* Changed: Minimum requirements are now WordPress 6.0 and PHP 7.4
 
 = 1.3.4 - 09/04/2024 =
 * Fixed: compatibility support with wordpress 6.5 version

@@ -59,9 +59,7 @@ Built with [`@wordpress/scripts`](https://developer.wordpress.org/block-editor/r
 - [wpdevteam](https://profiles.wordpress.org/wpdevteam/) — WPDeveloper
 - [re_enter_rupok](https://profiles.wordpress.org/re_enter_rupok/)
 - [Asif2BD](https://profiles.wordpress.org/asif2bd/)
-- [jamilbd07](https://profiles.wordpress.org/jamilbd07/)
 - [rahat89](https://profiles.wordpress.org/rahat89/)
-- [fencermonir](https://profiles.wordpress.org/fencermonir/)
 - [RahatSheikhLeon](https://github.com/RahatSheikhLeon)
 
 Contributions are welcome — open an issue or a pull request on [GitHub](https://github.com/EssentialBlocks/image-gallery-block/).

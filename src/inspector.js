@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from "@wordpress/i18n";
-import { InspectorControls, PanelColorSettings } from "@wordpress/block-editor";
+import { InspectorControls } from "@wordpress/block-editor";
 import {
 	PanelBody,
 	SelectControl,
@@ -13,6 +13,7 @@ import {
 	TabPanel,
 	TextControl,
 	PanelRow,
+	RangeControl,
 	__experimentalDivider as Divider,
 } from "@wordpress/components";
 import { useState, useEffect } from "@wordpress/element";
@@ -61,9 +62,13 @@ import {
 	FILTER_MARGIN,
 	NORMAL_HOVER,
 	FILTER_BORDER_SHADOW,
+	LOADMORE_PADDING,
+	LOADMORE_BORDER,
 } from "./constants";
 
-import { FILTER_TYPOGRAPHY } from "./typoConstants";
+import { FILTER_TYPOGRAPHY, LOADMORE_TYPOGRAPHY } from "./typoConstants";
+
+import { handleCustomURL, handleOpenNewTab } from "./helpers";
 
 const {
 	ResponsiveDimensionsControl,
@@ -74,6 +79,7 @@ const {
 	ColorControl,
 	AdvancedControls,
 	EbImageSizeSelector,
+	DynamicInputControl
 } = window.EBImageGalleryControls;
 
 function Inspector(props) {
@@ -100,6 +106,7 @@ function Inspector(props) {
 		filterAllTitle,
 		sources,
 		filterItems,
+		defaultFilter,
 		filterColorType,
 		filterColor,
 		filterHoverColor,
@@ -107,7 +114,19 @@ function Inspector(props) {
 		filterHoverBGColor,
 		filterActColor,
 		filterActBGColor,
+		addCustomLink,
+		images,
+		enableIsotope,
+		enableLoadMore,
+		loadmoreBtnText,
+		loadmoreColor,
+		loadmoreHvColor,
+		loadmoreBGColor,
+		loadmoreHvBGColor,
+		imagesPerPage,
 	} = attributes;
+
+	const [defaultFilterOptions, setDefaultFilterOptions] = useState("");
 
 	/**
 	 * Get All Image Sizes
@@ -131,6 +150,36 @@ function Inspector(props) {
 			setImageAllSizes(updatedSize);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (!enableFilter) {
+			return
+		}
+		let options = [{
+			label: filterAllTitle,
+			value: '*'
+		}]
+
+		if (filterItems.length > 0) {
+			options = [
+				...options,
+				...filterItems
+			]
+		}
+		if (!defaultFilter) {
+			setAttributes({ defaultFilter: '*' })
+		}
+		setDefaultFilterOptions([...options])
+
+	}, [filterItems, enableFilterAll])
+
+	useEffect(() => {
+		{ enableFilter === true ? setAttributes({ enableIsotope: false }) : null }
+	}, [enableFilter])
+
+	useEffect(() => {
+		{ enableIsotope === false ? setAttributes({ enableLoadMore: false }) : null }
+	}, [enableIsotope])
 
 	/**
 	 * Change Preset Styles
@@ -233,26 +282,42 @@ function Inspector(props) {
 							{tab.name === "general" && (
 								<>
 									<PanelBody
-										title={__("General", "essential-blocks")}
+										title={__(
+											"General",
+											"image-gallery-block"
+										)}
 										initialOpen={true}
 									>
 										<SelectControl
-											label={__("Layouts", "essential-blocks")}
+											label={__(
+												"Layouts",
+												"image-gallery-block"
+											)}
 											value={layouts}
 											options={LAYOUTS}
-											onChange={(layouts) => setAttributes({ layouts })}
+											onChange={(layouts) =>
+												setAttributes({ layouts })
+											}
 										/>
 
 										<SelectControl
-											label={__("Styles", "essential-blocks")}
+											label={__(
+												"Styles",
+												"image-gallery-block"
+											)}
 											value={styleNumber}
 											options={STYLES}
-											onChange={(styleNumber) => changeStyle(styleNumber)}
+											onChange={(styleNumber) =>
+												changeStyle(styleNumber)
+											}
 										/>
 
 										{styleNumber === "2" && (
 											<SelectControl
-												label={__("Overlay Styles", "essential-blocks")}
+												label={__(
+													"Overlay Styles",
+													"image-gallery-block"
+												)}
 												value={overlayStyle}
 												options={OVERLAY_STYLES}
 												onChange={(overlayStyle) =>
@@ -264,7 +329,10 @@ function Inspector(props) {
 										)}
 
 										<ToggleControl
-											label={__("Display Caption", "essential-blocks")}
+											label={__(
+												"Display Caption",
+												"image-gallery-block"
+											)}
 											checked={displayCaption}
 											onChange={() =>
 												setAttributes({
@@ -274,7 +342,7 @@ function Inspector(props) {
 										/>
 
 										<EbImageSizeSelector
-											attrName={"imageSize"}
+											attrname={"imageSize"}
 											resRequiredProps={resRequiredProps}
 											label={"Image Size"} //Optional
 										/>
@@ -283,7 +351,7 @@ function Inspector(props) {
 											<ToggleControl
 												label={__(
 													"Display Caption on Hover",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												checked={captionOnHover}
 												onChange={() =>
@@ -295,7 +363,10 @@ function Inspector(props) {
 										)}
 
 										<ResponsiveRangeController
-											baseLabel={__("Columns", "essential-blocks")}
+											baseLabel={__(
+												"Columns",
+												"image-gallery-block"
+											)}
 											controlName={GRID_COLUMNS}
 											resRequiredProps={resRequiredProps}
 											units={[]}
@@ -305,7 +376,10 @@ function Inspector(props) {
 										/>
 
 										<ResponsiveRangeController
-											baseLabel={__("Image Gap (px)", "essential-blocks")}
+											baseLabel={__(
+												"Image Gap (px)",
+												"image-gallery-block"
+											)}
 											controlName={IMAGE_GAP}
 											resRequiredProps={resRequiredProps}
 											units={[]}
@@ -315,7 +389,10 @@ function Inspector(props) {
 										/>
 
 										<ToggleControl
-											label={__("Disable Light Box", "essential-blocks")}
+											label={__(
+												"Disable Light Box",
+												"image-gallery-block"
+											)}
 											checked={disableLightBox}
 											onChange={() =>
 												setAttributes({
@@ -323,14 +400,48 @@ function Inspector(props) {
 												})
 											}
 										/>
+										{disableLightBox && (
+											<ToggleControl
+												label={__(
+													"Add custom link?",
+													"image-gallery-block"
+												)}
+												checked={addCustomLink}
+												onChange={() =>
+													setAttributes({
+														addCustomLink: !addCustomLink,
+													})
+												}
+											/>
+										)}
+
+										{!enableFilter && (
+											<>
+												<ToggleControl
+													label={__(
+														"Enable Isotope",
+														"image-gallery-block"
+													)}
+													checked={enableIsotope}
+													onChange={() =>
+														setAttributes({
+															enableIsotope: !enableIsotope,
+														})
+													}
+												/>
+											</>
+										)}
 									</PanelBody>
 
 									<PanelBody
-										title={__("Filter", "essential-blocks")}
+										title={__("Filter", "image-gallery-block")}
 										initialOpen={false}
 									>
 										<ToggleControl
-											label={__("Enable Filter", "essential-blocks")}
+											label={__(
+												"Enable Filter",
+												"image-gallery-block"
+											)}
 											checked={enableFilter}
 											onChange={() =>
 												setAttributes({
@@ -341,7 +452,10 @@ function Inspector(props) {
 
 										{enableFilter && (
 											<ToggleControl
-												label={__('Enable "All"', "essential-blocks")}
+												label={__(
+													'Enable "All"',
+													"image-gallery-block"
+												)}
 												checked={enableFilterAll}
 												onChange={() =>
 													setAttributes({
@@ -353,7 +467,10 @@ function Inspector(props) {
 
 										{enableFilter && enableFilterAll && (
 											<TextControl
-												label={__('"ALL" Text', "essential-blocks")}
+												label={__(
+													'"ALL" Text',
+													"image-gallery-block"
+												)}
 												value={filterAllTitle}
 												onChange={(newtitle) =>
 													setAttributes({
@@ -365,70 +482,218 @@ function Inspector(props) {
 
 										{enableFilter && (
 											<>
+												<SelectControl
+													label={__(
+														"Default Selected Filter",
+														"image-gallery-block"
+													)}
+													value={defaultFilter}
+													options={defaultFilterOptions}
+													onChange={(selected) =>
+														setAttributes({ defaultFilter: selected })
+													}
+												/>
+
 												<Divider />
 												<PanelRow>
-													{__("Filter Items", "essential-blocks")}
+													{__(
+														"Filter Items",
+														"image-gallery-block"
+													)}
 												</PanelRow>
 												<SortableFilterItems
-													filterItems={attributes.filterItems}
-													setAttributes={setAttributes}
+													filterItems={
+														attributes.filterItems
+													}
+													setAttributes={
+														setAttributes
+													}
 												/>
 												<Button
 													className="eb-pricebox-feature-button"
-													label={__("Add Filter", "essential-blocks")}
+													label={__(
+														"Add Filter",
+														"image-gallery-block"
+													)}
 													icon="plus-alt"
 													onClick={onFilterAdd}
 												>
 													<span className="eb-pricebox-add-button-label">
-														{__("Add Filter", "essential-blocks")}
+														{__(
+															"Add Filter",
+															"image-gallery-block"
+														)}
 													</span>
 												</Button>
 											</>
 										)}
 									</PanelBody>
 
-									{enableFilter && (
-										<PanelBody
-											title={__("Gallery Items", "essential-blocks")}
-											initialOpen={false}
-										>
-											{sources.map((item, index) => {
-												return (
-													<PanelBody
-														title={"Image " + (index + 1)}
-														initialOpen={false}
-														onToggle={() =>
-															setAttributes({
-																initialSlide: index,
-															})
-														}
-														className="eb-img-gallery-item-single-panel"
-														key={index}
-													>
+									<PanelBody
+										title={__(
+											"Gallery Items",
+											"image-gallery-block"
+										)}
+										initialOpen={false}
+									>
+										{sources.map((item, index) => {
+											return (
+												<PanelBody
+													title={
+														"Image " + (index + 1)
+													}
+													initialOpen={false}
+													onToggle={() =>
+														setAttributes({
+															initialSlide: index,
+														})
+													}
+													className="eb-img-gallery-item-single-panel"
+													key={index}
+												>
+													{enableFilter && (
 														<Select2
 															name="select-gallery-item"
 															value={
-																item.hasOwnProperty("filter") &&
-																item.filter.length > 0
-																	? JSON.parse(item.filter)
+																item.hasOwnProperty(
+																	"filter"
+																) &&
+																	item.filter
+																		.length > 0
+																	? JSON.parse(
+																		item.filter
+																	)
 																	: ""
 															}
-															onChange={(selected) =>
-																handleSelect2Filter(selected, index)
+															onChange={(
+																selected
+															) =>
+																handleSelect2Filter(
+																	selected,
+																	index
+																)
 															}
-															options={filterItems}
+															options={
+																filterItems
+															}
 															isMulti="true"
 															Placeholder="Select Filter"
 														/>
+													)}
+													{disableLightBox &&
+														addCustomLink && (
+															<>
+																<TextControl
+																	label={__(
+																		"URL",
+																		"image-gallery-block"
+																	)}
+																	value={
+																		item.customLink
+																	}
+																	onChange={(
+																		text
+																	) =>
+																		handleCustomURL(
+																			text,
+																			item.id,
+																			images,
+																			setAttributes
+																		)
+																	}
+																/>
+																{item.url &&
+																	item.url
+																		.length >
+																	0 &&
+																	!item.isValidUrl && (
+																		<span className="error">
+																			URL
+																			is
+																			not
+																			valid
+																		</span>
+																	)}
+																<ToggleControl
+																	label={__(
+																		"Open in New Tab",
+																		"image-gallery-block"
+																	)}
+																	checked={
+																		item.openNewTab
+																	}
+																	onChange={() =>
+																		handleOpenNewTab(
+																			!item.openNewTab,
+																			item.id,
+																			images,
+																			setAttributes
+																		)
+																	}
+																/>
+															</>
+														)}
 
-														<Divider />
-														<PanelRow>
-															{__("Image", "essential-blocks")}
-														</PanelRow>
-														<img src={item.url} />
-													</PanelBody>
-												);
-											})}
+													<Divider />
+													<PanelRow>
+														{__(
+															"Image",
+															"image-gallery-block"
+														)}
+													</PanelRow>
+													<img src={item.url} />
+												</PanelBody>
+											);
+										})}
+									</PanelBody>
+
+									{(enableFilter || enableIsotope) && (
+										<PanelBody
+											title={__(
+												"Load More Button",
+												"image-gallery-block"
+											)}
+											initialOpen={false}
+										>
+											<ToggleControl
+												label={__(
+													"Enable Loadmore",
+													"image-gallery-block"
+												)}
+												checked={enableLoadMore}
+												onChange={() =>
+													setAttributes({
+														enableLoadMore: !enableLoadMore,
+													})
+												}
+											/>
+
+											{enableLoadMore && (
+												<>
+													<DynamicInputControl
+														label="Button Text"
+														attrName="loadmoreBtnText"
+														inputValue={loadmoreBtnText}
+														setAttributes={setAttributes}
+														onChange={(text) => setAttributes({ loadmoreBtnText: text })}
+													/>
+													<RangeControl
+														label={__(
+															"Images Per Page",
+															"image-gallery-block"
+														)}
+														value={imagesPerPage}
+														onChange={(imagesPerPage) =>
+															setAttributes({
+																imagesPerPage,
+															})
+														}
+														min={1}
+														max={sources?.length - 1}
+														allowReset={true}
+													/>
+												</>
+											)}
 										</PanelBody>
 									)}
 								</>
@@ -436,69 +701,127 @@ function Inspector(props) {
 
 							{tab.name === "styles" && (
 								<>
-									<PanelBody title={__("Image Settings", "essential-blocks")}>
+									<PanelBody
+										title={__(
+											"Image Settings",
+											"image-gallery-block"
+										)}
+									>
 										{layouts === "grid" && (
 											<>
 												{!enableFilter && (
 													<BaseControl
-														label={__("Alignment", "essential-blocks")}
+														label={__(
+															"Alignment",
+															"image-gallery-block"
+														)}
 													>
 														<ButtonGroup>
-															{FLEX_ALIGN.map((item, index) => (
-																<Button
-																	key={index}
-																	isPrimary={imageAlignment === item.value}
-																	isSecondary={imageAlignment !== item.value}
-																	onClick={() =>
-																		setAttributes({
-																			imageAlignment: item.value,
-																		})
-																	}
-																>
-																	{item.label}
-																</Button>
-															))}
+															{FLEX_ALIGN.map(
+																(
+																	item,
+																	index
+																) => (
+																	<Button
+																		key={
+																			index
+																		}
+																		isPrimary={
+																			imageAlignment ===
+																			item.value
+																		}
+																		isSecondary={
+																			imageAlignment !==
+																			item.value
+																		}
+																		onClick={() =>
+																			setAttributes(
+																				{
+																					imageAlignment:
+																						item.value,
+																				}
+																			)
+																		}
+																	>
+																		{
+																			item.label
+																		}
+																	</Button>
+																)
+															)}
 														</ButtonGroup>
 													</BaseControl>
 												)}
 
 												<BaseControl
-													label={__("Image Size", "essential-blocks")}
+													label={__(
+														"Image Size",
+														"image-gallery-block"
+													)}
 												>
 													<ButtonGroup>
-														{IMAGE_SIZE_TYPE.map((item, index) => (
-															<Button
-																key={index}
-																isPrimary={imageSizeType === item.value}
-																isSecondary={imageSizeType !== item.value}
-																onClick={() =>
-																	setAttributes({
-																		imageSizeType: item.value,
-																	})
-																}
-															>
-																{item.label}
-															</Button>
-														))}
+														{IMAGE_SIZE_TYPE.map(
+															(item, index) => (
+																<Button
+																	key={index}
+																	isPrimary={
+																		imageSizeType ===
+																		item.value
+																	}
+																	isSecondary={
+																		imageSizeType !==
+																		item.value
+																	}
+																	onClick={() =>
+																		setAttributes(
+																			{
+																				imageSizeType:
+																					item.value,
+																			}
+																		)
+																	}
+																>
+																	{item.label}
+																</Button>
+															)
+														)}
 													</ButtonGroup>
 												</BaseControl>
 
 												{imageSizeType === "fixed" && (
 													<>
 														<ResponsiveRangeController
-															baseLabel={__("Image Height", "essential-blocks")}
-															controlName={IMAGE_HEIGHT}
-															resRequiredProps={resRequiredProps}
-															units={IMAGE_UNIT_TYPES}
+															baseLabel={__(
+																"Image Height",
+																"image-gallery-block"
+															)}
+															controlName={
+																IMAGE_HEIGHT
+															}
+															resRequiredProps={
+																resRequiredProps
+															}
+															units={
+																IMAGE_UNIT_TYPES
+															}
 															min={0}
 															max={500}
 															step={1}
 														/>
 														<ResponsiveRangeController
-															baseLabel={__("Image Width", "essential-blocks")}
-															controlName={IMAGE_WIDTH}
-															resRequiredProps={resRequiredProps}
-															units={IMAGE_UNIT_TYPES}
+															baseLabel={__(
+																"Image Width",
+																"image-gallery-block"
+															)}
+															controlName={
+																IMAGE_WIDTH
+															}
+															resRequiredProps={
+																resRequiredProps
+															}
+															units={
+																IMAGE_UNIT_TYPES
+															}
 															min={0}
 															max={500}
 															step={1}
@@ -506,54 +829,82 @@ function Inspector(props) {
 													</>
 												)}
 
-												{imageSizeType === "adaptive" && (
-													<>
-														<ResponsiveRangeController
-															baseLabel={__(
-																"Image Max Height",
-																"essential-blocks"
-															)}
-															controlName={IMAGE_MAX_HEIGHT}
-															resRequiredProps={resRequiredProps}
-															units={IMAGE_UNIT_TYPES}
-															min={0}
-															max={500}
-															step={1}
-														/>
-														<ResponsiveRangeController
-															baseLabel={__(
-																"Image Max Width",
-																"essential-blocks"
-															)}
-															controlName={IMAGE_MAX_WIDTH}
-															resRequiredProps={resRequiredProps}
-															units={IMAGE_UNIT_TYPES}
-															min={0}
-															max={500}
-															step={1}
-														/>
-													</>
-												)}
+												{imageSizeType ===
+													"adaptive" && (
+														<>
+															<ResponsiveRangeController
+																baseLabel={__(
+																	"Image Max Height",
+																	"image-gallery-block"
+																)}
+																controlName={
+																	IMAGE_MAX_HEIGHT
+																}
+																resRequiredProps={
+																	resRequiredProps
+																}
+																units={
+																	IMAGE_UNIT_TYPES
+																}
+																min={0}
+																max={500}
+																step={1}
+															/>
+															<ResponsiveRangeController
+																baseLabel={__(
+																	"Image Max Width",
+																	"image-gallery-block"
+																)}
+																controlName={
+																	IMAGE_MAX_WIDTH
+																}
+																resRequiredProps={
+																	resRequiredProps
+																}
+																units={
+																	IMAGE_UNIT_TYPES
+																}
+																min={0}
+																max={500}
+																step={1}
+															/>
+														</>
+													)}
 											</>
 										)}
 
 										<PanelBody
-											title={__("Border", "essential-blocks")}
+											title={__(
+												"Border",
+												"image-gallery-block"
+											)}
 											initialOpen={true}
 										>
 											<BorderShadowControl
-												controlName={IMAGE_BORDER_SHADOW}
-												resRequiredProps={resRequiredProps}
+												controlName={
+													IMAGE_BORDER_SHADOW
+												}
+												resRequiredProps={
+													resRequiredProps
+												}
 												noShadow
-												// noBorder
+											// noBorder
 											/>
 										</PanelBody>
 									</PanelBody>
 
 									{styleNumber === "2" && (
-										<PanelBody title={__("Overlay Styles", "essential-blocks")}>
+										<PanelBody
+											title={__(
+												"Overlay Styles",
+												"image-gallery-block"
+											)}
+										>
 											<ColorControl
-												label={__("Overlay Color", "essential-blocks")}
+												label={__(
+													"Overlay Color",
+													"image-gallery-block"
+												)}
 												color={overlayColor}
 												onChange={(color) =>
 													setAttributes({
@@ -564,26 +915,30 @@ function Inspector(props) {
 										</PanelBody>
 									)}
 									{displayCaption && (
-										<PanelBody title={__("Caption Styles", "essential-blocks")}>
-											<PanelColorSettings
-												title={__("Color Controls", "essential-blocks")}
-												className={"eb-subpanel"}
-												initialOpen={true}
-												disableAlpha={false}
-												colorSettings={[
-													{
-														value: captionColor,
-														onChange: (newColor) =>
-															setAttributes({
-																captionColor: newColor,
-															}),
-														label: __("Text Color", "essential-blocks"),
-													},
-												]}
+										<PanelBody
+											title={__(
+												"Caption Styles",
+												"image-gallery-block"
+											)}
+										>
+											<ColorControl
+												label={__(
+													"Text Color",
+													"image-gallery-block"
+												)}
+												color={captionColor}
+												onChange={(newColor) =>
+													setAttributes({
+														captionColor: newColor,
+													})
+												}
 											/>
 
 											<ColorControl
-												label={__("Background Color", "essential-blocks")}
+												label={__(
+													"Background Color",
+													"image-gallery-block"
+												)}
 												color={captionBGColor}
 												onChange={(backgroundColor) =>
 													setAttributes({
@@ -593,15 +948,27 @@ function Inspector(props) {
 											/>
 
 											<TypographyDropdown
-												baseLabel={__("Typography", "essential-blocks")}
-												typographyPrefixConstant={CAPTION_TYPOGRAPHY}
-												resRequiredProps={resRequiredProps}
+												baseLabel={__(
+													"Typography",
+													"image-gallery-block"
+												)}
+												typographyPrefixConstant={
+													CAPTION_TYPOGRAPHY
+												}
+												resRequiredProps={
+													resRequiredProps
+												}
 											/>
 
 											<ResponsiveRangeController
-												baseLabel={__("Width", "essential-blocks")}
+												baseLabel={__(
+													"Width",
+													"image-gallery-block"
+												)}
 												controlName={CAPTION_WIDTH}
-												resRequiredProps={resRequiredProps}
+												resRequiredProps={
+													resRequiredProps
+												}
 												units={UNIT_TYPES}
 												min={0}
 												max={300}
@@ -611,77 +978,148 @@ function Inspector(props) {
 											{displayCaption && (
 												<>
 													<BaseControl
-														label={__("Text Align", "essential-blocks")}
+														label={__(
+															"Text Align",
+															"image-gallery-block"
+														)}
 													>
 														<ButtonGroup>
-															{TEXT_ALIGN.map((item, index) => (
-																<Button
-																	key={index}
-																	isPrimary={textAlign === item.value}
-																	isSecondary={textAlign !== item.value}
-																	onClick={() =>
-																		setAttributes({
-																			textAlign: item.value,
-																		})
-																	}
-																>
-																	{item.label}
-																</Button>
-															))}
+															{TEXT_ALIGN.map(
+																(
+																	item,
+																	index
+																) => (
+																	<Button
+																		key={
+																			index
+																		}
+																		isPrimary={
+																			textAlign ===
+																			item.value
+																		}
+																		isSecondary={
+																			textAlign !==
+																			item.value
+																		}
+																		onClick={() =>
+																			setAttributes(
+																				{
+																					textAlign:
+																						item.value,
+																				}
+																			)
+																		}
+																	>
+																		{
+																			item.label
+																		}
+																	</Button>
+																)
+															)}
 														</ButtonGroup>
 													</BaseControl>
 
 													<BaseControl
-														label={__("Horizontal Align", "essential-blocks")}
+														label={__(
+															"Horizontal Align",
+															"image-gallery-block"
+														)}
 													>
 														<ButtonGroup>
-															{HORIZONTAL_ALIGN.map((item, index) => (
-																<Button
-																	key={index}
-																	isPrimary={horizontalAlign === item.value}
-																	isSecondary={horizontalAlign !== item.value}
-																	onClick={() =>
-																		setAttributes({
-																			horizontalAlign: item.value,
-																		})
-																	}
-																>
-																	{item.label}
-																</Button>
-															))}
+															{HORIZONTAL_ALIGN.map(
+																(
+																	item,
+																	index
+																) => (
+																	<Button
+																		key={
+																			index
+																		}
+																		isPrimary={
+																			horizontalAlign ===
+																			item.value
+																		}
+																		isSecondary={
+																			horizontalAlign !==
+																			item.value
+																		}
+																		onClick={() =>
+																			setAttributes(
+																				{
+																					horizontalAlign:
+																						item.value,
+																				}
+																			)
+																		}
+																	>
+																		{
+																			item.label
+																		}
+																	</Button>
+																)
+															)}
 														</ButtonGroup>
 													</BaseControl>
 
 													<BaseControl
-														label={__("Vertical Align", "essential-blocks")}
+														label={__(
+															"Vertical Align",
+															"image-gallery-block"
+														)}
 													>
 														<ButtonGroup>
-															{VERTICAL_ALIGN.map((item, index) => (
-																<Button
-																	key={index}
-																	isPrimary={verticalAlign === item.value}
-																	isSecondary={verticalAlign !== item.value}
-																	onClick={() =>
-																		setAttributes({
-																			verticalAlign: item.value,
-																		})
-																	}
-																>
-																	{item.label}
-																</Button>
-															))}
+															{VERTICAL_ALIGN.map(
+																(
+																	item,
+																	index
+																) => (
+																	<Button
+																		key={
+																			index
+																		}
+																		isPrimary={
+																			verticalAlign ===
+																			item.value
+																		}
+																		isSecondary={
+																			verticalAlign !==
+																			item.value
+																		}
+																		onClick={() =>
+																			setAttributes(
+																				{
+																					verticalAlign:
+																						item.value,
+																				}
+																			)
+																		}
+																	>
+																		{
+																			item.label
+																		}
+																	</Button>
+																)
+															)}
 														</ButtonGroup>
 													</BaseControl>
 
 													<ResponsiveDimensionsControl
-														resRequiredProps={resRequiredProps}
-														controlName={CAPTION_MARGIN}
+														resRequiredProps={
+															resRequiredProps
+														}
+														controlName={
+															CAPTION_MARGIN
+														}
 														baseLabel="Margin"
 													/>
 
 													<ResponsiveDimensionsControl
-														resRequiredProps={resRequiredProps}
-														controlName={CAPTION_PADDING}
+														resRequiredProps={
+															resRequiredProps
+														}
+														controlName={
+															CAPTION_PADDING
+														}
 														baseLabel="Padding"
 													/>
 												</>
@@ -691,137 +1129,286 @@ function Inspector(props) {
 
 									{enableFilter && (
 										<PanelBody
-											title={__("Filter", "essential-blocks")}
+											title={__(
+												"Filter",
+												"image-gallery-block"
+											)}
 											initialOpen={false}
 										>
 											<ResponsiveDimensionsControl
-												resRequiredProps={resRequiredProps}
+												resRequiredProps={
+													resRequiredProps
+												}
 												controlName={FILTER_MARGIN}
 												baseLabel="Margin"
 											/>
 											<ResponsiveDimensionsControl
-												resRequiredProps={resRequiredProps}
+												resRequiredProps={
+													resRequiredProps
+												}
 												controlName={FILTER_PADDING}
 												baseLabel="Padding"
 											/>
 											<TypographyDropdown
-												baseLabel={__("Typography", "essential-blocks")}
-												typographyPrefixConstant={FILTER_TYPOGRAPHY}
-												resRequiredProps={resRequiredProps}
+												baseLabel={__(
+													"Typography",
+													"image-gallery-block"
+												)}
+												typographyPrefixConstant={
+													FILTER_TYPOGRAPHY
+												}
+												resRequiredProps={
+													resRequiredProps
+												}
 											/>
 											<BaseControl>
 												<ButtonGroup>
-													{NORMAL_HOVER.map((item, index) => (
-														<Button
-															key={index}
-															isPrimary={filterColorType === item.value}
-															isSecondary={filterColorType !== item.value}
-															onClick={() =>
-																setAttributes({
-																	filterColorType: item.value,
-																})
-															}
-														>
-															{item.label}
-														</Button>
-													))}
+													{NORMAL_HOVER.map(
+														(item, index) => (
+															<Button
+																key={index}
+																isPrimary={
+																	filterColorType ===
+																	item.value
+																}
+																isSecondary={
+																	filterColorType !==
+																	item.value
+																}
+																onClick={() =>
+																	setAttributes(
+																		{
+																			filterColorType:
+																				item.value,
+																		}
+																	)
+																}
+															>
+																{item.label}
+															</Button>
+														)
+													)}
 												</ButtonGroup>
 
-												{filterColorType === "normal" && (
-													<PanelColorSettings
-														className={"eb-subpanel"}
-														title={__("Normal Color", "essential-blocks")}
-														initialOpen={true}
-														colorSettings={[
-															{
-																value: filterColor,
-																onChange: (newColor) =>
+												{filterColorType ===
+													"normal" && (
+														<>
+															<ColorControl
+																label={__(
+																	"Color",
+																	"image-gallery-block"
+																)}
+																color={filterColor}
+																onChange={(
+																	newColor
+																) =>
 																	setAttributes({
 																		filterColor: newColor,
-																	}),
-																label: __("Color", "essential-blocks"),
-															},
-															{
-																value: filterBGColor,
-																onChange: (newColor) =>
+																	})
+																}
+															/>
+
+															<ColorControl
+																label={__(
+																	"Background Color",
+																	"image-gallery-block"
+																)}
+																color={
+																	filterBGColor
+																}
+																onChange={(
+																	newColor
+																) =>
 																	setAttributes({
 																		filterBGColor: newColor,
-																	}),
-																label: __(
-																	"Background Color",
-																	"essential-blocks"
-																),
-															},
-														]}
-													/>
-												)}
+																	})
+																}
+															/>
+														</>
+													)}
 
-												{filterColorType === "hover" && (
-													<PanelColorSettings
-														className={"eb-subpanel"}
-														title={__("Hover Color", "essential-blocks")}
-														initialOpen={true}
-														colorSettings={[
-															{
-																value: filterHoverColor,
-																onChange: (newColor) =>
+												{filterColorType ===
+													"hover" && (
+														<>
+															<ColorControl
+																label={__(
+																	"Color",
+																	"image-gallery-block"
+																)}
+																color={
+																	filterHoverColor
+																}
+																onChange={(
+																	newColor
+																) =>
 																	setAttributes({
 																		filterHoverColor: newColor,
-																	}),
-																label: __("Color", "essential-blocks"),
-															},
-															{
-																value: filterHoverBGColor,
-																onChange: (newColor) =>
+																	})
+																}
+															/>
+
+															<ColorControl
+																label={__(
+																	"Background Color",
+																	"image-gallery-block"
+																)}
+																color={
+																	filterHoverBGColor
+																}
+																onChange={(
+																	newColor
+																) =>
 																	setAttributes({
 																		filterHoverBGColor: newColor,
-																	}),
-																label: __(
-																	"Background Color",
-																	"essential-blocks"
-																),
-															},
-														]}
-													/>
-												)}
+																	})
+																}
+															/>
+														</>
+													)}
 
-												{filterColorType === "active" && (
-													<PanelColorSettings
-														className={"eb-subpanel"}
-														title={__("Active Color", "essential-blocks")}
-														initialOpen={true}
-														colorSettings={[
-															{
-																value: filterActColor,
-																onChange: (newColor) =>
+												{filterColorType ===
+													"active" && (
+														<>
+															<ColorControl
+																label={__(
+																	"Color",
+																	"image-gallery-block"
+																)}
+																color={
+																	filterActColor
+																}
+																onChange={(
+																	newColor
+																) =>
 																	setAttributes({
 																		filterActColor: newColor,
-																	}),
-																label: __("Color", "essential-blocks"),
-															},
-															{
-																value: filterActBGColor,
-																onChange: (newColor) =>
+																	})
+																}
+															/>
+															<ColorControl
+																label={__(
+																	"Background Color",
+																	"image-gallery-block"
+																)}
+																color={
+																	filterActBGColor
+																}
+																onChange={(
+																	newColor
+																) =>
 																	setAttributes({
 																		filterActBGColor: newColor,
-																	}),
-																label: __(
-																	"Background Color",
-																	"essential-blocks"
-																),
-															},
-														]}
-													/>
-												)}
+																	})
+																}
+															/>
+														</>
+													)}
 											</BaseControl>
 
-											<PanelRow>Button Border & Shadow</PanelRow>
+											<PanelRow>
+												Button Border & Shadow
+											</PanelRow>
 											<BorderShadowControl
-												controlName={FILTER_BORDER_SHADOW}
-												resRequiredProps={resRequiredProps}
-												// noShadow
-												// noBorder
+												controlName={
+													FILTER_BORDER_SHADOW
+												}
+												resRequiredProps={
+													resRequiredProps
+												}
+											// noShadow
+											// noBorder
 											/>
+										</PanelBody>
+									)}
+
+									{(enableFilter || enableIsotope) && enableLoadMore && (
+										<PanelBody
+											title={__("Loadmore Button", "image-gallery-block")}
+											initialOpen={false}
+										>
+											<>
+												<TypographyDropdown
+													baseLabel={__(
+														"Typography",
+														"image-gallery-block"
+													)}
+													typographyPrefixConstant={
+														LOADMORE_TYPOGRAPHY
+													}
+													resRequiredProps={
+														resRequiredProps
+													}
+												/>
+												<ColorControl
+													label={__(
+														"Text Color",
+														"image-gallery-block"
+													)}
+													color={loadmoreColor}
+													onChange={(newTextColor) =>
+														setAttributes({
+															loadmoreColor: newTextColor,
+														})
+													}
+												/>
+												<ColorControl
+													label={__(
+														"Text Hover Color",
+														"image-gallery-block"
+													)}
+													color={loadmoreHvColor}
+													onChange={(newHoverTextColor) =>
+														setAttributes({
+															loadmoreHvColor: newHoverTextColor,
+														})
+													}
+												/>
+												<ColorControl
+													label={__(
+														"Background Color",
+														"image-gallery-block"
+													)}
+													color={loadmoreBGColor}
+													onChange={(newBgColor) =>
+														setAttributes({
+															loadmoreBGColor: newBgColor,
+														})
+													}
+												/>
+												<ColorControl
+													label={__(
+														"Background Hover Color",
+														"image-gallery-block"
+													)}
+													color={loadmoreHvBGColor}
+													onChange={(newHoverBgColor) =>
+														setAttributes({
+															loadmoreHvBGColor: newHoverBgColor,
+														})
+													}
+												/>
+												<ResponsiveDimensionsControl
+													resRequiredProps={
+														resRequiredProps
+													}
+													controlName={LOADMORE_PADDING}
+													baseLabel={__(
+														"Padding",
+														"image-gallery-block"
+													)}
+												/>
+												<PanelBody
+													title={__("Border", "image-gallery-block")}
+													initialOpen={false}
+												>
+													<BorderShadowControl
+														controlName={LOADMORE_BORDER}
+														resRequiredProps={
+															resRequiredProps
+														}
+													/>
+												</PanelBody>
+											</>
 										</PanelBody>
 									)}
 								</>
@@ -842,7 +1429,10 @@ function Inspector(props) {
 										/>
 									</PanelBody>
 									<PanelBody
-										title={__("Background", "essential-blocks")}
+										title={__(
+											"Background",
+											"image-gallery-block"
+										)}
 										initialOpen={false}
 									>
 										<BackgroundControl
@@ -851,12 +1441,15 @@ function Inspector(props) {
 											noOverlay
 										/>
 									</PanelBody>
-									<PanelBody title={__("Border & Shadow")} initialOpen={false}>
+									<PanelBody
+										title={__("Border & Shadow")}
+										initialOpen={false}
+									>
 										<BorderShadowControl
 											controlName={WRAPPER_BORDER_SHADOW}
 											resRequiredProps={resRequiredProps}
-											// noShadow
-											// noBorder
+										// noShadow
+										// noBorder
 										/>
 									</PanelBody>
 

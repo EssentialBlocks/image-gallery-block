@@ -16,6 +16,8 @@ import {
 	FILTER_PADDING,
 	FILTER_MARGIN,
 	FILTER_BORDER_SHADOW,
+	LOADMORE_PADDING,
+	LOADMORE_BORDER,
 } from "./constants";
 import * as CAPTION_TYPOGRAPHY from "./typoConstants";
 import { __ } from "@wordpress/i18n";
@@ -111,6 +113,10 @@ const attributes = {
 		type: "boolean",
 		default: false,
 	},
+	addCustomLink: {
+		type: "boolean",
+		default: false,
+	},
 	imageSizeType: {
 		type: "string",
 		default: "fixed",
@@ -129,7 +135,7 @@ const attributes = {
 		default: [
 			{
 				value: "filter-item-1",
-				label: __("Filter Item 1", "essential-blocks"),
+				label: __("Filter Item 1", "image-gallery-block"),
 			},
 		],
 	},
@@ -140,6 +146,9 @@ const attributes = {
 	filterAllTitle: {
 		type: "string",
 		default: "All",
+	},
+	defaultFilter: {
+		type: "string"
 	},
 	filterColorType: {
 		type: "string",
@@ -172,6 +181,35 @@ const attributes = {
 	select2Options: {
 		type: "string",
 		default: "",
+	},
+	enableIsotope: {
+		type: "boolean",
+		default: false,
+	},
+	enableLoadMore: {
+		type: "boolean",
+		default: false,
+	},
+
+	loadmoreBtnText: {
+		type: "string",
+		default: "Load More",
+	},
+	imagesPerPage: {
+		type: "number",
+		default: 1,
+	},
+	loadmoreColor: {
+		type: "string",
+		default: "#FFFFFF",
+	},
+	loadmoreHvColor: {
+		type: "string",
+		default: "#FFFFFF",
+	},
+	loadmoreBGColor: {
+		type: "string",
+		default: "#101828",
 	},
 
 	// typography attributes ⬇
@@ -273,6 +311,29 @@ const attributes = {
 		// noShadow: true,
 		// noBorder: true,
 	}),
+
+	...generateBorderShadowAttributes(LOADMORE_BORDER, {
+		bdrDefaults: {
+			top: 0,
+			bottom: 0,
+			right: 0,
+			left: 0,
+		},
+		rdsDefaults: {
+			top: 0,
+			bottom: 0,
+			right: 0,
+			left: 0,
+		},
+	}),
+	...generateDimensionsAttributes(LOADMORE_PADDING, {
+		top: 14,
+		bottom: 14,
+		right: 14,
+		left: 14,
+		isLinked: true,
+	}),
+
 };
 
 export default attributes;

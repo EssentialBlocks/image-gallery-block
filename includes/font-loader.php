@@ -13,7 +13,7 @@ class Image_Gallery_Font_Loader {
     protected static $instances = null;
 
     public static $gfonts      = [];
-    private static $block_name = [];
+    private static $block_name = '';
 
     /**
      * Registers the plugin.
@@ -48,8 +48,9 @@ class Image_Gallery_Font_Loader {
      * @access public
      */
     public function get_fonts_on_render_block( $block_content, $block ) {
-        if ( isset( $block['attrs'] ) ) {
-            if ( 'essential-blocks' === self::$block_name || $block['blockName'] === self::$block_name ) {
+        if ( isset( $block['attrs'] ) && is_array( $block['attrs'] ) ) {
+            $block_name = isset( $block['blockName'] ) ? $block['blockName'] : '';
+            if ( 'essential-blocks' === self::$block_name || $block_name === self::$block_name ) {
                 $fonts        = self::get_fonts_family( $block['attrs'] );
                 self::$gfonts = array_unique( array_merge( self::$gfonts, $fonts ) );
             }
@@ -67,6 +68,11 @@ class Image_Gallery_Font_Loader {
         $keys             = preg_grep( '/^(\w+)FontFamily/i', array_keys( $attributes ), 0 );
         $googleFontFamily = [];
         foreach ( $keys as $key ) {
+            // Skip null/non-string values — passing them to trim()/str_replace()
+            // is deprecated on PHP 8.1+ and yields a broken font URL.
+            if ( ! isset( $attributes[$key] ) || ! is_string( $attributes[$key] ) || '' === trim( $attributes[$key] ) ) {
+                continue;
+            }
             $googleFontFamily[$attributes[$key]] = $attributes[$key];
         }
         return $googleFontFamily;
@@ -94,6 +100,9 @@ class Image_Gallery_Font_Loader {
                 $gfonts      = '';
                 $gfonts_attr = ':100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic';
                 foreach ( $fonts as $font ) {
+                    if ( ! is_string( $font ) || '' === trim( $font ) ) {
+                        continue;
+                    }
                     $gfonts .= str_replace( ' ', '+', trim( $font ) ) . $gfonts_attr . '|';
                 }
                 if ( ! empty( $gfonts ) ) {

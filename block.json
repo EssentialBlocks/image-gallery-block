@@ -7,6 +7,5 @@
 	"keywords": ["images", "photos", "gallery"],
 	"supports": {
 		"align": true
-	},
-	"editorScript": "file:./dist/index.js"
+	}
 }

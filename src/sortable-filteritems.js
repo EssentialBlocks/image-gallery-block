@@ -109,7 +109,7 @@ const SortableItem = SortableElement(
 				{position === clickedItem && (
 					<Fragment>
 						<TextControl
-							label={__("Text", "essential-blocks")}
+							label={__("Text", "image-gallery-block")}
 							value={feature.label}
 							onChange={(value) => onFeatureChange("label", value, position)}
 						/>

@@ -141,7 +141,7 @@ export default function Edit(props) {
 				filterItems: [
 					{
 						value: "filter-item-1",
-						label: __("Filter Item 1", "essential-blocks"),
+						label: __("Filter Item 1", "image-gallery-block"),
 					},
 				],
 			});
@@ -335,7 +335,7 @@ export default function Edit(props) {
 													className="components-toolbar__control"
 													label={__(
 														"Edit gallery",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													icon="edit"
 													onClick={open}
@@ -494,7 +494,7 @@ export default function Edit(props) {
 										className="eb-gallery-upload-button"
 										label={__(
 											"Add Image",
-											"essential-blocks"
+											"image-gallery-block"
 										)}
 										icon="plus-alt"
 										onClick={open}

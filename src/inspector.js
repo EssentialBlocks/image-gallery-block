@@ -284,14 +284,14 @@ function Inspector(props) {
 									<PanelBody
 										title={__(
 											"General",
-											"essential-blocks"
+											"image-gallery-block"
 										)}
 										initialOpen={true}
 									>
 										<SelectControl
 											label={__(
 												"Layouts",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											value={layouts}
 											options={LAYOUTS}
@@ -303,7 +303,7 @@ function Inspector(props) {
 										<SelectControl
 											label={__(
 												"Styles",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											value={styleNumber}
 											options={STYLES}
@@ -316,7 +316,7 @@ function Inspector(props) {
 											<SelectControl
 												label={__(
 													"Overlay Styles",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												value={overlayStyle}
 												options={OVERLAY_STYLES}
@@ -331,7 +331,7 @@ function Inspector(props) {
 										<ToggleControl
 											label={__(
 												"Display Caption",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											checked={displayCaption}
 											onChange={() =>
@@ -351,7 +351,7 @@ function Inspector(props) {
 											<ToggleControl
 												label={__(
 													"Display Caption on Hover",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												checked={captionOnHover}
 												onChange={() =>
@@ -365,7 +365,7 @@ function Inspector(props) {
 										<ResponsiveRangeController
 											baseLabel={__(
 												"Columns",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											controlName={GRID_COLUMNS}
 											resRequiredProps={resRequiredProps}
@@ -378,7 +378,7 @@ function Inspector(props) {
 										<ResponsiveRangeController
 											baseLabel={__(
 												"Image Gap (px)",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											controlName={IMAGE_GAP}
 											resRequiredProps={resRequiredProps}
@@ -391,7 +391,7 @@ function Inspector(props) {
 										<ToggleControl
 											label={__(
 												"Disable Light Box",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											checked={disableLightBox}
 											onChange={() =>
@@ -404,7 +404,7 @@ function Inspector(props) {
 											<ToggleControl
 												label={__(
 													"Add custom link?",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												checked={addCustomLink}
 												onChange={() =>
@@ -420,7 +420,7 @@ function Inspector(props) {
 												<ToggleControl
 													label={__(
 														"Enable Isotope",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													checked={enableIsotope}
 													onChange={() =>
@@ -434,13 +434,13 @@ function Inspector(props) {
 									</PanelBody>
 
 									<PanelBody
-										title={__("Filter", "essential-blocks")}
+										title={__("Filter", "image-gallery-block")}
 										initialOpen={false}
 									>
 										<ToggleControl
 											label={__(
 												"Enable Filter",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											checked={enableFilter}
 											onChange={() =>
@@ -454,7 +454,7 @@ function Inspector(props) {
 											<ToggleControl
 												label={__(
 													'Enable "All"',
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												checked={enableFilterAll}
 												onChange={() =>
@@ -469,7 +469,7 @@ function Inspector(props) {
 											<TextControl
 												label={__(
 													'"ALL" Text',
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												value={filterAllTitle}
 												onChange={(newtitle) =>
@@ -485,7 +485,7 @@ function Inspector(props) {
 												<SelectControl
 													label={__(
 														"Default Selected Filter",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													value={defaultFilter}
 													options={defaultFilterOptions}
@@ -498,7 +498,7 @@ function Inspector(props) {
 												<PanelRow>
 													{__(
 														"Filter Items",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 												</PanelRow>
 												<SortableFilterItems
@@ -513,7 +513,7 @@ function Inspector(props) {
 													className="eb-pricebox-feature-button"
 													label={__(
 														"Add Filter",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													icon="plus-alt"
 													onClick={onFilterAdd}
@@ -521,7 +521,7 @@ function Inspector(props) {
 													<span className="eb-pricebox-add-button-label">
 														{__(
 															"Add Filter",
-															"essential-blocks"
+															"image-gallery-block"
 														)}
 													</span>
 												</Button>
@@ -532,7 +532,7 @@ function Inspector(props) {
 									<PanelBody
 										title={__(
 											"Gallery Items",
-											"essential-blocks"
+											"image-gallery-block"
 										)}
 										initialOpen={false}
 									>
@@ -586,7 +586,7 @@ function Inspector(props) {
 																<TextControl
 																	label={__(
 																		"URL",
-																		"essential-blocks"
+																		"image-gallery-block"
 																	)}
 																	value={
 																		item.customLink
@@ -617,7 +617,7 @@ function Inspector(props) {
 																<ToggleControl
 																	label={__(
 																		"Open in New Tab",
-																		"essential-blocks"
+																		"image-gallery-block"
 																	)}
 																	checked={
 																		item.openNewTab
@@ -638,7 +638,7 @@ function Inspector(props) {
 													<PanelRow>
 														{__(
 															"Image",
-															"essential-blocks"
+															"image-gallery-block"
 														)}
 													</PanelRow>
 													<img src={item.url} />
@@ -651,14 +651,14 @@ function Inspector(props) {
 										<PanelBody
 											title={__(
 												"Load More Button",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											initialOpen={false}
 										>
 											<ToggleControl
 												label={__(
 													"Enable Loadmore",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												checked={enableLoadMore}
 												onChange={() =>
@@ -680,7 +680,7 @@ function Inspector(props) {
 													<RangeControl
 														label={__(
 															"Images Per Page",
-															"essential-blocks"
+															"image-gallery-block"
 														)}
 														value={imagesPerPage}
 														onChange={(imagesPerPage) =>
@@ -704,7 +704,7 @@ function Inspector(props) {
 									<PanelBody
 										title={__(
 											"Image Settings",
-											"essential-blocks"
+											"image-gallery-block"
 										)}
 									>
 										{layouts === "grid" && (
@@ -713,7 +713,7 @@ function Inspector(props) {
 													<BaseControl
 														label={__(
 															"Alignment",
-															"essential-blocks"
+															"image-gallery-block"
 														)}
 													>
 														<ButtonGroup>
@@ -756,7 +756,7 @@ function Inspector(props) {
 												<BaseControl
 													label={__(
 														"Image Size",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 												>
 													<ButtonGroup>
@@ -793,7 +793,7 @@ function Inspector(props) {
 														<ResponsiveRangeController
 															baseLabel={__(
 																"Image Height",
-																"essential-blocks"
+																"image-gallery-block"
 															)}
 															controlName={
 																IMAGE_HEIGHT
@@ -811,7 +811,7 @@ function Inspector(props) {
 														<ResponsiveRangeController
 															baseLabel={__(
 																"Image Width",
-																"essential-blocks"
+																"image-gallery-block"
 															)}
 															controlName={
 																IMAGE_WIDTH
@@ -835,7 +835,7 @@ function Inspector(props) {
 															<ResponsiveRangeController
 																baseLabel={__(
 																	"Image Max Height",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																controlName={
 																	IMAGE_MAX_HEIGHT
@@ -853,7 +853,7 @@ function Inspector(props) {
 															<ResponsiveRangeController
 																baseLabel={__(
 																	"Image Max Width",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																controlName={
 																	IMAGE_MAX_WIDTH
@@ -876,7 +876,7 @@ function Inspector(props) {
 										<PanelBody
 											title={__(
 												"Border",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											initialOpen={true}
 										>
@@ -897,13 +897,13 @@ function Inspector(props) {
 										<PanelBody
 											title={__(
 												"Overlay Styles",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 										>
 											<ColorControl
 												label={__(
 													"Overlay Color",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												color={overlayColor}
 												onChange={(color) =>
@@ -918,13 +918,13 @@ function Inspector(props) {
 										<PanelBody
 											title={__(
 												"Caption Styles",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 										>
 											<ColorControl
 												label={__(
 													"Text Color",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												color={captionColor}
 												onChange={(newColor) =>
@@ -937,7 +937,7 @@ function Inspector(props) {
 											<ColorControl
 												label={__(
 													"Background Color",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												color={captionBGColor}
 												onChange={(backgroundColor) =>
@@ -950,7 +950,7 @@ function Inspector(props) {
 											<TypographyDropdown
 												baseLabel={__(
 													"Typography",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												typographyPrefixConstant={
 													CAPTION_TYPOGRAPHY
@@ -963,7 +963,7 @@ function Inspector(props) {
 											<ResponsiveRangeController
 												baseLabel={__(
 													"Width",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												controlName={CAPTION_WIDTH}
 												resRequiredProps={
@@ -980,7 +980,7 @@ function Inspector(props) {
 													<BaseControl
 														label={__(
 															"Text Align",
-															"essential-blocks"
+															"image-gallery-block"
 														)}
 													>
 														<ButtonGroup>
@@ -1022,7 +1022,7 @@ function Inspector(props) {
 													<BaseControl
 														label={__(
 															"Horizontal Align",
-															"essential-blocks"
+															"image-gallery-block"
 														)}
 													>
 														<ButtonGroup>
@@ -1064,7 +1064,7 @@ function Inspector(props) {
 													<BaseControl
 														label={__(
 															"Vertical Align",
-															"essential-blocks"
+															"image-gallery-block"
 														)}
 													>
 														<ButtonGroup>
@@ -1131,7 +1131,7 @@ function Inspector(props) {
 										<PanelBody
 											title={__(
 												"Filter",
-												"essential-blocks"
+												"image-gallery-block"
 											)}
 											initialOpen={false}
 										>
@@ -1152,7 +1152,7 @@ function Inspector(props) {
 											<TypographyDropdown
 												baseLabel={__(
 													"Typography",
-													"essential-blocks"
+													"image-gallery-block"
 												)}
 												typographyPrefixConstant={
 													FILTER_TYPOGRAPHY
@@ -1196,7 +1196,7 @@ function Inspector(props) {
 															<ColorControl
 																label={__(
 																	"Color",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																color={filterColor}
 																onChange={(
@@ -1211,7 +1211,7 @@ function Inspector(props) {
 															<ColorControl
 																label={__(
 																	"Background Color",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																color={
 																	filterBGColor
@@ -1233,7 +1233,7 @@ function Inspector(props) {
 															<ColorControl
 																label={__(
 																	"Color",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																color={
 																	filterHoverColor
@@ -1250,7 +1250,7 @@ function Inspector(props) {
 															<ColorControl
 																label={__(
 																	"Background Color",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																color={
 																	filterHoverBGColor
@@ -1272,7 +1272,7 @@ function Inspector(props) {
 															<ColorControl
 																label={__(
 																	"Color",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																color={
 																	filterActColor
@@ -1288,7 +1288,7 @@ function Inspector(props) {
 															<ColorControl
 																label={__(
 																	"Background Color",
-																	"essential-blocks"
+																	"image-gallery-block"
 																)}
 																color={
 																	filterActBGColor
@@ -1323,14 +1323,14 @@ function Inspector(props) {
 
 									{(enableFilter || enableIsotope) && enableLoadMore && (
 										<PanelBody
-											title={__("Loadmore Button", "essential-blocks")}
+											title={__("Loadmore Button", "image-gallery-block")}
 											initialOpen={false}
 										>
 											<>
 												<TypographyDropdown
 													baseLabel={__(
 														"Typography",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													typographyPrefixConstant={
 														LOADMORE_TYPOGRAPHY
@@ -1342,7 +1342,7 @@ function Inspector(props) {
 												<ColorControl
 													label={__(
 														"Text Color",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													color={loadmoreColor}
 													onChange={(newTextColor) =>
@@ -1354,7 +1354,7 @@ function Inspector(props) {
 												<ColorControl
 													label={__(
 														"Text Hover Color",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													color={loadmoreHvColor}
 													onChange={(newHoverTextColor) =>
@@ -1366,7 +1366,7 @@ function Inspector(props) {
 												<ColorControl
 													label={__(
 														"Background Color",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													color={loadmoreBGColor}
 													onChange={(newBgColor) =>
@@ -1378,7 +1378,7 @@ function Inspector(props) {
 												<ColorControl
 													label={__(
 														"Background Hover Color",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 													color={loadmoreHvBGColor}
 													onChange={(newHoverBgColor) =>
@@ -1394,11 +1394,11 @@ function Inspector(props) {
 													controlName={LOADMORE_PADDING}
 													baseLabel={__(
 														"Padding",
-														"essential-blocks"
+														"image-gallery-block"
 													)}
 												/>
 												<PanelBody
-													title={__("Border", "essential-blocks")}
+													title={__("Border", "image-gallery-block")}
 													initialOpen={false}
 												>
 													<BorderShadowControl
@@ -1431,7 +1431,7 @@ function Inspector(props) {
 									<PanelBody
 										title={__(
 											"Background",
-											"essential-blocks"
+											"image-gallery-block"
 										)}
 										initialOpen={false}
 									>

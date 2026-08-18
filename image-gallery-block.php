@@ -4,7 +4,7 @@
  * Plugin Name:     Image Gallery Block
  * Plugin URI:      https://essential-blocks.com
  * Description:     Impress your audience with beautiful image gallery with lightbox.
- * Version:         1.5.0
+ * Version:         1.4.0
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -42,7 +42,7 @@ if ( file_exists( __DIR__ . '/lib/style-handler/style-handler.php' ) ) {
 
 function create_block_image_gallery_block_init() {
     if ( ! defined( 'IMAGEGALLERY_BLOCK_VERSION' ) ) {
-        define( 'IMAGEGALLERY_BLOCK_VERSION', "1.5.0" );
+        define( 'IMAGEGALLERY_BLOCK_VERSION', "1.4.0" );
     }
     if ( ! defined( 'IMAGEGALLERY_BLOCK_ADMIN_URL' ) ) {
         define( 'IMAGEGALLERY_BLOCK_ADMIN_URL', plugin_dir_url( __FILE__ ) );

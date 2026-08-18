@@ -24,6 +24,7 @@
 Thumbs.db
 
 # --- Build tooling config ---
+.nvmrc
 .babelrc
 .babelrc.js
 .babelrc.json

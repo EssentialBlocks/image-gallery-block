@@ -21,9 +21,9 @@ ebConditionalRegisterBlockType(metadata, {
 	icon: ImageGalleryIcon,
 	attributes: Attributes,
 	keywords: [
-		__("images", "essential-blocks"),
-		__("photos", "essential-blocks"),
-		__("eb image gallery", "essential-blocks"),
+		__("images", "image-gallery-block"),
+		__("photos", "image-gallery-block"),
+		__("eb image gallery", "image-gallery-block"),
 	],
 	edit: Edit,
 	save: Save,

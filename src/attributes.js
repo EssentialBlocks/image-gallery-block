@@ -135,7 +135,7 @@ const attributes = {
 		default: [
 			{
 				value: "filter-item-1",
-				label: __("Filter Item 1", "essential-blocks"),
+				label: __("Filter Item 1", "image-gallery-block"),
 			},
 		],
 	},

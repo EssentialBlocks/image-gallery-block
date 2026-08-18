@@ -1,5 +1,5 @@
 === Image Gallery Block ===
-Contributors: wpdevteam, re_enter_rupok, Asif2BD, jamilbd07, rahat89, fencermonir
+Contributors: wpdevteam, re_enter_rupok, Asif2BD, jamilbd07, rahat89, fencermonir, RahatSheikhLeon
 Tags: block, blocks, image, gallery, image gallery, image grid, lightbox, gutenberg, gutenberg blocks
 Requires at least: 6.0
 Tested up to: 7.0

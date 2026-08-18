@@ -4,15 +4,22 @@
  * Plugin Name:     Image Gallery Block
  * Plugin URI:      https://essential-blocks.com
  * Description:     Impress your audience with beautiful image gallery with lightbox.
- * Version:         1.3.4
+ * Version:         1.4.0
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
  * License URI:     https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:     image-gallery-block
+ * Requires at least: 6.0
+ * Requires PHP:    7.4
  *
  * @package         image-gallery-block
  */
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
 /**
  * Registers all block assets so that they can be enqueued through the block editor
@@ -24,18 +31,30 @@
 require_once __DIR__ . '/includes/font-loader.php';
 require_once __DIR__ . '/includes/post-meta.php';
 require_once __DIR__ . '/includes/helpers.php';
-require_once __DIR__ . '/lib/style-handler/style-handler.php';
+
+/**
+ * `lib/style-handler` ships as a git submodule; guard the include so an
+ * un-initialised checkout degrades gracefully instead of fataling.
+ */
+if ( file_exists( __DIR__ . '/lib/style-handler/style-handler.php' ) ) {
+    require_once __DIR__ . '/lib/style-handler/style-handler.php';
+}
 
 function create_block_image_gallery_block_init() {
-    define( 'IMAGEGALLERY_BLOCK_VERSION', "1.3.4" );
-    define( 'IMAGEGALLERY_BLOCK_ADMIN_URL', plugin_dir_url( __FILE__ ) );
-    define( 'IMAGEGALLERY_BLOCK_ADMIN_PATH', dirname( __FILE__ ) );
+    if ( ! defined( 'IMAGEGALLERY_BLOCK_VERSION' ) ) {
+        define( 'IMAGEGALLERY_BLOCK_VERSION', "1.4.0" );
+    }
+    if ( ! defined( 'IMAGEGALLERY_BLOCK_ADMIN_URL' ) ) {
+        define( 'IMAGEGALLERY_BLOCK_ADMIN_URL', plugin_dir_url( __FILE__ ) );
+    }
+    if ( ! defined( 'IMAGEGALLERY_BLOCK_ADMIN_PATH' ) ) {
+        define( 'IMAGEGALLERY_BLOCK_ADMIN_PATH', dirname( __FILE__ ) );
+    }
 
     $script_asset_path = IMAGEGALLERY_BLOCK_ADMIN_PATH . "/dist/index.asset.php";
     if ( ! file_exists( $script_asset_path ) ) {
-        throw new Error(
-            'You need to run `npm start` or `npm run build` for the "block/testimonial" block first.'
-        );
+        // Build assets are missing. Bail out quietly rather than fataling the site.
+        return;
     }
     $index_js         = IMAGEGALLERY_BLOCK_ADMIN_URL . 'dist/index.js';
     $script_asset     = require $script_asset_path;
@@ -133,8 +152,8 @@ function create_block_image_gallery_block_init() {
     );
 
     if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/advanced-heading' ) ) {
-        register_block_type(
-            Image_Gallery_Helper::get_block_register_path( "advanced-heading/advanced-heading", IMAGEGALLERY_BLOCK_ADMIN_PATH ),
+        Image_Gallery_Helper::register_block(
+            IMAGEGALLERY_BLOCK_ADMIN_PATH,
             [
                 'editor_script'   => 'create-block-imagegallery-block-editor-script',
                 'editor_style'    => 'create-block-imagegallery-block-frontend-style',

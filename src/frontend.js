@@ -44,16 +44,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
         var iso = "";
 
+        // Match filters as plain CSS selectors, without jQuery.
         imagesLoaded(imageGallery, function () {
             if (imageGallery.classList.contains("grid")) {
                 iso = new Isotope(`.${wrapperid}`, {
                     itemSelector: ".eb-gallery-img-content",
+                    isJQueryFiltering: false,
                     layoutMode: "fitRows",
                     transitionDuration: '0.5s',
                 });
             } else {
                 iso = new Isotope(`.${wrapperid}`, {
                     itemSelector: ".eb-gallery-img-content",
+                    isJQueryFiltering: false,
                     percentPosition: true,
                     masonry: {
                         columnWidth: ".eb-gallery-img-content",

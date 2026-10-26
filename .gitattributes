@@ -54,3 +54,4 @@ lib/style-handler/style-handler.js export-ignore
 lib/style-handler/helpers.js export-ignore
 .wordpress-org	export-ignore
 .idea export-ignore
+*.map export-ignore

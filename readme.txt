@@ -3,7 +3,7 @@ Contributors: wpdevteam, re_enter_rupok, Asif2BD, rahat89, RahatSheikhLeon
 Tags: block, blocks, image, gallery, image gallery, image grid, lightbox, gutenberg, gutenberg blocks
 Requires at least: 6.0
 Tested up to: 7.0.4
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -93,6 +93,12 @@ Yes, it will work with any standard WordPress theme.
 
 
 == Changelog ==
+
+= 1.4.2 - Oct 26 2026 =
+* Fixed: The Image Size setting was not saved, so the gallery always used full-size images
+* Fixed: With a smaller image size, the lightbox still opens the full-size image
+* Added: Captions show simple HTML formatting (bold, italic, underline and similar) instead of raw tags
+* Fixed: Removed the deprecated DOMNodeInserted listener that triggered a Chrome console warning
 
 = 1.4.1 - Oct 19 2026 =
 * Security: Hardened gallery filters and block style generation

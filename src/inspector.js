@@ -342,7 +342,7 @@ function Inspector(props) {
 										/>
 
 										<EbImageSizeSelector
-											attrname={"imageSize"}
+											attrName={"imageSize"}
 											resRequiredProps={resRequiredProps}
 											label={"Image Size"} //Optional
 										/>

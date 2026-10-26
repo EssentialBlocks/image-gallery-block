@@ -24,6 +24,7 @@ import classnames from "classnames";
 
 import Inspector from "./inspector";
 import Style from "./style";
+import { sanitizeCaption } from "./helpers";
 
 const {
 	duplicateBlockIdFix,
@@ -109,6 +110,8 @@ export default function Edit(props) {
 			} else {
 				item.url = image.url;
 			}
+			// Lightbox keeps opening the original file when a smaller size is shown
+			item.fullUrl = image.url;
 			item.caption = image.caption;
 			item.id = image.id;
 			item.alt = image.alt;
@@ -439,9 +442,8 @@ export default function Edit(props) {
 													0 && (
 														<span
 															className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
-														>
-															{source.caption}
-														</span>
+															dangerouslySetInnerHTML={{ __html: sanitizeCaption(source.caption) }}
+														></span>
 													)}
 											</span>
 										</a>

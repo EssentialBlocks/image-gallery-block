@@ -4,7 +4,7 @@
  * Plugin Name:     Image Gallery Block
  * Plugin URI:      https://essential-blocks.com
  * Description:     Impress your audience with beautiful image gallery with lightbox.
- * Version:         1.4.0
+ * Version:         1.4.1
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -29,7 +29,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 require_once __DIR__ . '/includes/font-loader.php';
-require_once __DIR__ . '/includes/post-meta.php';
 require_once __DIR__ . '/includes/helpers.php';
 
 /**
@@ -42,7 +41,7 @@ if ( file_exists( __DIR__ . '/lib/style-handler/style-handler.php' ) ) {
 
 function create_block_image_gallery_block_init() {
     if ( ! defined( 'IMAGEGALLERY_BLOCK_VERSION' ) ) {
-        define( 'IMAGEGALLERY_BLOCK_VERSION', "1.4.0" );
+        define( 'IMAGEGALLERY_BLOCK_VERSION', "1.4.1" );
     }
     if ( ! defined( 'IMAGEGALLERY_BLOCK_ADMIN_URL' ) ) {
         define( 'IMAGEGALLERY_BLOCK_ADMIN_URL', plugin_dir_url( __FILE__ ) );
@@ -89,7 +88,7 @@ function create_block_image_gallery_block_init() {
     wp_register_script(
         'fslightbox-js',
         $lightbox_js,
-        ["jquery"],
+        [],
         IMAGEGALLERY_BLOCK_VERSION,
         true
     );
@@ -151,7 +150,7 @@ function create_block_image_gallery_block_init() {
         true
     );
 
-    if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/advanced-heading' ) ) {
+    if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' ) ) {
         Image_Gallery_Helper::register_block(
             IMAGEGALLERY_BLOCK_ADMIN_PATH,
             [

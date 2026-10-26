@@ -44,23 +44,26 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
         var iso = "";
 
+        // Match filters as plain CSS selectors, without jQuery.
         imagesLoaded(imageGallery, function () {
             if (imageGallery.classList.contains("grid")) {
                 iso = new Isotope(`.${wrapperid}`, {
                     itemSelector: ".eb-gallery-img-content",
+                    isJQueryFiltering: false,
                     layoutMode: "fitRows",
                     transitionDuration: '0.5s',
                 });
             } else {
                 iso = new Isotope(`.${wrapperid}`, {
                     itemSelector: ".eb-gallery-img-content",
+                    isJQueryFiltering: false,
                     percentPosition: true,
                     masonry: {
                         columnWidth: ".eb-gallery-img-content",
                     },
                 });
             }
-            if (defaultFilter) {
+            if (defaultFilter && (defaultFilter === '*' || /^[\w-]+$/.test(defaultFilter))) {
                 iso.arrange({ filter: defaultFilter === '*' ? '*' : `.eb-filter-img-${defaultFilter}` });
             }
             else {
@@ -79,9 +82,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
                     .closest(".eb-parent-wrapper")
                     .querySelector(`.${wrapperid}`);
 
-                filterValue = event.target.getAttribute("data-filter");
+                let filterValue = event.target.getAttribute("data-filter");
+                // Only the "all" filter or a gallery filter class is accepted.
+                if (filterValue !== '*' && !/^\.eb-filter-img-[\w-]+$/.test(filterValue)) return;
                 // use matching filter function
-                filterValue = filterFns[filterValue] || filterValue;
+                filterValue = Object.prototype.hasOwnProperty.call(filterFns, filterValue) ? filterFns[filterValue] : filterValue;
 
                 iso = Isotope.data(imageGallery);
 

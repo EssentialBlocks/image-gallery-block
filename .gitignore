@@ -29,3 +29,6 @@ node_modules/
 index.js.map
 yarn.lock
 .DS_Store
+
+# Source maps expose the private controls source
+*.map

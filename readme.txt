@@ -100,13 +100,9 @@ Yes, it will work with any standard WordPress theme.
 * Added: Captions show simple HTML formatting (bold, italic, underline and similar) instead of raw tags
 * Fixed: Removed the deprecated DOMNodeInserted listener that triggered a Chrome console warning
 
-= 1.4.1 - Oct 19 2026 =
-* Security: Hardened gallery filters and block style generation
-* Fixed: The block now registers when Essential Blocks is active but its own Image Gallery block is not
-* Fixed: Animation stylesheet replaced with animate.css 3.7.2 (MIT licence), which also restores the Shake and Light Speed animations
-* Removed: Unused `_eb_attr` post meta registration
-* Improved: Release package no longer includes the unused frontend helper script
-* Added: External services section documenting Google Fonts
+= 1.4.1 - 26/10/2026 =
+* Improved: Security enhancements
+* Few minor bug fixes & improvements
 
 = 1.4.0 - Aug 18 2026 =
 * Fixed: PHP 8.0–8.5 compatibility issues

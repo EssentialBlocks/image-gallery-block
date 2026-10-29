@@ -63,7 +63,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
                     },
                 });
             }
-            if (defaultFilter) {
+            if (defaultFilter && (defaultFilter === '*' || /^[\w-]+$/.test(defaultFilter))) {
                 iso.arrange({ filter: defaultFilter === '*' ? '*' : `.eb-filter-img-${defaultFilter}` });
             }
             else {
@@ -82,9 +82,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
                     .closest(".eb-parent-wrapper")
                     .querySelector(`.${wrapperid}`);
 
-                filterValue = event.target.getAttribute("data-filter");
+                let filterValue = event.target.getAttribute("data-filter");
+                // Only the "all" filter or a gallery filter class is accepted.
+                if (filterValue !== '*' && !/^\.eb-filter-img-[\w-]+$/.test(filterValue)) return;
                 // use matching filter function
-                filterValue = filterFns[filterValue] || filterValue;
+                filterValue = Object.prototype.hasOwnProperty.call(filterFns, filterValue) ? filterFns[filterValue] : filterValue;
 
                 iso = Isotope.data(imageGallery);
 

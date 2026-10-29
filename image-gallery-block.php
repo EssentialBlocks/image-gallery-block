@@ -88,7 +88,7 @@ function create_block_image_gallery_block_init() {
     wp_register_script(
         'fslightbox-js',
         $lightbox_js,
-        ["jquery"],
+        [],
         IMAGEGALLERY_BLOCK_VERSION,
         true
     );

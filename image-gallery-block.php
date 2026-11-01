@@ -150,29 +150,37 @@ function create_block_image_gallery_block_init() {
         true
     );
 
-    if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' ) ) {
-        Image_Gallery_Helper::register_block(
-            IMAGEGALLERY_BLOCK_ADMIN_PATH,
-            [
-                'editor_script'   => 'create-block-imagegallery-block-editor-script',
-                'editor_style'    => 'create-block-imagegallery-block-frontend-style',
-                'render_callback' => function ( $attributes, $content ) {
+    $eb_has_block = WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' );
+    $block_args   = [
+        'editor_script'   => 'create-block-imagegallery-block-editor-script',
+        'editor_style'    => 'create-block-imagegallery-block-frontend-style',
+        'render_callback' => function ( $attributes, $content ) {
 
-                    if ( ! is_admin() ) {
-                        wp_enqueue_style( 'create-block-imagegallery-block-frontend-style' );
-                        wp_enqueue_style( 'fslightbox-style' );
-                        wp_enqueue_script( 'fslightbox-js' );
-                        wp_enqueue_script( 'essential-blocks-eb-animation' );
-                        wp_enqueue_script( 'image-gallery-images-loaded-js' );
-                        wp_enqueue_script( 'image-gallery-isotope-js' );
-                        wp_enqueue_script( 'image-gallery-block-frontend-js' );
-                    }
+            if ( ! is_admin() ) {
+                wp_enqueue_style( 'create-block-imagegallery-block-frontend-style' );
+                wp_enqueue_style( 'fslightbox-style' );
+                wp_enqueue_script( 'fslightbox-js' );
+                wp_enqueue_script( 'essential-blocks-eb-animation' );
+                wp_enqueue_script( 'image-gallery-images-loaded-js' );
+                wp_enqueue_script( 'image-gallery-isotope-js' );
+                wp_enqueue_script( 'image-gallery-block-frontend-js' );
+            }
 
-                    return $content;
-                }
-            ]
-        );
+            return $content;
+        }
+    ];
+
+    // Essential Blocks has its own version of this block under another name. Posts saved
+    // with this one still need its render callback and front-end assets, so keep it
+    // registered, but leave out the editor bundle, which can't run beside Essential Blocks.
+    if ( $eb_has_block ) {
+        unset( $block_args['editor_script'], $block_args['editor_style'] );
     }
+
+    Image_Gallery_Helper::register_block(
+        IMAGEGALLERY_BLOCK_ADMIN_PATH,
+        $block_args
+    );
 }
 add_action( 'init', 'create_block_image_gallery_block_init', 99 );
 

@@ -117,7 +117,7 @@ export default function Edit(props) {
 			item.alt = image.alt;
 			item.customLink = image.customLink ? image.customLink : "";
 			item.openNewTab = image.openNewTab ? image.openNewTab : false;
-			item.isValidUrl = image.isValidUrl ? image.isValidUrl : true;
+			item.isValidUrl = image.isValidUrl !== undefined ? image.isValidUrl : true;
 			sources.length > 0 &&
 				sources.map((source) => {
 					if (source.filter && source.id === image.id) {

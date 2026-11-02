@@ -1,6 +1,7 @@
 import { useBlockProps } from "@wordpress/block-editor";
 
 import { sanitizeCaption } from "./helpers";
+import sanitizeLink from "./sanitize-link";
 
 const Save = ({ attributes }) => {
     const {
@@ -149,7 +150,7 @@ const Save = ({ attributes }) => {
                                             : addCustomLink &&
                                                 source.customLink &&
                                                 source.isValidUrl
-                                                ? source.customLink
+                                                ? sanitizeLink(source.customLink)
                                                 : "#"
                                     }
                                     {...lightBoxHtml}

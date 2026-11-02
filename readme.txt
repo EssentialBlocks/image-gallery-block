@@ -99,6 +99,12 @@ Yes, it will work with any standard WordPress theme.
 * Fixed: With a smaller image size, the lightbox still opens the full-size image
 * Added: Captions show simple HTML formatting (bold, italic, underline and similar) instead of raw tags
 * Fixed: Removed the deprecated DOMNodeInserted listener that triggered a Chrome console warning
+* Improved: Security enhancements
+* Fixed: Existing Image Gallery blocks stopped working on the front end when Essential Blocks is active
+* Fixed: Editor sidebar controls conflicting with Essential Blocks' styles
+* Fixed: Animated blocks appeared without playing their animation when Essential Blocks is active
+* Fixed: Entrance animations not previewing in the block editor
+* Fixed: Block icon hard to see when highlighted in the inserter and List View
 
 = 1.4.1 - 26/10/2026 =
 * Improved: Security enhancements

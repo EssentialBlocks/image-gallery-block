@@ -94,17 +94,12 @@ Yes, it will work with any standard WordPress theme.
 
 == Changelog ==
 
-= 1.4.2 - Oct 26 2026 =
-* Fixed: The Image Size setting was not saved, so the gallery always used full-size images
-* Fixed: With a smaller image size, the lightbox still opens the full-size image
-* Added: Captions show simple HTML formatting (bold, italic, underline and similar) instead of raw tags
-* Fixed: Removed the deprecated DOMNodeInserted listener that triggered a Chrome console warning
+= 1.4.2 - 12/11/2026 =
+* Added: HTML formatting support in captions
+* Fixed: Image size option not saving
+* Fixed: Frontend conflict with Essential Blocks
 * Improved: Security enhancements
-* Fixed: Existing Image Gallery blocks stopped working on the front end when Essential Blocks is active
-* Fixed: Editor sidebar controls conflicting with Essential Blocks' styles
-* Fixed: Animated blocks appeared without playing their animation when Essential Blocks is active
-* Fixed: Entrance animations not previewing in the block editor
-* Fixed: Block icon hard to see when highlighted in the inserter and List View
+* Few minor bug fixes & improvements
 
 = 1.4.1 - 26/10/2026 =
 * Improved: Security enhancements

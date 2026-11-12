@@ -4,7 +4,7 @@
  * Plugin Name:     Image Gallery Block
  * Plugin URI:      https://essential-blocks.com
  * Description:     Impress your audience with beautiful image gallery with lightbox.
- * Version:         1.4.1
+ * Version:         1.4.2
  * Author:          WPDeveloper
  * Author URI:      https://wpdeveloper.net
  * License:         GPL-3.0-or-later
@@ -41,7 +41,7 @@ if ( file_exists( __DIR__ . '/lib/style-handler/style-handler.php' ) ) {
 
 function create_block_image_gallery_block_init() {
     if ( ! defined( 'IMAGEGALLERY_BLOCK_VERSION' ) ) {
-        define( 'IMAGEGALLERY_BLOCK_VERSION', "1.4.1" );
+        define( 'IMAGEGALLERY_BLOCK_VERSION', "1.4.2" );
     }
     if ( ! defined( 'IMAGEGALLERY_BLOCK_ADMIN_URL' ) ) {
         define( 'IMAGEGALLERY_BLOCK_ADMIN_URL', plugin_dir_url( __FILE__ ) );
@@ -150,28 +150,68 @@ function create_block_image_gallery_block_init() {
         true
     );
 
-    if ( ! WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' ) ) {
-        Image_Gallery_Helper::register_block(
-            IMAGEGALLERY_BLOCK_ADMIN_PATH,
-            [
-                'editor_script'   => 'create-block-imagegallery-block-editor-script',
-                'editor_style'    => 'create-block-imagegallery-block-frontend-style',
-                'render_callback' => function ( $attributes, $content ) {
+    $eb_has_block = WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' );
+    $block_args   = [
+        'editor_script'   => 'create-block-imagegallery-block-editor-script',
+        'editor_style'    => 'create-block-imagegallery-block-frontend-style',
+        'render_callback' => function ( $attributes, $content ) {
 
-                    if ( ! is_admin() ) {
-                        wp_enqueue_style( 'create-block-imagegallery-block-frontend-style' );
-                        wp_enqueue_style( 'fslightbox-style' );
-                        wp_enqueue_script( 'fslightbox-js' );
-                        wp_enqueue_script( 'essential-blocks-eb-animation' );
-                        wp_enqueue_script( 'image-gallery-images-loaded-js' );
-                        wp_enqueue_script( 'image-gallery-isotope-js' );
-                        wp_enqueue_script( 'image-gallery-block-frontend-js' );
-                    }
+            if ( ! is_admin() ) {
+                wp_enqueue_style( 'create-block-imagegallery-block-frontend-style' );
+                wp_enqueue_style( 'fslightbox-style' );
+                wp_enqueue_script( 'fslightbox-js' );
+                wp_enqueue_script( 'essential-blocks-eb-animation' );
+                wp_enqueue_script( 'image-gallery-images-loaded-js' );
+                wp_enqueue_script( 'image-gallery-isotope-js' );
+                wp_enqueue_script( 'image-gallery-block-frontend-js' );
+            }
 
-                    return $content;
-                }
-            ]
-        );
+            return $content;
+        }
+    ];
+
+    // Essential Blocks has its own version of this block under another name. Posts saved
+    // with this one still need its render callback and front-end assets, so keep it
+    // registered, but leave out the editor bundle, which can't run beside Essential Blocks.
+    if ( $eb_has_block ) {
+        unset( $block_args['editor_script'], $block_args['editor_style'] );
     }
+
+    Image_Gallery_Helper::register_block(
+        IMAGEGALLERY_BLOCK_ADMIN_PATH,
+        $block_args
+    );
 }
 add_action( 'init', 'create_block_image_gallery_block_init', 99 );
+
+/**
+ * Block icons are filled #6C3BFF, which almost disappears on the highlighted row of
+ * the "/" inserter, a selected List View row and the drag chip. Recolour them there,
+ * as Essential Blocks does. The handle is shared, so the stylesheet prints once when
+ * several of these plugins are active.
+ */
+function image_gallery_block_icon_selected_style() {
+    wp_enqueue_style(
+        'eb-block-icon-selected',
+        plugins_url( 'assets/css/block-icon-selected.css', __FILE__ ),
+        [],
+        IMAGEGALLERY_BLOCK_VERSION
+    );
+}
+add_action( 'enqueue_block_editor_assets', 'image_gallery_block_icon_selected_style' );
+
+/**
+ * Let Essential Blocks' animation assets win on the front end when it is active.
+ *
+ * Both plugins register these handles and the first registration wins. This
+ * plugin's loader doesn't set `window.ebAnimationLoaded`, so Essential Blocks'
+ * failsafe would reveal every animated block without playing it. Essential Blocks
+ * registers its own at priority 20 and handles the same `.eb___animated` classes.
+ */
+function image_gallery_block_use_essential_blocks_animation() {
+    if ( defined( 'ESSENTIAL_BLOCKS_VERSION' ) ) {
+        wp_deregister_script( 'essential-blocks-eb-animation' );
+        wp_deregister_style( 'essential-blocks-animation' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'image_gallery_block_use_essential_blocks_animation', 19 );

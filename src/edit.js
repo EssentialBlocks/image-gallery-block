@@ -24,6 +24,7 @@ import classnames from "classnames";
 
 import Inspector from "./inspector";
 import Style from "./style";
+import { sanitizeCaption } from "./helpers";
 
 const {
 	duplicateBlockIdFix,
@@ -109,12 +110,14 @@ export default function Edit(props) {
 			} else {
 				item.url = image.url;
 			}
+			// Lightbox keeps opening the original file when a smaller size is shown
+			item.fullUrl = image.url;
 			item.caption = image.caption;
 			item.id = image.id;
 			item.alt = image.alt;
 			item.customLink = image.customLink ? image.customLink : "";
 			item.openNewTab = image.openNewTab ? image.openNewTab : false;
-			item.isValidUrl = image.isValidUrl ? image.isValidUrl : true;
+			item.isValidUrl = image.isValidUrl !== undefined ? image.isValidUrl : true;
 			sources.length > 0 &&
 				sources.map((source) => {
 					if (source.filter && source.id === image.id) {
@@ -439,9 +442,8 @@ export default function Edit(props) {
 													0 && (
 														<span
 															className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
-														>
-															{source.caption}
-														</span>
+															dangerouslySetInnerHTML={{ __html: sanitizeCaption(source.caption) }}
+														></span>
 													)}
 											</span>
 										</a>

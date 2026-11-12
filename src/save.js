@@ -1,5 +1,8 @@
 import { useBlockProps } from "@wordpress/block-editor";
 
+import { sanitizeCaption } from "./helpers";
+import sanitizeLink from "./sanitize-link";
+
 const Save = ({ attributes }) => {
     const {
         blockId,
@@ -111,12 +114,13 @@ const Save = ({ attributes }) => {
                                     source.caption.length > 0 && (
                                         <span
                                             className={`eb-gallery-img-caption ${horizontalAlign} ${verticalAlign}`}
-                                        >
-                                            {source.caption}
-                                        </span>
+                                            dangerouslySetInnerHTML={{ __html: sanitizeCaption(source.caption) }}
+                                        ></span>
                                     )}
                             </span>
                         );
+
+                        const lightboxUrl = source.fullUrl || source.url;
 
                         if (!addCustomLink) {
                             return (
@@ -124,7 +128,7 @@ const Save = ({ attributes }) => {
                                     key={index}
                                     href={
                                         !disableLightBox
-                                            ? source.url
+                                            ? lightboxUrl
                                             : "javascript:void(0)"
                                     }
                                     {...lightBoxHtml}
@@ -142,11 +146,11 @@ const Save = ({ attributes }) => {
                                     key={index}
                                     href={
                                         !disableLightBox
-                                            ? source.url
+                                            ? lightboxUrl
                                             : addCustomLink &&
                                                 source.customLink &&
                                                 source.isValidUrl
-                                                ? source.customLink
+                                                ? sanitizeLink(source.customLink)
                                                 : "#"
                                     }
                                     {...lightBoxHtml}

@@ -89,7 +89,7 @@ class Image_Gallery_Helper
             }
 
             wp_enqueue_style(
-                'essential-blocks-editor-css',
+                'image-gallery-block-controls-css',
                 IMAGEGALLERY_BLOCK_ADMIN_URL . '/dist/modules.css',
                 array(),
                 $controls_dependencies['version'],

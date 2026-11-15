@@ -16,6 +16,12 @@ import {
 } from "@wordpress/components";
 import { Fragment, useEffect, useState, useRef } from "@wordpress/element";
 import { select } from "@wordpress/data";
+import { isEqual } from "lodash";
+
+// Saved attributes come back from JSON, so compare through JSON too: keys holding
+// `undefined` drop out and a freshly built but equal value counts as unchanged.
+const isSameData = (next, current) =>
+	isEqual(JSON.parse(JSON.stringify(next ?? null)), current ?? null);
 
 /**
  * Internal depencencies
@@ -127,7 +133,10 @@ export default function Edit(props) {
 			currentSources.push(item);
 		});
 
-		setAttributes({ sources: currentSources });
+		// Rebuilt on every load; writing an equal array would mark the post dirty.
+		if (!isSameData(currentSources, sources)) {
+			setAttributes({ sources: currentSources });
+		}
 	}, [images, imageSize]);
 
 	// Get only urls for Lightbox

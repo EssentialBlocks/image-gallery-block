@@ -1,4 +1,43 @@
+/**
+ * Saved markup gives every gallery the same lightbox group ("gallery"), so all
+ * galleries on a page open as one slideshow. Give each gallery its own group,
+ * named after its block id, at runtime so saved markup stays unchanged.
+ */
+const separateLightboxGroups = () => {
+    const renamed = [];
+
+    document.querySelectorAll(".eb-gallery-img-wrapper").forEach((gallery, index) => {
+        const links = gallery.querySelectorAll('a[data-fslightbox="gallery"]');
+        if (links.length === 0) return;
+
+        const group = gallery.getAttribute("data-id") || `eb-image-gallery-${index}`;
+        links.forEach((link) => link.setAttribute("data-fslightbox", group));
+        renamed.push(group);
+    });
+
+    if (renamed.length === 0) return;
+
+    // fslightbox 3.x
+    if (typeof window.refreshFsLightbox === "function") {
+        window.refreshFsLightbox();
+        return;
+    }
+
+    // Bundled fslightbox 1.x: its click handlers read the group at click time,
+    // so each new group only needs an instance.
+    if (typeof window.fsLightboxClass === "function" && window.fsLightboxInstances) {
+        renamed.forEach((group) => {
+            if (window.fsLightboxInstances[group]) return;
+            const lightbox = new window.fsLightboxClass();
+            lightbox.data.name = group;
+            window.fsLightboxInstances[group] = lightbox;
+        });
+    }
+};
+
 window.addEventListener("DOMContentLoaded", (event) => {
+    separateLightboxGroups();
+
     const imageGalleries = document.querySelectorAll(
         `.eb-gallery-img-wrapper.eb-filterable-img-gallery, .eb-gallery-img-wrapper.enable-isotope`
     );

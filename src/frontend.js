@@ -131,9 +131,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 element.classList.add('hidden');
             });
 
-            iso.arrange({ layoutMode: 'fitRows' });
-
-            // isotopInstance.isotope('layout');
+            // Keep the layout chosen at init (fitRows for grid, masonry otherwise).
+            isotopInstance.arrange();
 
             //when no more to load, hide show more button
             if (hiddenElems?.length == 0) {

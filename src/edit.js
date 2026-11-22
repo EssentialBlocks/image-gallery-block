@@ -166,88 +166,76 @@ export default function Edit(props) {
 		}
 	}, []);
 
-	// isotopeEA filter
-	const isotopeEA = useRef();
+	// The gallery renders inside the editor iframe, so Isotope gets the element
+	// itself; a `document.querySelector` from the editor script never finds it.
+	const galleryRef = useRef(null);
+	const isotopeRef = useRef(null);
 	// store the filter keyword in a state
 	const [filterKey, setFilterKey] = useState("*");
+	const isotopeActive = enableFilter || enableIsotope;
 
-	// initialize an Isotope object with configs
+	const getFilterSelector = () =>
+		enableFilter && filterKey !== "*" ? `.${filterKey}` : "*";
+	// Isotope is built once images load, which can be after the user picks a
+	// filter, so it reads the latest filter from here rather than a stale closure.
+	const filterSelectorRef = useRef("*");
+	filterSelectorRef.current = getFilterSelector();
+
+	// Isotope ignores elements from another window, so use the copies loaded in
+	// the gallery's own window (the editor iframe), falling back to this one.
+	const getLayoutLibs = (gallery) => {
+		const view = gallery.ownerDocument.defaultView || window;
+		return {
+			Isotope: view.Isotope || window.Isotope,
+			imagesLoaded: view.imagesLoaded || window.imagesLoaded,
+		};
+	};
+
+	// Build Isotope, and rebuild it when layout settings change.
 	useEffect(() => {
-		if (isotopeEA.current && typeof isotopeEA.current === "object" && Object.keys(isotopeEA.current).length === 0) {
+		const gallery = galleryRef.current;
+		if (!isotopeActive || !gallery) {
+			return;
+		}
+		const libs = getLayoutLibs(gallery);
+		if (!libs.Isotope || !libs.imagesLoaded) {
 			return;
 		}
 
-		if (enableFilter) {
-			const imageGallery = document.querySelector(`.${blockId}`);
-			if (imageGallery) {
-				imagesLoaded(imageGallery, function () {
-					if (layouts == "grid") {
-						isotopeEA.current = new Isotope(`.${blockId}`, {
-							itemSelector: ".eb-gallery-img-content",
-							percentPosition: true,
-						});
-					} else {
-						isotopeEA.current = new Isotope(`.${blockId}`, {
-							itemSelector: ".eb-gallery-img-content",
-							percentPosition: true,
-							masonry: {
-								columnWidth: ".eb-gallery-img-content",
-							},
-						});
-					}
-
-					// cleanup
-					if (resOption === "Desktop") {
-						return () => isotopeEA.current.destroy();
-					}
-				});
+		let cancelled = false;
+		libs.imagesLoaded(gallery, () => {
+			if (cancelled) {
+				return;
 			}
-		}
-		if (enableIsotope) {
-			const imageGallery = document.querySelector(`.${blockId}`);
-			if (imageGallery) {
-				imagesLoaded(imageGallery, function () {
-					if (layouts == "grid") {
-						isotopeEA.current = new Isotope(`.${blockId}`, {
-							itemSelector: ".eb-gallery-img-content",
-							percentPosition: true,
-						});
-					} else {
-						isotopeEA.current = new Isotope(`.${blockId}`, {
-							itemSelector: ".eb-gallery-img-content",
-							percentPosition: true,
-							masonry: {
-								columnWidth: ".eb-gallery-img-content",
-							},
-						});
-					}
-
-					// cleanup
-					if (resOption === "Desktop") {
-						return () => isotopeEA.current.destroy();
-					}
-				});
+			// Same layout modes as the front end.
+			const options = {
+				itemSelector: ".eb-gallery-img-content",
+				percentPosition: true,
+				filter: filterSelectorRef.current,
+			};
+			if (layouts === "grid") {
+				options.layoutMode = "fitRows";
+			} else {
+				options.masonry = { columnWidth: ".eb-gallery-img-content" };
 			}
-		} else {
-			const imageGallery = document.querySelector(`.${blockId}`);
-			if (imageGallery) {
-				isotopeEA.current = new Isotope(`.${blockId}`);
-				isotopeEA.current.destroy();
-			}
-		}
+			isotopeRef.current = new libs.Isotope(gallery, options);
+		});
 
+		return () => {
+			cancelled = true;
+			if (isotopeRef.current) {
+				isotopeRef.current.destroy();
+				isotopeRef.current = null;
+			}
+		};
 	}, [
-		enableIsotope,
-		enableFilter,
+		isotopeActive,
 		layouts,
-		images,
+		resOption,
 		imageSize,
-		enableFilterAll,
-		filterItems,
-		sources,
 		columnsRange,
 		imageGapRange,
-		imageHeightRange, ,
+		imageHeightRange,
 		imageWidthRange,
 		imageMaxHeightRange,
 		imageMaxWidthRange,
@@ -263,29 +251,34 @@ export default function Edit(props) {
 		imgBorderShadowRds_Top,
 	]);
 
-	// handling filter key change
+	// Re-apply the filter when it changes, or when images or their filters change.
 	useEffect(() => {
-		if (
-			isotopeEA.current &&
-			typeof isotopeEA.current === "object" &&
-			Object.keys(isotopeEA.current).length === 0
-		) {
+		const isotope = isotopeRef.current;
+		const gallery = galleryRef.current;
+		if (!isotope || !gallery) {
 			return;
 		}
 
-		if (enableFilter) {
-			const imageGallery = document.querySelector(`.${blockId}`);
-			if (imageGallery) {
-				imagesLoaded(imageGallery, function () {
-					filterKey === "*"
-						? isotopeEA.current.arrange({ filter: `*` })
-						: isotopeEA.current.arrange({
-							filter: `.${filterKey}`,
-						});
+		getLayoutLibs(gallery).imagesLoaded(gallery, () => {
+			if (isotopeRef.current !== isotope) {
+				return;
+			}
+			// Re-read items only when images were added, removed or reordered.
+			// reloadItems() forgets which items are hidden, so carry that over,
+			// or filtered-out images would never be revealed again.
+			const elements = Array.from(gallery.children);
+			const sameItems =
+				isotope.items.length === elements.length &&
+				isotope.items.every((item, i) => item.element === elements[i]);
+			if (!sameItems) {
+				isotope.reloadItems();
+				isotope.items.forEach((item) => {
+					item.isHidden = item.element.style.display === "none";
 				});
 			}
-		}
-	}, [enableFilter, filterKey]);
+			isotope.arrange({ filter: getFilterSelector() });
+		});
+	}, [enableFilter, filterKey, sources]);
 
 	useEffect(() => {
 		if (defaultFilter && defaultFilter.length > 0) {
@@ -295,11 +288,6 @@ export default function Edit(props) {
 
 	const handleFilterKeyChange = (event, value) => {
 		setFilterKey(value);
-		var buttonGroup = event.target.closest(
-			".eb-img-gallery-filter-wrapper"
-		);
-		buttonGroup.querySelector(".is-checked").classList.remove("is-checked");
-		event.target.classList.add("is-checked");
 	};
 
 	return (
@@ -361,7 +349,6 @@ export default function Edit(props) {
 
 						<div
 							className={`eb-parent-wrapper eb-parent-${blockId} ${classHook}`}
-							ref={isotopeEA}
 						>
 							{enableFilter && (
 								<ul className={`eb-img-gallery-filter-wrapper`}>
@@ -410,6 +397,7 @@ export default function Edit(props) {
 										: ""
 									} ${enableIsotope ? 'enable-isotope' : 'no-isotope'} ${enableLoadMore ? 'show-loadmore' : ''}`}
 								data-id={blockId}
+								ref={galleryRef}
 							>
 								{sources.map((source, index) => {
 									let filters;

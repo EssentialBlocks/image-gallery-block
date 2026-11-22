@@ -128,6 +128,14 @@ function create_block_image_gallery_block_init() {
         IMAGEGALLERY_BLOCK_VERSION
     );
 
+    // Font Awesome Free 6, for filter item icons picked from the icon library.
+    wp_register_style(
+        'image-gallery-block-fontawesome',
+        IMAGEGALLERY_BLOCK_ADMIN_URL . 'lib/fontawesome/css/all.min.css',
+        [],
+        '6.7.2'
+    );
+
     $style_css = IMAGEGALLERY_BLOCK_ADMIN_URL . 'dist/style.css';
     //Frontend Style
     wp_register_style(
@@ -164,6 +172,7 @@ function create_block_image_gallery_block_init() {
                 wp_enqueue_script( 'image-gallery-images-loaded-js' );
                 wp_enqueue_script( 'image-gallery-isotope-js' );
                 wp_enqueue_script( 'image-gallery-block-frontend-js' );
+                image_gallery_block_enqueue_filter_icon_styles( $attributes );
             }
 
             return $content;
@@ -218,6 +227,69 @@ function image_gallery_block_editor_canvas_scripts() {
     wp_enqueue_script( 'image-gallery-isotope-js' );
 }
 add_action( 'enqueue_block_assets', 'image_gallery_block_editor_canvas_scripts' );
+
+/**
+ * Load the icon fonts a gallery's filter items use: Font Awesome for
+ * "fa-" icons and Dashicons for the rest. Uploaded SVGs need neither.
+ *
+ * @param array $attributes Block attributes.
+ */
+function image_gallery_block_enqueue_filter_icon_styles( $attributes ) {
+    if ( empty( $attributes['enableFilter'] ) || empty( $attributes['enableFilterIcon'] ) ) {
+        return;
+    }
+    if ( empty( $attributes['filterItems'] ) || ! is_array( $attributes['filterItems'] ) ) {
+        return;
+    }
+
+    foreach ( $attributes['filterItems'] as $item ) {
+        if ( ! is_array( $item ) || ( isset( $item['iconType'] ) && 'svg' === $item['iconType'] ) ) {
+            continue;
+        }
+        if ( empty( $item['icon'] ) || ! is_string( $item['icon'] ) ) {
+            continue;
+        }
+        if ( false !== strpos( $item['icon'], 'fa-' ) ) {
+            wp_enqueue_style( 'image-gallery-block-fontawesome' );
+        } else {
+            wp_enqueue_style( 'dashicons' );
+        }
+    }
+}
+
+/**
+ * Icon fonts in the editor: the parent window shows the icon picker, and
+ * enqueue_block_assets also loads them inside the editor iframe for the preview.
+ */
+function image_gallery_block_editor_fontawesome() {
+    if ( ! is_admin() ) {
+        return;
+    }
+    if ( WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' ) ) {
+        return;
+    }
+    wp_enqueue_style( 'image-gallery-block-fontawesome' );
+    wp_enqueue_style( 'dashicons' );
+}
+
+/**
+ * Block settings sidebar styles. The sidebar and the icon picker popover live
+ * in the editor's parent window, not in the iframe.
+ */
+function image_gallery_block_editor_sidebar_style() {
+    if ( WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' ) ) {
+        return;
+    }
+    wp_enqueue_style(
+        'image-gallery-block-editor-sidebar',
+        plugins_url( 'assets/css/editor.css', __FILE__ ),
+        [],
+        IMAGEGALLERY_BLOCK_VERSION
+    );
+}
+add_action( 'enqueue_block_editor_assets', 'image_gallery_block_editor_sidebar_style' );
+add_action( 'enqueue_block_editor_assets', 'image_gallery_block_editor_fontawesome' );
+add_action( 'enqueue_block_assets', 'image_gallery_block_editor_fontawesome' );
 
 /**
  * Let Essential Blocks' animation assets win on the front end when it is active.

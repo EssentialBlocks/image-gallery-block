@@ -30,7 +30,7 @@ import classnames from "classnames";
 
 import Inspector from "./inspector";
 import Style from "./style";
-import { sanitizeCaption } from "./helpers";
+import { sanitizeCaption, FilterItemContent } from "./helpers";
 
 const {
 	duplicateBlockIdFix,
@@ -85,6 +85,8 @@ export default function Edit(props) {
 		enableIsotope,
 		loadmoreBtnText,
 		enableLoadMore,
+		enableFilterIcon,
+		filterIconPosition,
 	} = attributes;
 
 	// this useEffect is for creating a unique id for each block's unique className by a random unique number
@@ -369,7 +371,8 @@ export default function Edit(props) {
 										</li>
 									)}
 									{filterItems.map(
-										({ value, label }, index) => {
+										(item, index) => {
+											const { value, label } = item;
 											return (
 												<li
 													key={index}
@@ -382,7 +385,12 @@ export default function Edit(props) {
 														)
 													}
 												>
-													{label}
+													<FilterItemContent
+														item={item}
+														label={label}
+														showIcon={enableFilterIcon}
+														position={filterIconPosition}
+													/>
 												</li>
 											);
 										}

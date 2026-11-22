@@ -1,6 +1,6 @@
 import { useBlockProps } from "@wordpress/block-editor";
 
-import { sanitizeCaption } from "./helpers";
+import { sanitizeCaption, FilterItemContent } from "./helpers";
 import sanitizeLink from "./sanitize-link";
 
 const Save = ({ attributes }) => {
@@ -26,6 +26,8 @@ const Save = ({ attributes }) => {
         enableLoadMore,
         loadmoreBtnText,
         imagesPerPage,
+        enableFilterIcon,
+        filterIconPosition,
     } = attributes;
 
     if (sources.length === 0) return null;
@@ -60,7 +62,8 @@ const Save = ({ attributes }) => {
                                 {filterAllTitle !== "" ? filterAllTitle : "All"}
                             </li>
                         )}
-                        {filterItems.map(({ value, label }, index) => {
+                        {filterItems.map((item, index) => {
+                            const { value, label } = item;
                             return (
                                 <li
                                     key={index}
@@ -68,7 +71,12 @@ const Save = ({ attributes }) => {
                                     data-filter={`.eb-filter-img-${value}`}
                                     data-id={blockId}
                                 >
-                                    {label}
+                                    <FilterItemContent
+                                        item={item}
+                                        label={label}
+                                        showIcon={enableFilterIcon}
+                                        position={filterIconPosition}
+                                    />
                                 </li>
                             );
                         })}

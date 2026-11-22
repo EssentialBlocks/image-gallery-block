@@ -352,3 +352,17 @@
 .fslightbox-container.fslightbox-fade-in-strong {
 	animation: fslightbox-fade-in-complete 0.25s forwards;
 }
+
+// Filter item icons
+.eb-img-gallery-filter-item {
+	.eb-img-gallery-filter-icon {
+		display: inline-block;
+		vertical-align: middle;
+		line-height: 1;
+		text-align: center;
+	}
+
+	.eb-img-gallery-filter-icon-svg {
+		object-fit: contain;
+	}
+}

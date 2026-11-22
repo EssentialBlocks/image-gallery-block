@@ -2,7 +2,8 @@
  * WordPress dependencies
  */
 import { __ } from "@wordpress/i18n";
-import { TextControl } from "@wordpress/components";
+import { TextControl, SelectControl, Button, BaseControl } from "@wordpress/components";
+import { MediaUpload, MediaUploadCheck } from "@wordpress/block-editor";
 import { Component, Fragment } from "@wordpress/element";
 
 /**
@@ -14,6 +15,8 @@ import {
 	SortableHandle,
 } from "react-sortable-hoc";
 import arrayMove from "array-move";
+import { IconPicker } from "wordpress-icon-picker";
+import "wordpress-icon-picker/dist/style.css";
 
 /**
  * Internal dependencies
@@ -78,6 +81,89 @@ const TrashIcon = ({ position, onDeleteFeature }) => (
 	</span>
 );
 
+/**
+ * Icon settings for one filter item: pick from the icon library
+ * (FontAwesome / Dashicons) or use an uploaded SVG.
+ */
+const FilterItemIcon = ({ feature, position, onItemChange }) => {
+	const iconType = feature.iconType === "svg" ? "svg" : "library";
+
+	return (
+		<div className="eb-img-gallery-filter-icon-control">
+			<SelectControl
+				label={__("Icon Source", "image-gallery-block")}
+				value={iconType}
+				options={[
+					{ label: __("Icon Library", "image-gallery-block"), value: "library" },
+					{ label: __("Upload SVG", "image-gallery-block"), value: "svg" },
+				]}
+				onChange={(value) => onItemChange(position, { iconType: value })}
+			/>
+
+			{iconType === "library" && (
+				<IconPicker
+					value={feature.icon || ""}
+					onChange={(icon) => onItemChange(position, { icon })}
+					title={__("Icon", "image-gallery-block")}
+					disableDashicon={false}
+					disableFontAwesome={false}
+				/>
+			)}
+
+			{iconType === "svg" && (
+				<BaseControl
+					id={`eb-img-gallery-filter-svg-${position}`}
+					label={__("SVG Icon", "image-gallery-block")}
+					help={
+						feature.svgUrl
+							? undefined
+							: __(
+								"Only .svg files are accepted. Your site must allow SVG uploads to add a new file.",
+								"image-gallery-block"
+							)
+					}
+				>
+					{feature.svgUrl && (
+						<div className="eb-img-gallery-filter-svg-preview">
+							<img src={feature.svgUrl} alt="" />
+						</div>
+					)}
+					<MediaUploadCheck>
+						<MediaUpload
+							allowedTypes={["image/svg+xml"]}
+							value={feature.svgId}
+							onSelect={(media) =>
+								onItemChange(position, {
+									svgUrl: media?.url || "",
+									svgId: media?.id,
+								})
+							}
+							render={({ open }) => (
+								<Button variant="secondary" onClick={open}>
+									{feature.svgUrl
+										? __("Replace SVG", "image-gallery-block")
+										: __("Upload SVG", "image-gallery-block")}
+								</Button>
+							)}
+						/>
+					</MediaUploadCheck>
+					{feature.svgUrl && (
+						<Button
+							variant="link"
+							isDestructive
+							onClick={() =>
+								onItemChange(position, { svgUrl: "", svgId: undefined })
+							}
+						>
+							{__("Remove", "image-gallery-block")}
+						</Button>
+					)}
+				</BaseControl>
+			)}
+		</div>
+	);
+};
+
 // const TrashIcon = ({ position, onDeleteFeature }) => (
 // 	<span
 // 		className="fa fa-trash eb-pricebox-sortable-trash"
@@ -92,6 +178,8 @@ const SortableItem = SortableElement(
 		onFeatureClick,
 		onFeatureChange,
 		onDeleteFeature,
+		onItemChange,
+		showIcon,
 		clickedItem,
 	}) => {
 		return (
@@ -113,6 +201,13 @@ const SortableItem = SortableElement(
 							value={feature.label}
 							onChange={(value) => onFeatureChange("label", value, position)}
 						/>
+						{showIcon && (
+							<FilterItemIcon
+								feature={feature}
+								position={position}
+								onItemChange={onItemChange}
+							/>
+						)}
 					</Fragment>
 				)}
 			</li>
@@ -126,6 +221,8 @@ const SortableList = SortableContainer(
 		onFeatureClick,
 		onFeatureChange,
 		onDeleteFeature,
+		onItemChange,
+		showIcon,
 		clickedItem,
 	}) => {
 		return (
@@ -140,6 +237,8 @@ const SortableList = SortableContainer(
 						onFeatureClick={onFeatureClick}
 						onFeatureChange={onFeatureChange}
 						onDeleteFeature={onDeleteFeature}
+						onItemChange={onItemChange}
+						showIcon={showIcon}
 					/>
 				))}
 			</ul>
@@ -207,6 +306,14 @@ class SortableFilterItems extends Component {
 		this.props.setAttributes({ filterItems });
 	};
 
+	// Merge icon fields into one item without mutating the current array.
+	onItemChange = (position, changes) => {
+		const filterItems = this.props.filterItems.map((item, index) =>
+			index === position ? { ...item, ...changes } : item
+		);
+		this.props.setAttributes({ filterItems });
+	};
+
 	onDeleteFeature = (position) => {
 		const { setAttributes } = this.props;
 		let filterItems = [...this.props.filterItems];
@@ -221,6 +328,8 @@ class SortableFilterItems extends Component {
 				onFeatureClick={this.onFeatureClick}
 				onFeatureChange={this.onFeatureChange}
 				onDeleteFeature={this.onDeleteFeature}
+				onItemChange={this.onItemChange}
+				showIcon={this.props.showIcon}
 				onSortEnd={this.onSortEnd}
 				clickedItem={this.state.clickedItem}
 				useDragHandle

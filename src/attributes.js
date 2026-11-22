@@ -150,6 +150,24 @@ const attributes = {
 	defaultFilter: {
 		type: "string"
 	},
+	// Filter item icons. Each filter item may also carry `iconType`
+	// ("library" | "svg"), `icon` (library class) and `svgUrl`/`svgId`.
+	enableFilterIcon: {
+		type: "boolean",
+		default: false,
+	},
+	filterIconPosition: {
+		type: "string",
+		default: "left",
+	},
+	filterIconSize: {
+		type: "number",
+		default: 14,
+	},
+	filterIconGap: {
+		type: "number",
+		default: 6,
+	},
 	filterColorType: {
 		type: "string",
 		default: "normal",

@@ -201,6 +201,25 @@ function image_gallery_block_icon_selected_style() {
 add_action( 'enqueue_block_editor_assets', 'image_gallery_block_icon_selected_style' );
 
 /**
+ * Load Isotope and imagesLoaded inside the editor iframe.
+ *
+ * The editor script runs in the parent window, but the gallery renders inside
+ * the iframe. Isotope only accepts elements from its own window, so the editor
+ * preview uses the copies loaded here to filter and lay out the gallery.
+ */
+function image_gallery_block_editor_canvas_scripts() {
+    if ( ! is_admin() ) {
+        return;
+    }
+    if ( WP_Block_Type_Registry::get_instance()->is_registered( 'essential-blocks/image-gallery' ) ) {
+        return;
+    }
+    wp_enqueue_script( 'image-gallery-images-loaded-js' );
+    wp_enqueue_script( 'image-gallery-isotope-js' );
+}
+add_action( 'enqueue_block_assets', 'image_gallery_block_editor_canvas_scripts' );
+
+/**
  * Let Essential Blocks' animation assets win on the front end when it is active.
  *
  * Both plugins register these handles and the first registration wins. This

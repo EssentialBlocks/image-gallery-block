@@ -61,6 +61,10 @@ export default function Style(props) {
 		filterHoverBGColor,
 		filterActColor,
 		filterActBGColor,
+		enableFilterIcon,
+		filterIconPosition,
+		filterIconSize,
+		filterIconGap,
 		imageGapRange,
 		TABimageGapRange,
 		MOBimageGapRange,
@@ -561,7 +565,21 @@ export default function Style(props) {
 			color: ${filterActColor};
 			background-color: ${filterActBGColor};
 		}
+${enableFilterIcon ? `
+		.eb-parent-${blockId} .eb-img-gallery-filter-icon {
+			font-size: ${filterIconSize}px;
+			width: ${filterIconSize}px;
+			height: ${filterIconSize}px;
+		}
 
+		.eb-parent-${blockId} .eb-img-gallery-filter-icon.icon-left {
+			margin-right: ${filterIconGap}px;
+		}
+
+		.eb-parent-${blockId} .eb-img-gallery-filter-icon.icon-right {
+			margin-left: ${filterIconGap}px;
+		}
+` : ""}
 		.eb-gallery-img-wrapper.${blockId}.eb-filterable-img-gallery .eb-gallery-img-content {
 			margin: calc(${imageGapRange}px / 2);
             width: calc(99.99% / ${gridColumnsDesktop} - ${imageMasonryGapStyleDesktop}px);

@@ -1,0 +1,74 @@
+/**
+ * Block settings sidebar styles (editor only).
+ */
+
+/*
+ * Range controls: the shared controls CSS fixes the number box at 70px, but
+ * the input inside keeps WordPress's 80px width and spills over the reset
+ * icon next to it (Columns, Image Gap, Icon Size, Icon Gap).
+ */
+.eb-panel-control .components-range-control__root .components-input-control .components-input-control__container,
+.eb-panel-control .components-range-control__root .components-input-control input {
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+}
+
+.eb-panel-control .eb-range-controller-container .eb-range-reset-button {
+	flex-shrink: 0;
+}
+
+/* Line the reset icon up with the number box, as on Columns / Image Gap. */
+.eb-panel-control .eb-range-controller-container.eb-img-gallery-reset-range {
+	align-items: flex-end;
+}
+
+.eb-panel-control .eb-range-controller-container.eb-img-gallery-reset-range .eb-range-reset-button {
+	margin-top: 0;
+	margin-bottom: 24px;
+}
+
+/* Filter item icon settings */
+.eb-img-gallery-filter-icon-control {
+	margin-top: 8px;
+}
+
+.eb-img-gallery-filter-icon-control .eb-img-gallery-filter-svg-preview img {
+	display: block;
+	max-width: 48px;
+	max-height: 48px;
+	margin-bottom: 8px;
+}
+
+/*
+ * Icon picker: show icons only, without their names, in a compact grid.
+ */
+.wip-iconpicker-popup .wip-icon-area {
+	gap: 4px;
+	margin-left: 0;
+}
+
+.wip-iconpicker-popup .wip-icon-area .wip-icon-box {
+	width: calc((100% - 16px) / 5);
+	height: 48px;
+	border-radius: 4px;
+}
+
+.wip-iconpicker-popup .wip-icon-area .wip-icon-box .wip-icon-content {
+	top: 50%;
+	transform: translate(-50%, -50%);
+	height: auto;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wip-iconpicker-popup .wip-icon-area .wip-icon-box .dashicon,
+.wip-iconpicker-popup .wip-icon-area .wip-icon-box i {
+	margin: 0;
+}
+
+.wip-iconpicker-popup .wip-icon-area .wip-icon-box .components-panel__row {
+	display: none !important;
+}

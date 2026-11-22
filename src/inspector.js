@@ -26,6 +26,7 @@ import { select } from "@wordpress/data";
 import objAttributes from "./attributes";
 
 import SortableFilterItems from "./sortable-filteritems";
+import ResetControl from "./reset-control";
 
 /**
  * External Dependencies
@@ -124,6 +125,10 @@ function Inspector(props) {
 		loadmoreBGColor,
 		loadmoreHvBGColor,
 		imagesPerPage,
+		enableFilterIcon,
+		filterIconPosition,
+		filterIconSize,
+		filterIconGap,
 	} = attributes;
 
 	const [defaultFilterOptions, setDefaultFilterOptions] = useState("");
@@ -494,6 +499,82 @@ function Inspector(props) {
 													}
 												/>
 
+												<ToggleControl
+													label={__(
+														"Show Icon",
+														"image-gallery-block"
+													)}
+													help={__(
+														"Set each filter item's icon in its settings below.",
+														"image-gallery-block"
+													)}
+													checked={!!enableFilterIcon}
+													onChange={() =>
+														setAttributes({
+															enableFilterIcon: !enableFilterIcon,
+														})
+													}
+												/>
+
+												{enableFilterIcon && (
+													<>
+														<SelectControl
+															label={__(
+																"Icon Position",
+																"image-gallery-block"
+															)}
+															value={filterIconPosition}
+															options={[
+																{ label: __("Left", "image-gallery-block"), value: "left" },
+																{ label: __("Right", "image-gallery-block"), value: "right" },
+															]}
+															onChange={(value) =>
+																setAttributes({ filterIconPosition: value })
+															}
+														/>
+														<ResetControl
+															onReset={() =>
+																setAttributes({
+																	filterIconSize: objAttributes.filterIconSize.default,
+																})
+															}
+														>
+															<RangeControl
+																label={__(
+																	"Icon Size",
+																	"image-gallery-block"
+																)}
+																value={filterIconSize}
+																onChange={(value) =>
+																	setAttributes({ filterIconSize: value })
+																}
+																min={8}
+																max={64}
+															/>
+														</ResetControl>
+														<ResetControl
+															onReset={() =>
+																setAttributes({
+																	filterIconGap: objAttributes.filterIconGap.default,
+																})
+															}
+														>
+															<RangeControl
+																label={__(
+																	"Icon Gap",
+																	"image-gallery-block"
+																)}
+																value={filterIconGap}
+																onChange={(value) =>
+																	setAttributes({ filterIconGap: value })
+																}
+																min={0}
+																max={40}
+															/>
+														</ResetControl>
+													</>
+												)}
+
 												<Divider />
 												<PanelRow>
 													{__(
@@ -508,6 +589,7 @@ function Inspector(props) {
 													setAttributes={
 														setAttributes
 													}
+													showIcon={!!enableFilterIcon}
 												/>
 												<Button
 													className="eb-pricebox-feature-button"

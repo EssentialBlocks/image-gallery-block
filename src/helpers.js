@@ -88,6 +88,67 @@ export const sanitizeCaption = (html) => {
     return doc.body.innerHTML;
 };
 
+/**
+ * CSS classes for an icon picked from the icon library. FontAwesome values
+ * ("fas fa-star") are used as they are; Dashicon values ("dashicons-star-filled")
+ * need the base Dashicons classes.
+ */
+export const getFilterIconClass = (icon) => {
+    if (typeof icon !== "string" || icon.trim() === "") {
+        return "";
+    }
+    return icon.includes("fa-") ? icon : `dashicon dashicons ${icon}`;
+};
+
+// An uploaded SVG is shown with <img>, so scripts inside the file never run.
+const isSafeIconUrl = (url) =>
+    typeof url === "string" && /^(https?:)?\/\//i.test(url.trim());
+
+/**
+ * Icon shown beside a filter item's label. Renders nothing when the item has
+ * no icon, so filter items without one keep their existing markup.
+ */
+export const FilterIcon = ({ item, position }) => {
+    const className = `eb-img-gallery-filter-icon icon-${position === "right" ? "right" : "left"}`;
+
+    if (item?.iconType === "svg") {
+        if (!isSafeIconUrl(item.svgUrl)) {
+            return null;
+        }
+        return (
+            <img
+                className={`${className} eb-img-gallery-filter-icon-svg`}
+                src={item.svgUrl}
+                alt=""
+                aria-hidden="true"
+            />
+        );
+    }
+
+    const iconClass = getFilterIconClass(item?.icon);
+    if (!iconClass) {
+        return null;
+    }
+    return <i className={`${className} ${iconClass}`} aria-hidden="true"></i>;
+};
+
+/**
+ * A filter item's label with its icon on the chosen side.
+ */
+export const FilterItemContent = ({ item, label, showIcon, position }) => {
+    if (!showIcon) {
+        return label;
+    }
+    const icon = <FilterIcon item={item} position={position} />;
+    return (
+        <>
+            {position !== "right" && icon}
+            {label}
+            {position === "right" && icon}
+        </>
+    );
+};
+
 export const handleOpenNewTab =(openNewTab, id, images, setAttributes) => {
     let updatedImageArray = images.map((item) => {
         if (item.id == id) {
